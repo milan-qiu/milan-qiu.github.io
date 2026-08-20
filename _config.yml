@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Jayden-个人记录
+title: Milan明良-个人记录
 subtitle:
 description: 一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust
 keywords: 博客,简历,技术
-author: Jayden
+author: Milan明良
 language: zh-CN
 timezone: Asia/Shanghai
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://jayden-qiu.github.io/
+url: https://milan-qiu.github.io/
 permalink: "/:category/:title/"
 permalink_defaults:
 pretty_urls:
@@ -103,7 +103,7 @@ theme: next
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: git@github.com:jayden-qiu/jayden-qiu.github.io.git
+  repo: git@github.com:milan-qiu/milan-qiu.github.io.git
   branch: master
 
 search:
