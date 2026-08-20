@@ -43,6 +43,9 @@ render_drafts: false
 post_asset_folder: false
 relative_link: false
 future: true
+# Markdown
+marked:
+  disableNunjucks: true
 highlight:
   enable: true
   line_number: true
