@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Array [əˈreɪ] 数组创建 空数组的创建：var a &#x3D; new Array(); &#x2F;&#x2F;数组可以存储各种不同类型的项。 方法一： var a &#x3D; new Array(4); &#x2F;&#x2F; ()里面可以写要保存的项目数量 a [0] &#x3D;3; a [1] &#x3D;”abc”; a [2] &#x3D;5; a [3]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="04-JS内置对象">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/04-JS%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="Array [əˈreɪ] 数组创建 空数组的创建：var a &#x3D; new Array(); &#x2F;&#x2F;数组可以存储各种不同类型的项。 方法一： var a &#x3D; new Array(4); &#x2F;&#x2F; ()里面可以写要保存的项目数量 a [0] &#x3D;3; a [1] &#x3D;”abc”; a [2] &#x3D;5; a [3]">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-01-20T08:26:00.000Z">
+<meta property="article:modified_time" content="2020-03-14T08:30:00.000Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/04-JS%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>04-JS内置对象 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/04-JS%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          04-JS内置对象<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/04-JS%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-20 16:26:00" itemprop="dateCreated datePublished" datetime="2020-01-20T16:26:00+08:00">2020-01-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-14 16:30:00" itemprop="dateModified" datetime="2020-03-14T16:30:00+08:00">2020-03-14</time>
+              </span>
+
+          
+            <div class="post-description">Array [əˈreɪ] 数组创建 空数组的创建：var a = new Array(); //数组可以存储各种不同类型的项。 方法一： var a = new Array(4); // ()里面可以写要保存的项目数量 a [0] =3; a [1] =”abc”; a [2] =5; a [3]</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&nbsp;</p>
+<p><span style="font-size: 18pt;"><strong><span style="font-family: 幼圆;">Array [əˈreɪ]</span></strong></span></p>
+<p><span style="font-size: 16px; font-family: 幼圆;"><strong>数组创建</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">空数组的创建：var a =  new Array();     //数组可以存储各种不同类型的项。
+
+<p>方法一：</p>
+<p>var a &#x3D;  new Array(4);   &#x2F;&#x2F;  ()里面可以写要保存的项目数量</p>
+<p>a [0]  &#x3D;3;</p>
+<p>a [1]  &#x3D;&amp;rdquo;abc&amp;rdquo;;</p>
+<p>a [2]  &#x3D;5;</p>
+<p>a [3]  &#x3D;&amp;rdquo;qml&amp;rdquo;;</p>
+<p>方法二：var a &#x3D;  new Array(3 , &amp;ldquo;abc&amp;rdquo; , 5 , &amp;ldquo;qml&amp;rdquo;);    &#x2F;&#x2F;  ()里面还可以向Array传递数组包含的项。</p>
+<p>方法三：var  a  &#x3D;  [ 3 , &amp;ldquo;abc&amp;rdquo; , 5 , &amp;ldquo;qml&amp;rdquo; ];</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px; font-family: 幼圆;"><strong>数组元素读取</strong></span></p>
+<div class="cnblogs_code">
+<pre>如：console.log( a[0] );  //在控制台打印出第一项。索引是从0开始的正整数。</pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px; font-family: 幼圆;"><strong>数组长度</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">arrayName.length    //获取数组的长度
+
+<p>var a &#x3D;  new Array(3 , &amp;ldquo;abc&amp;rdquo; , 5 , &amp;ldquo;qml&amp;rdquo;);</p>
+<p>a.length &#x3D; 3;    &#x2F;&#x2F;本来长度为4，现在设置成3，那么最后一位数组就会被移除。</p>
+<p>a[99] &#x3D; &amp;ldquo;mm&amp;rdquo;;   &#x2F;&#x2F;把mm赋给数组的第100项。那么数组的长度 &#x3D; 索引值 +  1  ，即a.length &#x3D; 100。</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 18pt; font-family: 幼圆;"><strong>数组的栈方法</strong></span></p>
+<p><strong><span style="font-size: 16px;">数组元素添加</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">a.unshift( &ldquo;开头&rdquo;,&rdquo;开头1&Prime; );  // unshift()  往数组的开头添加若干个项（返回值是添加完元素后的新数组）。
+
+<p>a.push( &amp;ldquo;末尾&amp;rdquo;,&amp;rdquo;末尾1&amp;Prime; );               &#x2F;&#x2F;  push()  往数组的末尾添加若干个项（返回值是添加完元素后的新数组）。</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-size: 16px; font-family: 幼圆;">数组元素删除</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">a.shift()   //删除数组的第一个元素（返回值是被删除的元素）。
+
+<p>a.pop();   &#x2F;&#x2F;删除数组的最后一个元素（返回值是被删除的元素）。</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><strong>join（数组转字符串）</strong></p>
+<div class="cnblogs_code">
+<pre>a.join();   //把a数组中所有元素放入一个字符串。（返回值是那个字符串）。（）里面什么都不写，默认用逗号隔开。（&rdquo;-&ldquo;）里面是&rdquo;-&ldquo;，说明用&rdquo;-&ldquo;隔开。</pre>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-size: 16px; font-family: 幼圆;">reverse（数组元素顺序颠倒）</span></strong></p>
+<div class="cnblogs_code">
+<pre>a.reverse();    //颠倒a数组里面的元素（返回值是那个数组）。</pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px; font-family: 幼圆;"><strong>sort（数组元素排序方法）</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">a.sort();     //用于对数组的元素进行排序（返回值是排序后的数组）。
+
+<p>即使数组中每一项都是数值，sort()比较的还是字符串。sort()可以接收一个比较函数作为参数。</p>
+<p>a.sort(  function(a,b){ return b-a }  );  &#x2F;&#x2F;return b-a是降序，return a-b是升序。</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px; font-family: 幼圆;"><strong>concat（数组拼接）</strong></span></p>
+<div class="cnblogs_code">
+<pre>a.concat( b,c,d, [&ldquo;m&rdquo;,99] );    //把a数组跟b、c、d、[&ldquo;m&rdquo;,99] 数组连接起来（返回值是连接后的数组）。</pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px; font-family: 幼圆;"><strong>slice（数组元素截取）</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">a.slice(开始下标,结束下标);   //从a数组的开始下标，截取到a数组的结束下标，结束下标的元素  不在截取范围（返回值是截取到数组）。
+
+<p>开始下标不可以省略，结束下标省略时，表示截取到最后。</p>
+<p>当开始下标为负数时，开始下标  &#x3D;  数组的长度  +  该负数</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px; font-family: 幼圆;"><strong>splice（数组元素删除）</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">a.splice(index,count);  //index表示开始删除的项目下标，count表示删除的个数。
+
+<p>从开始下标开始删除，删除count个元素（返回值是删除的元素组成的数组）。</p>
+<p>当count等于0时，则不会删除任何值。如果不设置，则删除从index开始的所有值。</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-size: 16px; font-family: 幼圆;">数组元素插入</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">a.splice(index,0,&rdquo;m&rdquo;,&rdquo;n&rdquo;);   //index表示开始插入的项目下标，count=0表示不执行删除，后面是插入的字符串。
+
+<p>返回值：当count&#x3D;0就是不删除任何值，所以返回的值是一个空数组 [ ] 。</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-size: 16px; font-family: 幼圆;">数组元素替换</span></strong></p>
+<div class="cnblogs_code">
+<pre>a.splice(index,2,&rdquo;m&rdquo;,&rdquo;n&rdquo;);  //index表示开始插入的项目下标，count=2表示删除两个数，后面是插入的字符串（返回值是删除的元素组成的数组）。</pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px; font-family: 幼圆;"><strong>indexOf（数组元素查找）</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">a.indexOf ( searchValue , startIndex );   //从a数组开头（位置startIndex）开始向后查找searchValue 这个值。
+
+<p>searchValue：必须项，表示要查找的内容。  startIndex ：可选项，表示从那个位置开始查找，省略时 表示从头开始。</p>
+<p>返回值：返回找到的项在数组中的位置，若没有找到就返回-1。</p>
+<p>注：在比较参数与数组中的每一项时，使用的是全等操作符。</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px; font-family: 幼圆;"><strong>lastIndexOf（数组元素查找）</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">a.lastIndexOf( searchValue , startIndex );   //从a数组末尾（位置startIndex）开始向前查找searchValue 这个值。
+
+<p>searchValue：必须项，表示要查找的内容。  startIndex ：可选项，表示从那个位置开始查找，省略时 表示从头开始。</p>
+<p>返回值：返回找到的项在数组中的位置，若没有找到就返回-1。</p>
+<p>注：在比较参数与数组中的每一项时，使用的是全等操作符。</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 18pt;">String字符串</span></strong></p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">indexOf（字符串查找）</span></strong></p>
+<div class="cnblogs_code">
+<pre>a.indexOf(&ldquo;o&rdquo;);   //在a字符串中,从头开始查找0，返回o的位置下标，若找不到返回-1。</pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong>lastIndexOf（字符串查找）</strong></span></p>
+<div class="cnblogs_code">
+<pre>a.lastIndexOf(&ldquo;o&rdquo;);    //在a字符串中,从末尾开始查找0，返回o的位置下标，若找不到返回-1。</pre>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">charAt（字符串元素读取）</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">a.charAt(4);  =  a [4];      //检测a字符串中的 第5项字符。
+
+<p>返回值：返回值就是该项的字符。</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">charCodeAt（字符串元素字符编码）</span></strong></p>
+<div class="cnblogs_code">
+<pre>a.charCodeAt( 4 );  //返回a字符串中，下标为4的   位置   字符的字符编码。</pre>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">slice（字符串元素截取）</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">a.slice(开始下标,结束下标);   //从a字符串的开始下标，截取到a字符串的结束下标，结束下标的字符串  不在截取范围（返回值是截取到的字符串）。
+
+<p>开始下标不可以省略，结束下标省略时，表示截取到最后。</p>
+<p>当开始下标为负数时，开始下标  &#x3D;  数组的长度  +  该负数，结束下标为负数时，同理。</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong>substring（字符串元素截取）</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">a.substring(开始下标,结束下标);   //从a字符串的开始下标，截取到a字符串的结束下标，结束下标的字符串  不在截取范围（返回值是截取到的字符串）。
+
+<p>开始下标不可以省略，结束下标省略时，表示截取到最后。</p>
+<p>当开始下标为负数时，自动转换成0，当结束下标为负数时，同理。</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">substr（字符串元素截取）</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">a.substr(开始下标,xx);    //从a字符串的开始下标，截取到xx个字符。
+
+<p>当开始下标为负数时，开始下标  &#x3D;  数组的长度  +  该负数。</p>
+<p>当xx省略时，截取到最后；当xx为负数时，返回空字符串。</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong>split（字符串转数组）</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">var a=&rdquo;123-456-789&Prime;;
+
+<p>a.split(&amp;ldquo;-&amp;ldquo;);    &#x2F;&#x2F;将a字符串里的内容，按照&amp;ldquo;-&amp;rdquo;隔开，转成字符串（返回值为转换后的数组）。</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">replace（字符串元素替换）</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">var a=&rdquo;123-456-789&Prime;;
+
+<p>a.replace( &amp;ldquo;-&amp;rdquo; , &amp;ldquo;&#x3D;&amp;rdquo; );    &#x2F;&#x2F;把字符串中的&amp;ldquo;-&amp;rdquo;替换成&amp;ldquo;&#x3D;&amp;rdquo;（返回值为替换后的字符串）。</p>
+<p>缺点：不能批量替换，只能替换一处。</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong>toUpperCase（字符串小写转大写）</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">var a =  &ldquo;hello world&rdquo;;
+
+<p>a.toUpperCase();   &#x2F;&#x2F;a字符串里面的小写全部转为大写</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong>toLowerCase（字符串大写转小写）</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">var a =  &ldquo;HELLO WORLD&rdquo;;
+
+<p>a.toLowerCase();   &#x2F;&#x2F;a字符串里面的大写全部转为小写</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 18pt;">Math对象</span></strong></p>
+<p><span style="font-size: 16px; font-family: 幼圆;"><strong>Math.min()</strong></span></p>
+<div class="cnblogs_code">
+<pre>Math.min(1,2,3,4,5);  //在一组数中找出最小值（返回该最小值）。</pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px; font-family: 幼圆;"><strong>Math.max()</strong></span></p>
+<div class="cnblogs_code">
+<pre>Math.max(1,2,3,4,5);  //在一组数中找出最大值（返回该最大值）。</pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px; font-family: 幼圆;"><strong>Math.ceil()</strong></span></p>
+<div class="cnblogs_code">
+<pre>Math.ceil( 109.55 );   //向上取整，返回大于109.55的最小整数，即110。</pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px; font-family: 幼圆;"><strong>Math.floor()</strong></span></p>
+<div class="cnblogs_code">
+<pre>Math.floor( 109.55 );    //向下取整，返回109.55的整数部分，即109。</pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px; font-family: 幼圆;"><strong>Math.round()</strong></span></p>
+<div class="cnblogs_code">
+<pre>Math.round( 109.55 );    //将数值四舍五入为最接近的整数，即110。</pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px; font-family: 幼圆;"><strong>Math.abs()</strong></span></p>
+<div class="cnblogs_code">
+<pre>Math.abs( -109.55 );    //返回-109.55的绝对值，即109.55。</pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px; font-family: 幼圆;"><strong>Math.random()</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">Math.random();    //随机生成一个0到1之间的数，不包含1。
+
+<p>扩展：随机生成一个3到60之间的数</p>
+<p>var x &#x3D; Math.floor( Math.random() * (60-3+1) + 3 );</p>
+<p>&#x2F;&#x2F;生成一个m到n之间的整数  （思路）</p>
+<p>&#x2F;&#x2F;设   不大过1的数   为x。</p>
+<p>&#x2F;&#x2F;1、一共生成的整数的个数为（n-m+1）</p>
+<p>&#x2F;&#x2F;2、用x  乘以  生成整数的个数  得到的值肯定不会超过n</p>
+<p>&#x2F;&#x2F;3、用 2、的值  加上最小值m</p>
+<p>&#x2F;&#x2F;4、这样的话会比n大0.9999999，所以用floor()进行向下取整</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 18pt;">Date对象</span></strong></p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong>new Date()</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">var shijian = new Date();  //不传参的时候，返回当前的日期时间对象。
+<br />
+getFullYear();    //返回四位数的年份
+
+<p>getMonth();    &#x2F;&#x2F;返回日期中的月份，0-11</p>
+<p>getDate();    &#x2F;&#x2F;返回月份中的天数</p>
+<p>getDay();    &#x2F;&#x2F;返回星期，0-6</p>
+<p>getHours();    &#x2F;&#x2F;返回小时</p>
+<p>getMinutes();    &#x2F;&#x2F;返回分</p>
+<p>getSeconds();    &#x2F;&#x2F;返回秒</p>
+<p>getTime();    &#x2F;&#x2F;返回日期的毫秒数，从1970年1月1号 00:00:00  开始到现在的毫米数</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">setDate</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">1、 set FullYear(year):设置4位数的年份
+<br /><br />2、 setMonth(mon):设置日期中的月份,从O开始,0表示1月
+<br />3、 setDate0:设置日期
+<br />4、 sethours0:设置小时
+<br />5、 setMinutes0:设置分
+<br />6、 setseconds0:设置秒
+<br />7、 setTime0:以毫秒数设置日期,会改变整个日期</span></pre>
+</div>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/03-JS%E5%87%BD%E6%95%B0/" rel="prev" title="03-JS函数">
+      <i class="fa fa-chevron-left"></i> 03-JS函数
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/05-%E9%94%99%E8%AF%AF%E8%B0%83%E8%AF%95%E4%B8%8E%E5%A4%84%E7%90%86/" rel="next" title="05-错误调试与处理">
+      05-错误调试与处理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/04-JS%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1/",
+      identifier: "/uncategorized/04-JS内置对象/",
+      title     : "04-JS内置对象",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

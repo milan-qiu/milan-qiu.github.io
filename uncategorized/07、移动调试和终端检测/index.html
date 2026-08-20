@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="浏览器调试 一般通过chrome浏览器的控制台 真机调试 1、需要电脑安装集成环境的软件，如phpstudy、xampp等等 phpstudy地址：https:&#x2F;&#x2F;www.xp.cn&#x2F; 2、运行环境，将移动端网站放到www文件夹里 3、获取电脑ip，在手机端输入ip及对应的文件夹访问 远程调试工具V">
+<meta property="og:type" content="article">
+<meta property="og:title" content="07、移动调试和终端检测">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/07%E3%80%81%E7%A7%BB%E5%8A%A8%E8%B0%83%E8%AF%95%E5%92%8C%E7%BB%88%E7%AB%AF%E6%A3%80%E6%B5%8B/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="浏览器调试 一般通过chrome浏览器的控制台 真机调试 1、需要电脑安装集成环境的软件，如phpstudy、xampp等等 phpstudy地址：https:&#x2F;&#x2F;www.xp.cn&#x2F; 2、运行环境，将移动端网站放到www文件夹里 3、获取电脑ip，在手机端输入ip及对应的文件夹访问 远程调试工具V">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-18T07:16:00.000Z">
+<meta property="article:modified_time" content="2026-08-20T06:32:52.421Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/07%E3%80%81%E7%A7%BB%E5%8A%A8%E8%B0%83%E8%AF%95%E5%92%8C%E7%BB%88%E7%AB%AF%E6%A3%80%E6%B5%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>07、移动调试和终端检测 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/07%E3%80%81%E7%A7%BB%E5%8A%A8%E8%B0%83%E8%AF%95%E5%92%8C%E7%BB%88%E7%AB%AF%E6%A3%80%E6%B5%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          07、移动调试和终端检测<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/07%E3%80%81%E7%A7%BB%E5%8A%A8%E8%B0%83%E8%AF%95%E5%92%8C%E7%BB%88%E7%AB%AF%E6%A3%80%E6%B5%8B.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-18 15:16:00" itemprop="dateCreated datePublished" datetime="2020-04-18T15:16:00+08:00">2020-04-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-08-20 14:32:52" itemprop="dateModified" datetime="2026-08-20T14:32:52+08:00">2026-08-20</time>
+              </span>
+
+          
+            <div class="post-description">浏览器调试 一般通过chrome浏览器的控制台 真机调试 1、需要电脑安装集成环境的软件，如phpstudy、xampp等等 phpstudy地址：https://www.xp.cn/ 2、运行环境，将移动端网站放到www文件夹里 3、获取电脑ip，在手机端输入ip及对应的文件夹访问 远程调试工具V</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2>浏览器调试</h2>
+<p>一般通过chrome浏览器的控制台</p>
+<p>&nbsp;</p>
+<h2>真机调试</h2>
+<p>1、需要电脑安装集成环境的软件，如phpstudy、xampp等等</p>
+<p>phpstudy地址：<a target="_blank" rel="noopener" href="https://www.xp.cn/">https://www.xp.cn/</a></p>
+<p>2、运行环境，将移动端网站放到www文件夹里</p>
+<p>3、获取电脑ip，在手机端输入ip及对应的文件夹访问</p>
+<p>&nbsp;</p>
+<h2>远程调试工具Vorlon.js</h2>
+<p>//作用：让移动端拥有控制台</p>
+<h3>安装运行</h3>
+<p>1、用node.js安装：</p>
+<div class="cnblogs_code">
+<pre>cnpm install -g vorlon</pre>
+</div>
+<p>&nbsp;</p>
+<p>2、完成后直接运行vorlon，</p>
+<div class="cnblogs_code">
+<pre>vorlon</pre>
+</div>
+<p>&nbsp;</p>
+<p>3、当看到这两行代码，说明成功了</p>
+<div class="cnblogs_code">
+<pre>2020-3-18 11:1:26 - info:    Vorlon.js PROXY listening at 0.0.0.0:5050
+2020-3-18 11:1:26 - info:    Vorlon.js SERVER listening at 0.0.0.0:1337</pre>
+</div>
+<p>&nbsp;</p>
+<h3>使用</h3>
+<p>1、电脑打开vorlon控制台。需要用到上面的最后一个端口，浏览器地址栏输入</p>
+<div class="cnblogs_code">
+<pre>localhost:1337
+<span style="color: #008000;">//</span><span style="color: #008000;">或</span>
+127.0.0.1:1337
+<span style="color: #008000;">//</span><span style="color: #008000;">或</span>
+本机ip:1337
+<span style="color: #008000;">//</span><span style="color: #008000;">访问到vorlon</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>2、在需要调试的网站页面里加入script，如</p>
+<div class="cnblogs_code">
+<pre>&lt;script type="text/javascript" src="http://192.168.0.104:1337/vorlon.js"&gt;&lt;/script&gt;
+<span style="color: #008000;">//</span><span style="color: #008000;">  http:// 本机ip:vorlon端口 / vorlon.js</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>3、打开phpstudy等工具，将网站塞到www里面。手机连接到电脑同一个局域网。</p>
+<p>4、手机通过phpstudy环境打开页面，即</p>
+<div class="cnblogs_code">
+<pre>http:<span style="color: #008000;">//</span><span style="color: #008000;">192.168.0.104/vorlontest/</span><span style="color: #008000;">
+//</span><span style="color: #008000;"> http://电脑ip/网站文件夹</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>5、只要手机打开网页，电脑vorlon页就会出现控制台</p>
+<p>&nbsp;</p>
+<h2>多终端调试工具Browsersync</h2>
+<p>//监听某些文件，只要文件修改就自动刷新，且所有连接到的设备都同步操作</p>
+<p>//不需要phpstudy等集成环境就能通过ip访问项目</p>
+<p>官网：<a target="_blank" rel="noopener" href="https://www.browsersync.io/">https://www.browsersync.io/</a></p>
+<h3>安装运行</h3>
+<p>1、node.js安装</p>
+<div class="cnblogs_code">
+<pre>cnpm install -g browser-sync</pre>
+</div>
+<p>&nbsp;</p>
+<p>2、装完后在项目文件夹打开cmd，运行</p>
+<div class="cnblogs_code">
+<pre>browser-sync start --server --files="*"
+<span style="color: #008000;">//</span><span style="color: #008000;">表示监听该文件夹下所有的文件</span>
+browser-sync start --server --files="css/*.css,js/*.js"
+<span style="color: #008000;">//</span><span style="color: #008000;">表示监听css目录下的所有css文件，js目录下的所有文件</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>使用</h3>
+<p>1、运行成功后会自动打开目录下的网站</p>
+<p>2、用户可通过&nbsp; 电脑ip:3000&nbsp; 访问该项目。如</p>
+<div class="cnblogs_code">
+<pre>http:<span style="color: #008000;">//</span><span style="color: #008000;">192.168.0.104:3000/</span><span style="color: #008000;">
+//</span><span style="color: #008000;">端口默认是3000</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>3、通过以上地址访问到的网站所有操作同步</p>
+<p>4、端口3000是网站，端口3001是browser-sync的设置工具</p>
+<p>&nbsp;</p>
+<h2>终端检测</h2>
+<p>//检测出移动端就跳转移动端，pc端就跳转pc端。若不跳转还可以进行按需加载</p>
+<p>//在BOM基础讲过</p>
+<h3>navigator对象&gt;userAgent属性</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> mobile = navigator.userAgent.match(/andriod|iphone|ipad|ipod/<span style="color: #000000;">i);
+</span><span style="color: #008000;">//</span><span style="color: #008000;">如果navigator.userAgent里面含有android的一些字符串，那就是移动端</span>
+
+<p><span style="color: #0000ff;">if</span><span style="color: #000000;">(mobile){<br>    console.log(</span>“这是移动端”<span style="color: #000000;">);<br>}</span><span style="color: #0000ff;">else</span><span style="color: #000000;">{<br>    console.log(</span>“这不是移动端”<span style="color: #000000;"><br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/06%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BA%8B%E4%BB%B6/" rel="prev" title="06、移动端事件">
+      <i class="fa fa-chevron-left"></i> 06、移动端事件
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/windows%E6%9B%B4%E6%94%B9%E6%9C%AC%E5%9C%B0%E8%B7%AF%E7%94%B1/" rel="next" title="windows更改本地路由">
+      windows更改本地路由 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">浏览器调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">真机调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">远程调试工具Vorlon.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text">安装运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">多终端调试工具Browsersync</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text">安装运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">终端检测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.</span> <span class="nav-text">navigator对象&gt;userAgent属性</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/07%E3%80%81%E7%A7%BB%E5%8A%A8%E8%B0%83%E8%AF%95%E5%92%8C%E7%BB%88%E7%AB%AF%E6%A3%80%E6%B5%8B/",
+      identifier: "/uncategorized/07、移动调试和终端检测/",
+      title     : "07、移动调试和终端检测",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

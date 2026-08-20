@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="laravel提供了三种操作数据库的方式 1、DB facade (原始查找) [fəˈsɑːd] 2、查询构造器 3、Eloquent ORM [ˈeləkwənt] 连接数据库配置 1、config&#x2F;database.php 保存连接数据库的账号密码 2、但是账号密码指向的是 app&#x2F;.env">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5、数据库增删改查">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/5%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="laravel提供了三种操作数据库的方式 1、DB facade (原始查找) [fəˈsɑːd] 2、查询构造器 3、Eloquent ORM [ˈeləkwənt] 连接数据库配置 1、config&#x2F;database.php 保存连接数据库的账号密码 2、但是账号密码指向的是 app&#x2F;.env">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-06-07T12:48:00.000Z">
+<meta property="article:modified_time" content="2021-01-31T18:40:00.000Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/5%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>5、数据库增删改查 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/5%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          5、数据库增删改查<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/5%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-07 20:48:00" itemprop="dateCreated datePublished" datetime="2020-06-07T20:48:00+08:00">2020-06-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-01 02:40:00" itemprop="dateModified" datetime="2021-02-01T02:40:00+08:00">2021-02-01</time>
+              </span>
+
+          
+            <div class="post-description">laravel提供了三种操作数据库的方式 1、DB facade (原始查找) [fəˈsɑːd] 2、查询构造器 3、Eloquent ORM [ˈeləkwənt] 连接数据库配置 1、config/database.php 保存连接数据库的账号密码 2、但是账号密码指向的是 app/.env</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2>laravel提供了三种操作数据库的方式</h2>
+<p>1、DB facade (原始查找)&nbsp; &nbsp;[fəˈsɑːd]</p>
+<p>2、查询构造器</p>
+<p>3、Eloquent ORM&nbsp; &nbsp; &nbsp;[ˈeləkwənt]</p>
+<p>&nbsp;</p>
+<h2>连接数据库配置</h2>
+<p>1、config/database.php 保存连接数据库的账号密码</p>
+<p>2、但是账号密码指向的是 app/.env 文件</p>
+<p>3、所以修改数据地址，数据库名，密码等操作都在 .env 文件完成</p>
+<p>4、修改完后重启下 php artisan serve</p>
+<p>&nbsp;</p>
+<h2>DB facade (原始查找)&nbsp; &nbsp;[fəˈsɑːd]&nbsp;</h2>
+<p>使用DB facade前，先在控制器里进行引入</p>
+<div class="cnblogs_code">
+<pre>use Illuminate\Support\Facades\DB; <span style="color: #008000;">//</span><span style="color: #008000;">使用数据库前，先进行数据库的引入</span></pre>
+</div>
+<p>控制器：增删改查</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">public</span><span style="color: #000000;"> function shujvku(){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">查</span>
+    $shujv = DB::<span style="color: #0000ff;">select</span>(<span style="color: #800000;">'</span><span style="color: #800000;">select * from news</span><span style="color: #800000;">'</span><span style="color: #000000;">);
+    var_dump($shujv); </span><span style="color: #008000;">//</span><span style="color: #008000;">输出数据，格式乱</span>
+    dd($shujv); <span style="color: #008000;">//</span><span style="color: #008000;">输出数据，格式整齐
+    
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;增&lt;/span&gt;
+$&lt;span style=&quot;color: #0000ff;&quot;&gt;bool&lt;/span&gt; = DB::insert(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;insert news(title,author) values(?,?)&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;,[&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;良哥&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;,&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;好好&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;]);
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 两个问好对应后面数组的两个值。若不加?，sql里面的值是写死的；后面数组里面的值可以动态更改
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 增加成功后会返回一个布尔值&lt;/span&gt;
+var_dump($&lt;span style=&quot;color: #0000ff;&quot;&gt;bool&lt;/span&gt;); &lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;布尔值为true，即增加成功
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;改&lt;/span&gt;
+$gai = DB::update(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;update news set title=? where author=?&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;,[&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;名利阿斯蒂芬肯德基顺利打开附件&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;,&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;好好&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;]);
+var_dump($gai); &lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;修改成功后，返回修改了多少行
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;删&lt;/span&gt;
+$san = DB::delete(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;delete from news where Id&amp;gt;?&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;,[&lt;span style=&quot;color: #800080;&quot;&gt;10&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;]);
+var_dump($san); &lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;删除成功后，返回删除了多少行&lt;/span&gt;
+</code></pre>
+<span style="color: #000000;">    
+}</span></pre>
+</div>
+<p>配置好路由即可将数据的增删改查操作</p>
+<p>&nbsp;</p>
+<h2>查询构造器</h2>
+<p>使用查询构造器前，先在控制器里进行引入</p>
+<div class="cnblogs_code">
+<pre>use Illuminate\Support\Facades\DB; <span style="color: #008000;">//</span><span style="color: #008000;">使用数据库前，先进行数据库的引入</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3><strong>查询构造器：添加数据</strong></h3>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">public</span><span style="color: #000000;"> function index(){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">查询构造器：增</span>
+    $<span style="color: #0000ff;">bool</span> = DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span>) -&gt; insert([<span style="color: #800000;">'</span><span style="color: #800000;">title</span><span style="color: #800000;">'</span> =&gt; <span style="color: #800000;">'</span><span style="color: #800000;">题目深刻的房间里</span><span style="color: #800000;">'</span> , <span style="color: #800000;">'</span><span style="color: #800000;">author</span><span style="color: #800000;">'</span> =&gt; <span style="color: #800000;">'</span><span style="color: #800000;">作者顺利打开附件</span><span style="color: #800000;">'</span><span style="color: #000000;">]);
+    var_dump($</span><span style="color: #0000ff;">bool</span>);  <span style="color: #008000;">//</span><span style="color: #008000;">插入数据，返回布尔值
+    
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;插入成功后，返回该条记录的id&lt;/span&gt;
+$id = DB::table(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;news&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;) -&amp;gt; insertGetId([&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;title&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt; =&amp;gt; &lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;题目深刻11111&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt; , &lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;author&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt; =&amp;gt; &lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;作者顺利打开11111&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;]);
+var_dump($id);  &lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;插入数据，成功后，返回该条记录的id
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;插入多条数据&lt;/span&gt;
+$duo = DB::table(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;news&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;) -&amp;gt;&lt;span style=&quot;color: #000000;&quot;&gt; insert([
+    [&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;title&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt; =&amp;gt; &lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;111111111111111&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt; , &lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;author&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt; =&amp;gt; &lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;1111111111111111&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;],
+    [&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;title&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt; =&amp;gt; &lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;22222222222222&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt; , &lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;author&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt; =&amp;gt; &lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;22222222222222222&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;]
+]);
+var_dump($duo);  &lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;插入后返回布尔值&lt;/span&gt;
+</code></pre>
+<p>}</pre></p>
+</div>
+<p>&nbsp;</p>
+<h3><strong>查询构造器：更新数据</strong></h3>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">public</span><span style="color: #000000;"> function index(){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">查询构造器：更新数据</span>
+    $num = DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+        </span>-&gt;<span style="color: #0000ff;">where</span>(<span style="color: #800000;">'</span><span style="color: #800000;">Id</span><span style="color: #800000;">'</span>,<span style="color: #800080;">14</span><span style="color: #000000;">)
+        </span>-&gt;update([<span style="color: #800000;">'</span><span style="color: #800000;">title</span><span style="color: #800000;">'</span> =&gt; <span style="color: #800000;">'</span><span style="color: #800000;">更新11111111</span><span style="color: #800000;">'</span><span style="color: #000000;">]);
+    var_dump($num);  </span><span style="color: #008000;">//</span><span style="color: #008000;">成功后返回影响的行数</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<p>对某些字段进行自增自减，id除外</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">public</span><span style="color: #000000;"> function index(){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">给某个字段的内容全部自增1</span>
+    $num1 = DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span>) -&gt; increment(<span style="color: #800000;">'</span><span style="color: #800000;">count</span><span style="color: #800000;">'</span>); <span style="color: #008000;">//</span><span style="color: #008000;">不能对Id进行自增
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">给某个字段的内容全部自增3</span>
+    $num2 = DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span>) -&gt; increment(<span style="color: #800000;">'</span><span style="color: #800000;">count</span><span style="color: #800000;">'</span>,<span style="color: #800080;">3</span><span style="color: #000000;">);
+    var_dump($num1,$num2); </span><span style="color: #008000;">//</span><span style="color: #008000;">返回受影响的行数
+        
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;给某个字段的内容全部自减1&lt;/span&gt;
+$num3 = DB::table(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;news&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;) -&amp;gt; decrement(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;count&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;); &lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;不能对Id进行自减
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;给某个字段的内容全部自减3&lt;/span&gt;
+$num4 = DB::table(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;news&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;) -&amp;gt; decrement(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;count&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;,&lt;span style=&quot;color: #800080;&quot;&gt;3&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;);
+var_dump($num1,$num2); &lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;返回受影响的行数&lt;/span&gt;
+</code></pre>
+<p>}</pre></p>
+</div>
+<p>给单独某一条记录的字段进行自增或自减</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">public</span><span style="color: #000000;"> function index(){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">给单独某一条记录的字段进行自增或自减</span>
+    $num1 = DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    </span>-&gt;<span style="color: #0000ff;">where</span>(<span style="color: #800000;">'</span><span style="color: #800000;">Id</span><span style="color: #800000;">'</span>,<span style="color: #800080;">14</span>)  <span style="color: #008000;">//</span><span style="color: #008000;">查找id为14的那一行</span>
+    -&gt; increment(<span style="color: #800000;">'</span><span style="color: #800000;">author</span><span style="color: #800000;">'</span>,<span style="color: #800080;">3</span>); <span style="color: #008000;">//</span><span style="color: #008000;">将author字段自增3</span>
+    var_dump($num1);  <span style="color: #008000;">//</span><span style="color: #008000;">返回受影响的行数</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<p>给某行记录进行自增的同时，对其他字段进行更新</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">public</span><span style="color: #000000;"> function index(){
+    $num2 </span>= DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    </span>-&gt;<span style="color: #0000ff;">where</span>(<span style="color: #800000;">'</span><span style="color: #800000;">Id</span><span style="color: #800000;">'</span>,<span style="color: #800080;">14</span>)  <span style="color: #008000;">//</span><span style="color: #008000;">查找id为14的那一行</span>
+    -&gt; increment(<span style="color: #800000;">'</span><span style="color: #800000;">author</span><span style="color: #800000;">'</span>,<span style="color: #800080;">3</span>,[<span style="color: #800000;">'</span><span style="color: #800000;">title</span><span style="color: #800000;">'</span> =&gt; <span style="color: #800000;">'</span><span style="color: #800000;">自增的同时修改</span><span style="color: #800000;">'</span>]); <span style="color: #008000;">//</span><span style="color: #008000;">若要更新多个字段，数组里面再嵌套数组</span>
+    var_dump($num2);  <span style="color: #008000;">//</span><span style="color: #008000;">返回受影响的行数</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<h3><strong>查询构造器：删除数据</strong></h3>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">public</span><span style="color: #000000;"> function index(){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">查询构造器：删除数据</span>
+    $num3 = DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    </span>-&gt;<span style="color: #0000ff;">where</span>(<span style="color: #800000;">'</span><span style="color: #800000;">Id</span><span style="color: #800000;">'</span>,<span style="color: #800080;">14</span>)  <span style="color: #008000;">//</span><span style="color: #008000;">删除某条记录</span>
+    -&gt;<span style="color: #000000;">delete();
+    var_dump($num3); </span><span style="color: #008000;">//</span><span style="color: #008000;">返回受影响的行数</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<p>删除多行数据，删除&nbsp; &gt;=x&nbsp; 的数据</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">public</span><span style="color: #000000;"> function index(){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">查询构造器：删除数据</span>
+    $num3 = DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    </span>-&gt;<span style="color: #0000ff;">where</span>(<span style="color: #800000;">'</span><span style="color: #800000;">Id</span><span style="color: #800000;">'</span>,<span style="color: #800000;">'</span><span style="color: #800000;">&gt;=</span><span style="color: #800000;">'</span>,<span style="color: #800080;">4</span>)  <span style="color: #008000;">//</span><span style="color: #008000;">删除Id&gt;=4的记录</span>
+    -&gt;<span style="color: #000000;">delete();
+    var_dump($num3); </span><span style="color: #008000;">//</span><span style="color: #008000;">返回受影响的行数</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<p>truncate，删除整个表&nbsp; &nbsp; &nbsp;[trʌŋˈkeɪt]</p>
+<div class="cnblogs_code">
+<pre>DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span>)-&gt;truncate();  <span style="color: #008000;">//</span><span style="color: #008000;">删除某个表，不会返回任何数据</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3><strong>查询构造器：查询数据</strong></h3>
+<p>查询数据表的所有内容</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">public</span><span style="color: #000000;"> function index(){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 查询表的所有数据</span>
+    $num4 = DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span>)-&gt;<span style="color: #0000ff;">get</span>(); <span style="color: #008000;">//</span><span style="color: #008000;">查询news表的所有数据</span>
+    dd($num4); <span style="color: #008000;">//</span><span style="color: #008000;">返回结果集</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<p>查询某一条数据，或某一个范围的数据</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">public</span><span style="color: #000000;"> function index(){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">查询某一条数据，或某一个范围的数据</span>
+    $data = DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    </span>-&gt;<span style="color: #0000ff;">where</span>(<span style="color: #800000;">'</span><span style="color: #800000;">Id</span><span style="color: #800000;">'</span>,<span style="color: #800000;">'</span><span style="color: #800000;">&gt;</span><span style="color: #800000;">'</span>,<span style="color: #800080;">3</span>)  <span style="color: #008000;">//</span><span style="color: #008000;">查询Id&gt;3的数据</span>
+    -&gt;<span style="color: #0000ff;">get</span><span style="color: #000000;">();
+    dd($data);
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>查询&nbsp; 符合多个条件的数据（可以试着做登陆验证）</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">public</span><span style="color: #000000;"> function index(){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">查询  符合多个条件的数据（可以试着做登陆验证）</span>
+    $deng = DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    </span>-&gt;whereRaw(<span style="color: #800000;">'</span><span style="color: #800000;">Id &gt;= ? and title=?</span><span style="color: #800000;">'</span>,[<span style="color: #800080;">4</span>,<span style="color: #800080;">2</span>])  <span style="color: #008000;">//</span><span style="color: #008000;">id&gt;=4,title=2的同一条数据</span>
+    -&gt;<span style="color: #0000ff;">get</span><span style="color: #000000;">();
+    dd($deng);
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>查询第一条数据</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">public</span><span style="color: #000000;"> function index(){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">first：查询第一条数据，默认正序</span>
+    $num5 = DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span>)-&gt;<span style="color: #000000;">first();
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">first：查询第一条数据，逆序方式</span>
+    $num6 = DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span>)-&gt;orderBy(<span style="color: #800000;">'</span><span style="color: #800000;">Id</span><span style="color: #800000;">'</span>,<span style="color: #800000;">'</span><span style="color: #800000;">desc</span><span style="color: #800000;">'</span>)-&gt;<span style="color: #000000;">first();
+    dd($num5,$num6);
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>查询表的某一个字段的所有内容</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">public</span><span style="color: #000000;"> function index(){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">pluck：查询表的某一个字段的所有内容</span>
+    $num6 = DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    </span>-&gt;pluck(<span style="color: #800000;">'</span><span style="color: #800000;">title</span><span style="color: #800000;">'</span>);  <span style="color: #008000;">//</span><span style="color: #008000;">查询news表的title字段</span>
+<span style="color: #000000;">    dd($num6);
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>查询一个表的多个字段</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">public</span><span style="color: #000000;"> function index(){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">select：查询一个表的多个字段</span>
+    $num8 = DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    </span>-&gt;<span style="color: #0000ff;">select</span>(<span style="color: #800000;">'</span><span style="color: #800000;">title</span><span style="color: #800000;">'</span>,<span style="color: #800000;">'</span><span style="color: #800000;">author</span><span style="color: #800000;">'</span>,<span style="color: #800000;">'</span><span style="color: #800000;">source</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    </span>-&gt;<span style="color: #0000ff;">get</span><span style="color: #000000;">();
+    dd($num8);
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>chunk：当数据有上万条时，指定每次查询多少条</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">public</span><span style="color: #000000;"> function index(){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">chunk：当数据有上万条时，指定每次查询多少条</span>
+    DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    </span>-&gt; orderBy(<span style="color: #800000;">'</span><span style="color: #800000;">Id</span><span style="color: #800000;">'</span>,<span style="color: #800000;">'</span><span style="color: #800000;">asc</span><span style="color: #800000;">'</span>)  <span style="color: #008000;">//</span><span style="color: #008000;">使用chunk时，必须使用orderBy子句。顺序为asc，逆序为desc</span>
+    -&gt; chunk (<span style="color: #800080;">2</span>,function($count){  <span style="color: #008000;">//</span><span style="color: #008000;">每次查询两条数据，知道数据查完</span>
+        echo <span style="color: #800000;">'</span><span style="color: #800000;">&lt;pre&gt;</span><span style="color: #800000;">'</span>;  <span style="color: #008000;">//</span><span style="color: #008000;">将数据整齐格式化</span>
+<span style="color: #000000;">        var_dump($count);
+    });
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>查询构造器中的聚合函数</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">public</span><span style="color: #000000;"> function index(){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">count：计算表中有多少数据</span>
+    $count = DB::table(<span style="color: #800000;">'</span><span style="color: #800000;">news</span><span style="color: #800000;">'</span>)-&gt;count(); <span style="color: #008000;">//</span><span style="color: #008000;">查询news表有多少数据</span>
+<span style="color: #000000;">    var_dump($count); 
+
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;max：找出某个字段里最大的那个数&lt;/span&gt;
+$max = DB::table(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;news&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;)-&amp;gt;max(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;num&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;); &lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;news表的num字段的最大那个数&lt;/span&gt;
+</code></pre>
+<p><span style="color: #000000;">    var_dump($max);</p>
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;min：找出某个字段里最小的那个数&lt;/span&gt;
+$min = DB::table(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;news&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;)-&amp;gt;min(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;num&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;); &lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;news表的num字段的最小那个数&lt;/span&gt;
+</code></pre>
+<p><span style="color: #000000;">    var_dump($min);</p>
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;avg：计算出某个字段的平均数&lt;/span&gt;
+$avg = DB::table(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;news&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;)-&amp;gt;avg(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;num&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;); &lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;news表的num字段的平均数&lt;/span&gt;
+</code></pre>
+<p><span style="color: #000000;">    var_dump($avg);</p>
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;sum：计算出某个字段的总和&lt;/span&gt;
+$sum = DB::table(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;news&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;)-&amp;gt;sum(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;num&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;);  &lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;news表的num字段总数&lt;/span&gt;
+</code></pre>
+<p><span style="color: #000000;">    var_dump($sum);<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h2>Eloquent ORM&nbsp; &nbsp; [ˈeləkwənt]</h2>
+<p><strong>简述 CRUD</strong></p>
+<p>新建模型&nbsp;</p>
+<div class="cnblogs_code">
+<pre>&lt;?<span style="color: #000000;">php
+
+<p></span><span style="color: #0000ff;">namespace</span> App; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">命名空间，表当前模型的位置</span><br><span style="color: #000000;"><br>use Illuminate\Database\Eloquent\Model; </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">继承模型类前需要引入</span></p>
+<p><span style="color: #0000ff;">class</span><span style="color: #000000;"> Mm extends Model{</span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">指定表名</span><br>  <span style="color: #0000ff;">protected</span> $table &#x3D; <span style="color: #800000;">‘</span><span style="color: #800000;">news</span><span style="color: #800000;">‘</span><span style="color: #000000;">;</p>
+<p>  </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">指定主键，默认为id</span><br>  <span style="color: #0000ff;">protected</span> $primaryKey &#x3D; <span style="color: #800000;">‘</span><span style="color: #800000;">Id</span><span style="color: #800000;">‘</span><span style="color: #000000;">;<br />　<br />  &#x2F;&#x2F;新增数据时，默认打开时间戳，若不需要可以这样关闭<br />  public $timesstamps &#x3D; false;<br /><br />  &#x2F;&#x2F;默认的时间戳不是unicode时间戳，需要在这里进行转换<br />  protected $dateFormat &#x3D; ‘U’;<br /><br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>控制器中使用模型需要引入</p>
+<div class="cnblogs_code">
+<pre>use App\Mm;  <span style="color: #008000;">//</span><span style="color: #008000;">使用模型的数据前，先进行模型的引入</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>ORM查询数据 (R)</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">all：查询表的所有记录</span>
+$mm =<span style="color: #000000;"> Mm::all();
+dd($mm);
+</span><span style="color: #008000;">//</span><span style="color: #008000;">还可以使用查询构造器方法，查询表的所有内容</span>
+$m = Mm::<span style="color: #0000ff;">get</span><span style="color: #000000;">();
+dd($m);</span></pre>
+</div>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">find：查找某一条id为几的记录</span>
+$mm1 = Mm::find(<span style="color: #800080;">5</span><span style="color: #000000;">);
+dd($mm1);
+</span><span style="color: #008000;">//</span><span style="color: #008000;">还可以用查询构造器的方法，查询id为几的记录</span>
+$m1 = Mm::<span style="color: #0000ff;">where</span>(<span style="color: #800000;">'</span><span style="color: #800000;">Id</span><span style="color: #800000;">'</span>,<span style="color: #800000;">'</span><span style="color: #800000;">5</span><span style="color: #800000;">'</span>)-&gt;<span style="color: #0000ff;">get</span><span style="color: #000000;">();
+dd($m1);</span></pre>
+</div>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">findOrFail：查找某一条id为几的记录，若找不到就提示 not found</span>
+$mm2 = Mm::findOrFail(<span style="color: #800080;">6</span><span style="color: #000000;">);
+dd($mm2);</span></pre>
+</div>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">chunk：指定每次查多少条数据</span>
+Mm::chunk(<span style="color: #800080;">2</span><span style="color: #000000;">,function($tt){
+    var_dump($tt);
+});</span></pre>
+</div>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">聚合函数</span>
+$count = Mm::count(); <span style="color: #008000;">//</span><span style="color: #008000;">计算数量</span>
+$max = Mm::max(<span style="color: #800000;">'</span><span style="color: #800000;">num</span><span style="color: #800000;">'</span>); <span style="color: #008000;">//</span><span style="color: #008000;">计算num字段最大值</span>
+$min = Mm::min(<span style="color: #800000;">'</span><span style="color: #800000;">num</span><span style="color: #800000;">'</span>); <span style="color: #008000;">//</span><span style="color: #008000;">计算num字段最小值</span>
+$avg = Mm::avg(<span style="color: #800000;">'</span><span style="color: #800000;">num</span><span style="color: #800000;">'</span>); <span style="color: #008000;">//</span><span style="color: #008000;">计算num字段平均数</span>
+var_dump($count,$max,$min,$avg);</pre>
+</div>
+<p>&nbsp;</p>
+<h3>ORM新增数据 (C)</h3>
+<p>默认插入时间戳，需要自己手动创建字段：created_at、updated_at，其类型都是Int</p>
+<p>插入数据：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">新增数据</span>
+$Mm = <span style="color: #0000ff;">new</span> Mm;  <span style="color: #008000;">//</span><span style="color: #008000;">实例化一个模型</span>
+$Mm-&gt;title = <span style="color: #800000;">'</span><span style="color: #800000;">标题</span><span style="color: #800000;">'</span><span style="color: #000000;">;
+$Mm</span>-&gt;author = <span style="color: #800000;">'</span><span style="color: #800000;">作者</span><span style="color: #800000;">'</span><span style="color: #000000;">;
+$</span><span style="color: #0000ff;">bool</span> = $Mm -&gt; save();  <span style="color: #008000;">//</span><span style="color: #008000;">返回布尔值，插入成功返回true</span>
+var_dump($<span style="color: #0000ff;">bool</span>);</pre>
+</div>
+<p>&nbsp;</p>
+<p>输出时间戳，默认会将时间戳格式化好</p>
+<div class="cnblogs_code">
+<pre>$student = Mm::find(<span style="color: #800080;">18</span>); <span style="color: #008000;">//</span><span style="color: #008000;">查找id为18的记录</span>
+echo $student-&gt;created_at; <span style="color: #008000;">//</span><span style="color: #008000;">输出created_at的字段<br /><br /></span></pre>
+<p>//将原始时间戳转换为 标准时间格式<br />$student = Mm::find(18);<br />echo ('Y-m-d H-i-s',$student-&gt;created_at);</p>
+
+
+
+
+
+
+
+</div>
+<p>&nbsp;</p>
+<p>批量插入数据：</p>
+<p>1、默认不允许批量插入数据，需要在模型添加...</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">protected</span> $fillable = [<span style="color: #800000;">'</span><span style="color: #800000;">name</span><span style="color: #800000;">'</span>];  <span style="color: #008000;">//</span><span style="color: #008000;">需要批量赋值多少字段，就在数组里面添加多少值</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>2、用模型的 Create 方法增加数据，控制器批量赋值</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">使用模型的 Create方法新增数据</span>
+$Mm =<span style="color: #000000;"> Mm::create(
+    [</span><span style="color: #800000;">'</span><span style="color: #800000;">title</span><span style="color: #800000;">'</span> =&gt; <span style="color: #800000;">'</span><span style="color: #800000;">046题目</span><span style="color: #800000;">'</span> , <span style="color: #800000;">'</span><span style="color: #800000;">author</span><span style="color: #800000;">'</span> =&gt; <span style="color: #800000;">'</span><span style="color: #800000;">046作者</span><span style="color: #800000;">'</span><span style="color: #000000;">]
+);
+dd($Mm); </span><span style="color: #008000;">//</span><span style="color: #008000;">插入成功后，返回Mm模型</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>3、根据特殊情况，可以在Model指定 不允许批量赋值的字段，如：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">指定不允许批量赋值的字段</span>
+<span style="color: #0000ff;">protected</span> $guarded = [<span style="color: #800000;">'</span><span style="color: #800000;">num</span><span style="color: #800000;">'</span>];</pre>
+</div>
+<p>&nbsp;</p>
+<p>firstOrCreate：若某字段不存在就添加，并返回该字段的模型。若存在就直接返回该字段的模型，不添加</p>
+<div class="cnblogs_code">
+<pre>$Mm =<span style="color: #000000;"> Mm::firstOrCreate(
+    [</span><span style="color: #800000;">'</span><span style="color: #800000;">title</span><span style="color: #800000;">'</span> =&gt; <span style="color: #800000;">'</span><span style="color: #800000;">101题目</span><span style="color: #800000;">'</span> , <span style="color: #800000;">'</span><span style="color: #800000;">author</span><span style="color: #800000;">'</span> =&gt; <span style="color: #800000;">'</span><span style="color: #800000;">101作者</span><span style="color: #800000;">'</span><span style="color: #000000;">]
+);
+dd($Mm);</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>firstOrNew：以属性查找用户，若没有则建立新的实例，若需要保存则可以添加save方法</p>
+<div class="cnblogs_code">
+<pre>$Mm =<span style="color: #000000;"> Mm::firstOrNew(
+    [</span><span style="color: #800000;">'</span><span style="color: #800000;">title</span><span style="color: #800000;">'</span> =&gt; <span style="color: #800000;">'</span><span style="color: #800000;">标题</span><span style="color: #800000;">'</span><span style="color: #000000;">]
+);
+dd($Mm);</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>Eloquent ORM修改数据 (U)</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">通过模型修改数据</span>
+$data = Mm::find(<span style="color: #800080;">19</span><span style="color: #000000;">);
+$data</span>-&gt;time = <span style="color: #800000;">'</span><span style="color: #800000;">时间修改</span><span style="color: #800000;">'</span>;  <span style="color: #008000;">//</span><span style="color: #008000;">执行修改</span>
+$<span style="color: #0000ff;">bool</span> = $data-&gt;save();  <span style="color: #008000;">//</span><span style="color: #008000;">修改完成后，执行保存，返回布尔值-&gt;是否保存成功</span>
+var_dump($<span style="color: #0000ff;">bool</span><span style="color: #000000;">);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">除了用查询构造器find外，还可以用where等等</span><br><span style="color: #000000;"><br>$num </span>&#x3D; Mm::<span style="color: #0000ff;">where</span>(<span style="color: #800000;">‘</span><span style="color: #800000;">Id</span><span style="color: #800000;">‘</span>,<span style="color: #800000;">‘</span><span style="color: #800000;">&gt;</span><span style="color: #800000;">‘</span>,<span style="color: #800080;">16</span>)-&gt;<span style="color: #000000;">update(<br>    [</span><span style="color: #800000;">‘</span><span style="color: #800000;">source</span><span style="color: #800000;">‘</span>&#x3D;&gt;<span style="color: #800000;">‘</span><span style="color: #800000;">中华网</span><span style="color: #800000;">‘</span><span style="color: #000000;">]<br>);<br>var_dump($num); </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">执行成功后，返回更新成功的行数</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>Eloquent ORM删除数据 (D)</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">通过模型删除</span>
+$mo = Mm::find(<span style="color: #800080;">12</span>); <span style="color: #008000;">//</span><span style="color: #008000;">通过id找到数据</span>
+$<span style="color: #0000ff;">bool</span> = $mo-&gt;delete(); <span style="color: #008000;">//</span><span style="color: #008000;">执行删除，结果返回布尔值</span>
+var_dump($<span style="color: #0000ff;">bool</span><span style="color: #000000;">);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">通过主键删除</span><br>$num &#x3D; Mm::destroy(<span style="color: #800080;">20</span>); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">删除主键为20的值</span><br>$num1 &#x3D; Mm::destroy(<span style="color: #800080;">20</span>,<span style="color: #800080;">21</span>); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">删除主键为20、21的值</span><br>$num2 &#x3D; Mm::destroy([<span style="color: #800080;">20</span>,<span style="color: #800080;">21</span>]); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">里面也可以为数组</span><br>var_dump($num); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">返回受影响的行数</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">通过指定条件删除</span><br>$numm &#x3D; Mm::<span style="color: #0000ff;">where</span>(<span style="color: #800000;">‘</span><span style="color: #800000;">Id</span><span style="color: #800000;">‘</span>,<span style="color: #800000;">‘</span><span style="color: #800000;">&gt;</span><span style="color: #800000;">‘</span>,<span style="color: #800080;">18</span>)-&gt;delete(); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">指定条件删除</span><br>var_dump($numm); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">返回受影响的行数</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>model与model之间的关系绑定</p>
+<p>如，一个人可以有多篇文章</p>
+<p>在users的model类中可以定义</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">将user的id与author_id关联</span>
+<span style="color: #0000ff;">public</span> <span style="color: #0000ff;">function</span><span style="color: #000000;"> post(){
+   </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">$this</span>-&gt;hasMany(Post::<span style="color: #0000ff;">class</span>,'author_id'<span style="color: #000000;">);
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>在post的model类中可以定义</p>
+<p>&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/4%E3%80%81%E6%A8%A1%E5%9E%8B/" rel="prev" title="4、模型">
+      <i class="fa fa-chevron-left"></i> 4、模型
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/6%E3%80%81Blade%E6%A8%A1%E6%9D%BF/" rel="next" title="6、Blade模板">
+      6、Blade模板 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">laravel提供了三种操作数据库的方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">连接数据库配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">DB facade (原始查找)   [fəˈsɑːd] </span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">查询构造器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text">查询构造器：添加数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.2.</span> <span class="nav-text">查询构造器：更新数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.3.</span> <span class="nav-text">查询构造器：删除数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.4.</span> <span class="nav-text">查询构造器：查询数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.5.</span> <span class="nav-text">查询构造器中的聚合函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">Eloquent ORM    [ˈeləkwənt]</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.</span> <span class="nav-text">ORM查询数据 (R)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.2.</span> <span class="nav-text">ORM新增数据 (C)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.3.</span> <span class="nav-text">Eloquent ORM修改数据 (U)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.4.</span> <span class="nav-text">Eloquent ORM删除数据 (D)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/5%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/",
+      identifier: "/uncategorized/5、数据库增删改查/",
+      title     : "5、数据库增删改查",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

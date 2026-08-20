@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="创建使用分支 创建dev分支 git branch dev 一、创建并切换到新的分支（dev分支） git switch -c dev 二、查看当前分支 git branch 三、修改完文件，并add、commit后，切换回master分支 git switch master 四、将dev合并到ma">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3、分支管理">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/3%E3%80%81%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="创建使用分支 创建dev分支 git branch dev 一、创建并切换到新的分支（dev分支） git switch -c dev 二、查看当前分支 git branch 三、修改完文件，并add、commit后，切换回master分支 git switch master 四、将dev合并到ma">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-06-28T06:19:00.000Z">
+<meta property="article:modified_time" content="2026-08-20T06:32:52.537Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/3%E3%80%81%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>3、分支管理 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/3%E3%80%81%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          3、分支管理<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/3%E3%80%81%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-28 14:19:00" itemprop="dateCreated datePublished" datetime="2020-06-28T14:19:00+08:00">2020-06-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-08-20 14:32:52" itemprop="dateModified" datetime="2026-08-20T14:32:52+08:00">2026-08-20</time>
+              </span>
+
+          
+            <div class="post-description">创建使用分支 创建dev分支 git branch dev 一、创建并切换到新的分支（dev分支） git switch -c dev 二、查看当前分支 git branch 三、修改完文件，并add、commit后，切换回master分支 git switch master 四、将dev合并到ma</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2>创建使用分支</h2>
+<p>创建dev分支</p>
+<div class="cnblogs_code">
+<pre>git branch dev</pre>
+</div>
+<p>&nbsp;</p>
+<p>一、创建并切换到新的分支（dev分支）</p>
+<div class="cnblogs_code">
+<pre>git <span style="color: #0000ff;">switch</span> -c dev</pre>
+</div>
+<p>&nbsp;</p>
+<p>二、查看当前分支</p>
+<div class="cnblogs_code">
+<pre>git branch</pre>
+</div>
+<p>&nbsp;</p>
+<p>三、修改完文件，并add、commit后，切换回master分支</p>
+<div class="cnblogs_code">
+<pre>git <span style="color: #0000ff;">switch</span> master</pre>
+</div>
+<p>&nbsp;</p>
+<p>四、将dev合并到master</p>
+<div class="cnblogs_code">
+<pre>git merge dev</pre>
+</div>
+<p>&nbsp;</p>
+<p>五、删除dev分支</p>
+<div class="cnblogs_code">
+<pre>git branch -d dev</pre>
+</div>
+<p>&nbsp;</p>
+<p>六、查看分支合并情况</p>
+<div class="cnblogs_code">
+<pre><code class="php">git log --graph --pretty=oneline --abbrev-commit</code></pre>
+</div>
+<p>&nbsp;</p>
+<h2>解决冲突</h2>
+<p>一、若合并分支发生冲突（git merge dev）</p>
+<p>&nbsp;</p>
+<p>二、查看发生冲突的文件</p>
+<div class="cnblogs_code">
+<pre>git status</pre>
+</div>
+<p>&nbsp;</p>
+<p>三、打开发生冲突的文件，手动更改再add、commit</p>
+<p>&nbsp;</p>
+<p>四、删除分支</p>
+<div class="cnblogs_code">
+<pre>git branch -d dev</pre>
+</div>
+<p>&nbsp;</p>
+<h2>合并分支问题</h2>
+<p>一、若合并分支时使用的时Fast forward方式，后删除分支后会产生分支信息丢失</p>
+<p>&nbsp;</p>
+<p>二、禁用Fast forward方式</p>
+<div class="cnblogs_code">
+<pre>git merge --no-ff -m <span style="color: #800000;">"</span><span style="color: #800000;">禁用fast forward合并</span><span style="color: #800000;">"</span> dev</pre>
+</div>
+<p>&nbsp;</p>
+<h2>Bug分支</h2>
+<p>一、在dev上开发遇到bug时，将当前工作区储藏起来</p>
+<div class="cnblogs_code">
+<pre>git stash</pre>
+</div>
+<p>现在用git status 查看是干净的</p>
+<p>&nbsp;</p>
+<p>二、若问题在master上，就在master上建立bug分支</p>
+<p>三、切换bug分支解决问题后，切回master进行合并，并删除bug分支</p>
+<p>&nbsp;</p>
+<p>四、切换回dev分支，查看藏起来的工作</p>
+<div class="cnblogs_code">
+<pre>git stash list</pre>
+</div>
+<p>&nbsp;</p>
+<p>五、两种恢复方法</p>
+<p>1、一是用<strong><code>git stash apply</code>恢复</strong>，但是恢复后，<strong>stash内容并不删除</strong>，你需要用<strong><code>git stash drop</code>来删除</strong></p>
+<p>2、用<strong><code>git stash pop</code>恢复</strong>，<strong>stash内容也会删</strong>了</p>
+<p>&nbsp;</p>
+<p>六、可对当前工作进行多次隐藏，隐藏后查看列表</p>
+<div class="cnblogs_code">
+<pre>git stash list</pre>
+</div>
+<p>&nbsp;</p>
+<p>七、恢复其中一次</p>
+<div class="cnblogs_code">
+<pre>git stash apply stash@{<span style="color: #800080;">0</span>}</pre>
+</div>
+<p>&nbsp;</p>
+<p>八、在master上的bug，dev也会存在，记住提交bug时的commit id</p>
+<div class="cnblogs_code">
+<pre>git cherry-pick 4c805e2</pre>
+</div>
+<p>这样dev上的bug也会解决</p>
+<p>&nbsp;</p>
+<h2>Feature分支</h2>
+<p>一、每添加一个新功能就添加一个feature</p>
+<p>&nbsp;</p>
+<p>二、功能实现后添加到dev，并删除分支</p>
+<p>&nbsp;</p>
+<p>三、若开发Feature的过程中，这个功能突然说不需要了</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">切换回dev，强制删除Feature分支</span>
+git branch -D feature</pre>
+</div>
+<p>&nbsp;</p>
+<h2>多人协作</h2>
+<p>一、当你从远程仓库克隆时，实际上Git自动把本地的<code>master</code>分支和远程的<code>master</code>分支对应起来了，并且，远程仓库的默认名称是<code>origin</code>。</p>
+<p>&nbsp;</p>
+<p>二、查看远程库信息</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">查看远程库名称</span>
+<span style="color: #000000;">git  remote
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">查看远程库详细信息</span><br>git remote -v</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>三、将本地的master推送到远程的master</p>
+<div class="cnblogs_code">
+<pre>git push origin master</pre>
+</div>
+<p>&nbsp;</p>
+<p>四、将本地的master推送到远程的dev</p>
+<div class="cnblogs_code">
+<pre>git push origin dev</pre>
+</div>
+<p>&nbsp;</p>
+<p>默认clone下来的项目只有master分支，怎么关联远程的dev分支到本地？</p>
+<div class="cnblogs_code">
+<pre>git checkout -b dev origin/dev</pre>
+</div>
+<p>做完开发add、commit后，推送到远程的dev分支</p>
+<div class="cnblogs_code">
+<pre>git push origin dev</pre>
+</div>
+<p>若有人做了同样的更改，你git push oringin dev推送不上去？</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">需要将先用git pull把最新的提交从origin/dev抓下来，然后，在本地合并，解决冲突，再推送<br /><br />//指定本地<code>dev</code>分支与远程<code>origin/dev</code>分支的链接</span>
+git branch --<span style="color: #0000ff;">set</span>-upstream-to=origin/<span style="color: #000000;">dev dev<br /><br />//pull文件下来，手动更改<br />git pull
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">随后再push上去</span><br>git push origin dev</pre></p>
+</div>
+<p>&nbsp;</p>
+<h2>Rebase</h2>
+<p>rebase的目的是使得我们在查看历史提交的变化时更容易，因为分叉的提交需要三方对比。</p>
+<p>一、将<code class="sql">git log <span class="comment">--graph --pretty=oneline --abbrev-commit 变直线</span></code></p>
+<div class="cnblogs_code">
+<pre>git rebase</pre>
+</div>
+<p>二、查看</p>
+<div class="cnblogs_code">
+<pre>git log --graph --pretty=oneline --abbrev-commit</pre>
+</div>
+<p>&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/2%E3%80%81Git%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" rel="prev" title="2、Git基本操作">
+      <i class="fa fa-chevron-left"></i> 2、Git基本操作
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/4%E3%80%81%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86/" rel="next" title="4、标签管理">
+      4、标签管理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">创建使用分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">解决冲突</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">合并分支问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">Bug分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">Feature分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">多人协作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">Rebase</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/3%E3%80%81%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/",
+      identifier: "/uncategorized/3、分支管理/",
+      title     : "3、分支管理",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="类与对象 OOP-面向对象开发（核心是封装） es5函数封装 &#x2F;&#x2F;面向过程的封装： 封装一个自执行的匿名函数，这样内部的各种属性和方法就不会暴露在全局下面。面向过程可以暂时理解为函数 es6的类封装 &#x2F;&#x2F;类相当于一个工厂，只要给适当的参数就会生产出对应的对象。&#x2F;&#x2F;构造函数相当于接头人，负责接收参数，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="05、ES6 class">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/05%E3%80%81ES6%20class/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="类与对象 OOP-面向对象开发（核心是封装） es5函数封装 &#x2F;&#x2F;面向过程的封装： 封装一个自执行的匿名函数，这样内部的各种属性和方法就不会暴露在全局下面。面向过程可以暂时理解为函数 es6的类封装 &#x2F;&#x2F;类相当于一个工厂，只要给适当的参数就会生产出对应的对象。&#x2F;&#x2F;构造函数相当于接头人，负责接收参数，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-06T07:36:00.000Z">
+<meta property="article:modified_time" content="2020-05-06T07:38:00.000Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/05%E3%80%81ES6%20class/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>05、ES6 class | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/05%E3%80%81ES6%20class/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          05、ES6 class<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/05%E3%80%81ES6%20class.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-05-06 15:36:00 / 修改时间：15:38:00" itemprop="dateCreated datePublished" datetime="2020-05-06T15:36:00+08:00">2020-05-06</time>
+            </span>
+
+          
+            <div class="post-description">类与对象 OOP-面向对象开发（核心是封装） es5函数封装 //面向过程的封装： 封装一个自执行的匿名函数，这样内部的各种属性和方法就不会暴露在全局下面。面向过程可以暂时理解为函数 es6的类封装 //类相当于一个工厂，只要给适当的参数就会生产出对应的对象。//构造函数相当于接头人，负责接收参数，</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2>类与对象</h2>
+<p>OOP-面向对象开发（核心是封装）</p>
+<h3>es5函数封装</h3>
+<p>//面向过程的封装： 封装一个自执行的匿名函数，这样内部的各种属性和方法就不会暴露在全局下面。面向过程可以暂时理解为函数</p>
+<h3>es6的类封装</h3>
+<p>//类相当于一个工厂，只要给适当的参数就会生产出对应的对象。<br />//构造函数相当于接头人，负责接收参数，有固定名字： constructor<br />//实例化相当于生产的过程，就是类创建对象的过程</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">class car {
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">constructor构造函数用来接收参数</span>
+    constructor([name,color]){ <span style="color: #008000;">//</span><span style="color: #008000;">这里函数的写法，跟对象里的简洁表示法一样</span>
+        <span style="color: #0000ff;">this</span>.name = name; <span style="color: #008000;">//</span><span style="color: #008000;">this是在一个类中能被访问的一个关键字</span>
+        <span style="color: #0000ff;">this</span>.color = color; <span style="color: #008000;">//</span><span style="color: #008000;">若没有this，下面实例化完的对象就访问不到这里的属性</span>
+        <span style="color: #0000ff;">this</span>.number = 0<span style="color: #000000;">;
+        console.log(</span>'开始接收参数'<span style="color: #000000;">);
+        console.log(name,color);
+    }
+
+<pre><code>add(){
+    &lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;this&lt;/span&gt;.number += 1;    &lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;这里可以对constructor里面的参数进行更改&lt;/span&gt;
+    console.log(&lt;span style=&quot;color: #0000ff;&quot;&gt;this&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;.number);
+}
+</code></pre>
+<p>}</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">只要class准备好了就可以实例化了</span><br>const che &#x3D;  <span style="color: #0000ff;">new</span> car([‘奔驰’,’红色’]); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里相当于调用constructor，括号里面可以传递参数</span><br><span style="color: #000000;"><br>console.log(che); </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">上面有了this的关键字，这里就能访问到属性了</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">实例化之后就可以调用里面的方法了</span><br>che.add();</pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>class的三大特性</h3>
+<p>一、封装</p>
+<p>二、继承</p>
+<p>三、多态： 同一个接口不同的表现</p>
+<p>&nbsp;</p>
+<h2>静态属性与静态方法</h2>
+<p>1、不会被类实例所拥有的属性与方法，只是自身拥有。</p>
+<p>2、只能通过类调用。</p>
+<h3>&nbsp;</h3>
+<h3>静态属性的定义与调用</h3>
+<h4>定义</h4>
+<p>第一种，在类里面，在constructor前面</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">定义静态属性一： 在类里面</span><span style="color: #008000;">
+//</span><span style="color: #008000;">static 属性名 = 属性值</span>
+static stt = 'constructor前面定义的静态属性';<br /><br />//修改静态属性</pre>
+<p>　constructor(){<br />	　　　//对第一种方式的，静态属性进行修改。<br />	　　　//必须先实例化再调用才生效<br />	　　　haha.stt = '01234';<br />　}</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+<p>&nbsp;</p>
+<p>第二种，在类外面</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> 定义静态属性二： 在类外面</span><span style="color: #008000;">
+//</span><span style="color: #008000;"> 定义静态属性： 类名 . 属性名 = 属性值 </span>
+haha.str = '静态属性'; </pre>
+</div>
+<p>&nbsp;</p>
+<h4>调用</h4>
+<div class="cnblogs_code">
+<pre>console.log(haha.stt); <span style="color: #008000;">//</span><span style="color: #008000;">调用静态属性，类名 . 静态属性名。</span>
+console.log(haha.str); <span style="color: #008000;">//</span><span style="color: #008000;">调用静态属性，类名 . 静态属性名。</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>静态方法的定义与调用</h3>
+<h4>定义</h4>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">定义普通方法</span>
+<span style="color: #000000;">bb(){
+    console.log(</span>'静态方法跟普通方法重名是没关系的，互不影响'<span style="color: #000000;">);
+}
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">定义静态方法</span><br><span style="color: #000000;">static bb(name){<br>    console.log(</span>‘我是静态方法，只有class才能调用。传进来的参数是：’ +<span style="color: #000000;"> name);<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h4>调用</h4>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">调用静态方法，只有该class才能调用静态方法</span>
+haha.bb('大比');  <span style="color: #008000;">//</span><span style="color: #008000;">类名 . 静态方法名</span></pre>
+</div>
+<p>&nbsp;</p>
+<h2>类表达式</h2>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">类表达式</span>
+const p = class a{  <span style="color: #008000;">//</span><span style="color: #008000;">若不需要，a可以省略</span>
+<span style="color: #000000;">    constructor(){
+        console.log(</span>'这里p是 === a的，a仅限于内部使用'<span style="color: #000000;">);
+    }
+}
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> new p();</span>
+
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">类的声明</span><br><span style="color: #000000;">class bb{<br>    constructor(){<br>        console.log(</span>‘类的声明’<span style="color: #000000;">);<br>    }<br>}<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> new bb();</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">类的自执行</span><br>const aa &#x3D; <span style="color: #0000ff;">new</span><span style="color: #000000;"> class p{<br>    constructor(){<br>        p.a </span>&#x3D; 26<span style="color: #000000;">;<br>        console.log(p.a);<br>    }</p>
+<p>}()</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h2>getter、setter</h2>
+<p>//类似给属性提供钩子。在获取属性和设置属性的时候做一些额外的事情</p>
+<p>&nbsp;</p>
+<h3>ES5的getter、setter</h3>
+<p>1、在字面量中书写get、set方法</p>
+<div class="cnblogs_code">
+<pre>const obj =<span style="color: #000000;"> {
+    _name:</span>'123'<span style="color: #000000;">,
+    get name(){     </span><span style="color: #008000;">//</span><span style="color: #008000;">获取name属性</span>
+        console.log('这是获取name的操作'); <span style="color: #008000;">//</span><span style="color: #008000;">除了返回name之外，还可以做其他额外的操作</span>
+        <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">this</span><span style="color: #000000;">._name;
+    },
+    set name(val){  </span><span style="color: #008000;">//</span><span style="color: #008000;">设置name属性</span>
+        <span style="color: #0000ff;">this</span>._name =<span style="color: #000000;"> val;
+    }
+}
+</span><span style="color: #008000;">//</span><span style="color: #008000;">设置name，实际上是设置_name</span>
+obj.name = '设置name，会自动调用set name方法'<span style="color: #000000;">;
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取name，实际上是访问_name</span><br><span style="color: #000000;">console.log(obj.name);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">name属性名 跟 get、set方法名不可以重名。 若重名会报错，栈内存溢出</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">先触发get name，里面this.name访问了name，访问了name又会触发get name ……</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>2、Object.defineProperty</p>
+<div class="cnblogs_code">
+<pre>const obj =<span style="color: #000000;"> {
+    _age : </span>2<span style="color: #000000;">
+}
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">设置&#x2F;添加属性</span><br>Object.defineProperty(obj,’age’,{  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里同样不能重名</span><br>    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">value : 88,</span><br>    get : <span style="color: #0000ff;">function</span><span style="color: #000000;">(){<br>        console.log(</span>‘正在使用get方法’<span style="color: #000000;">);<br>        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">this</span>._age; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里同样不能重名</span><br><span style="color: #000000;">    },<br>    set : </span><span style="color: #0000ff;">function</span><span style="color: #000000;">(val){<br>        console.log(</span>‘正在使用set方法’<span style="color: #000000;">);<br>        </span><span style="color: #0000ff;">this</span>._age &#x3D; val; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里同样不能重名</span><br><span style="color: #000000;">    }<br>});<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">第一个参数： obj是表示要操作的对象</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">第二个参数： ‘age’表示需要设置&#x2F;添加的属性</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">第三个参数： 一个对象，里面是对属性的描述</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">value是属性的值，即第二个参数的值。</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">是否可以枚举： enumerable:true 。默认是false，不可以被遍历出来</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">描述还可以添加是否可读。</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> console.log(obj); &#x2F;&#x2F;里面多出了一个age属性。不过默认age属性是不可以被遍历出来的</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">修改age</span><br>obj.age &#x3D; 88<span style="color: #000000;">;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取age</span><br>console.log(obj.age);</pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>ES6的class中，getter、setter</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">class obj{
+    constructor(){
+        </span><span style="color: #0000ff;">this</span>._address = '北京'<span style="color: #000000;">;
+    }
+    get address(){
+        console.log(</span>'class里面的get操作'<span style="color: #000000;">);
+        </span><span style="color: #0000ff;">return</span> `我家住在${<span style="color: #0000ff;">this</span><span style="color: #000000;">._address}`;
+    }
+    set address(val){
+        console.log(</span>'class里面的set操作'<span style="color: #000000;">);
+        </span><span style="color: #0000ff;">this</span>._address =<span style="color: #000000;"> val;
+    }
+}
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">首先需要实例化</span><br>const p &#x3D; <span style="color: #0000ff;">new</span><span style="color: #000000;"> obj();</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">修改address</span><br>p.address &#x3D; ‘上海’<span style="color: #000000;">;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取address</span><br>console.log(p.address);</pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>name属性 与 new.target属性</h3>
+<h4>name属性</h4>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">name属性获取class类名</span>
+<span style="color: #000000;">class bb {}
+console.log(bb.name); </span><span style="color: #008000;">//</span><span style="color: #008000;">类名是bb</span>
+<span style="color: #000000;">
+const aa </span>=<span style="color: #000000;"> class {}
+console.log(aa.name); </span><span style="color: #008000;">//</span><span style="color: #008000;">类名是aa</span>
+<span style="color: #000000;">
+const cc </span>=<span style="color: #000000;"> class dd{}
+console.log(cc.name); </span><span style="color: #008000;">//</span><span style="color: #008000;">类名是dd</span></pre>
+</div>
+<p>&nbsp;</p>
+<h4>new.target属性</h4>
+<p>//表示该类/函数自身。只有在类 或 构造函数/函数 里面才可以访问</p>
+<div class="cnblogs_code">
+<pre>ass Car{ <span style="color: #008000;">//</span><span style="color: #008000;">类使用</span>
+<span style="color: #000000;">    constructor(){
+        console.log(</span><span style="color: #0000ff;">new</span>.target); <span style="color: #008000;">//</span><span style="color: #008000;">打印出这个类本身</span>
+<span style="color: #000000;">    }
+}
+</span><span style="color: #0000ff;">new</span> Car(); <span style="color: #008000;">//</span><span style="color: #008000;">new后面的Car()，就是new.target属性</span>
+
+
+<p><span style="color: #0000ff;">function</span> ccr(){ <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">构造函数 或 普通函数都可以使用</span><br>    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">判断是否使用new关键字调用</span><br>    <span style="color: #0000ff;">if</span>(ccr &#x3D;&#x3D; <span style="color: #0000ff;">new</span>.target){ <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">还可以这样判断(this instanceof ccr)，详情看下面构造函数流程</span><br>        console.log(<span style="color: #0000ff;">new</span>.target); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">只有构造函数调用，才能正常使用new.target</span><br>    }<span style="color: #0000ff;">else</span><span style="color: #000000;">{<br>        </span><span style="color: #0000ff;">throw</span> Error(‘必须用new关键字调用’<span style="color: #000000;">);<br>    }<br>}<br></span><span style="color: #0000ff;">new</span><span style="color: #000000;"> ccr();<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">构造函数调用 跟 普通函数调用 走的流程不一样</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">1、构造函数this会先指向一个新的空对象</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">2、构造函数的prototype属性会成为 空对象的原型<br />&#x2F;&#x2F;3、this赋值给这个空对象<br />&#x2F;&#x2F;4、执行函数</span><span style="color: #008000;"><br>&#x2F;&#x2F;5</span><span style="color: #008000;">、若该函数没有返回值的话，则返回this。即之前那个空对象</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>ES5模拟类</h3>
+<p>1、构造函数this会先指向一个新的空对象</p>
+<p>2、构造函数的prototype属性会成为 空对象的原型</p>
+<p>3、this赋值给这个空对象</p>
+<p>4、执行函数</p>
+<p>5、若该函数没有返回值的话，则返回this。即之前那个空对象</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">将构造函数的流程封装成一个函数</span>
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> Constructor(fn,args){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 1、构造函数this会先指向一个新的空对象</span>
+    <span style="color: #008000;">//</span><span style="color: #008000;"> 2、构造函数的prototype属性会成为 空对象的原型</span>
+    <span style="color: #0000ff;">var</span> _this =<span style="color: #000000;"> Object.create(fn.prototype);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> var _this = Object.create(fn.prototype);</span>
+
+<pre><code>&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 3、this赋值给这个空对象&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;var&lt;/span&gt; res =&lt;span style=&quot;color: #000000;&quot;&gt; fn.apply(_this,args);
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; var res = fn.apply(_this, args);&lt;/span&gt;
+
+&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 4、执行函数 &lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 5、若该函数没有返回值的话，则返回this。即之前那个空对象&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;return&lt;/span&gt; res ?&lt;span style=&quot;color: #000000;&quot;&gt; res : _this;
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; return res ? res : _this;&lt;/span&gt;
+</code></pre>
+<p><span style="color: #000000;">}</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">构建一个普通函数</span><br><span style="color: #0000ff;">function</span><span style="color: #000000;"> Person(name,age){<br>    </span><span style="color: #0000ff;">this</span>.name &#x3D;<span style="color: #000000;"> name;<br>    </span><span style="color: #0000ff;">this</span>.age &#x3D;<span style="color: #000000;"> age;<br>}<br>Person.prototype.say </span>&#x3D; <span style="color: #0000ff;">function</span><span style="color: #000000;">() {<br>    console.log(<code>我叫${&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;this&lt;/span&gt;.name}，我今年${&lt;span style=&quot;color: #0000ff;&quot;&gt;this&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;.age}岁了</code>);<br>}</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">将 普通函数 转为 构造函数</span><br><span style="color: #0000ff;">var</span> ren &#x3D; Constructor(Person,[‘张三’,88<span style="color: #000000;">]);<br>console.log(ren);</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>类的继承</h3>
+<div class="cnblogs_code">
+<pre>class fu{    <span style="color: #008000;">//</span><span style="color: #008000;">定义父类</span>
+<span style="color: #000000;">    constructor(name,sex,age){
+        </span><span style="color: #0000ff;">this</span>.name =<span style="color: #000000;"> name;
+        </span><span style="color: #0000ff;">this</span>.sex =<span style="color: #000000;"> sex;
+        </span><span style="color: #0000ff;">this</span>.age =<span style="color: #000000;"> age;
+    }
+    shuo(){     </span><span style="color: #008000;">//</span><span style="color: #008000;">定义父类的方法</span>
+        console.log(`我的名字是${<span style="color: #0000ff;">this</span>.name}，性别是${<span style="color: #0000ff;">this</span>.sex}，年龄是${<span style="color: #0000ff;">this</span><span style="color: #000000;">.age}`);
+    }
+}
+
+<p>class zi extends fu{    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">定义子类，并继承父类</span><br>    constructor(name,sex,age,skill){    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">接收父类的参数 和 子类的参数</span><br>        super(name,sex,age);    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">给父类传入参数</span><br>        <span style="color: #0000ff;">this</span>.skill &#x3D;<span style="color: #000000;"> skill;<br>    }<br>    jineng(){  </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">定义子类的方法</span><br>        console.log(<code>我的技能有${&lt;span style=&quot;color: #0000ff;&quot;&gt;this&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;.skill}</code>);<br>    }<br>}</p>
+<p>const person </span>&#x3D; <span style="color: #0000ff;">new</span> zi(‘小蝴蝶’,’女’,3,’嚎啕大哭’); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">实例化子类，并传入参数</span><br><span style="color: #000000;"><br>person.shuo();    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">调用父类的方法</span><br><span style="color: #000000;"><br>person.jineng();    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">调用子类方法</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>super关键字的其他内容</h3>
+<h4>作为父类构造函数调用</h4>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">在继承中有使用到，在调用之后子类就会有父类的属性和方法。</span><span style="color: #008000;">
+//</span><span style="color: #008000;">（相当于把子类的this放到父类的构造函数中运行一遍，后继续走子类的构造函数）</span>
+<span style="color: #000000;">class fu{
+    constructor(name){
+        </span><span style="color: #0000ff;">this</span>.name =<span style="color: #000000;"> name;
+    }
+}
+class zi extends fu{
+    constructor(name,sex){
+        super(name);
+        </span><span style="color: #0000ff;">this</span>.sex =<span style="color: #000000;"> sex;
+    }
+    methods(){
+        console.log(`我的名字是${</span><span style="color: #0000ff;">this</span>.name}，我是${<span style="color: #0000ff;">this</span><span style="color: #000000;">.sex}生。`);
+    }
+}
+const child </span>= <span style="color: #0000ff;">new</span> zi('大白','女'<span style="color: #000000;">);
+child.methods();</span></pre>
+</div>
+<h4>&nbsp;</h4>
+<h4>作为对象的方式调用。</h4>
+<p>//在调用super，父类的this始终是子类的this</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">在非静态方法中访问super，访问的是父类原型</span>
+<span style="color: #000000;">class fu{
+    fusay(){
+        console.log(</span>'您好！'<span style="color: #000000;">);
+    }
+}
+
+<p>class zi extends fu{<br>    zisay(){<br>        console.log(super.fusay); </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这样的话调用子类的zisay就会输出父类的fusay函数本身。</span><br>        <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">若要执行父类的fusay，这里也可以直接调用，如： super.fusay()</span><br><span style="color: #000000;">    }<br>}<br>const child </span>&#x3D; <span style="color: #0000ff;">new</span><span style="color: #000000;"> zi();<br>child.zisay(); </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">作为对象调用的时候，不使用super也可以调用父类的方法</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">在静态方法中访问super，访问的是父类</span>
+<span style="color: #000000;">class fu{
+}
+fu.total </span>= 898<span style="color: #000000;">;
+
+<p>class zi extends fu{<br>    static tot(){<br>        console.log(super.total);<br>    }<br>}<br>zi.tot();</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">验证： 调用super时，父类的this始终是子类的this</span>
+<span style="color: #000000;">class fu{
+    check(_this){
+        console.log(_this </span>=== <span style="color: #0000ff;">this</span>); <span style="color: #008000;">//</span><span style="color: #008000;">接收子类的this，并把子类的this与父类的this相比较</span>
+<span style="color: #000000;">    }
+}
+class zi extends fu{
+    use(){
+        super.check(</span><span style="color: #0000ff;">this</span>); <span style="color: #008000;">//</span><span style="color: #008000;">调用父类check方法，并把子类的this传过去</span>
+<span style="color: #000000;">    }
+}
+const yan </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> zi();
+yan.use();    </span><span style="color: #008000;">//</span><span style="color: #008000;">true</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>简单的多态</h3>
+<p>//同一个接口在不同的情况下，做不同的事情。即相同的接口，不同的表现</p>
+<p>//好处： 提高类的扩充性和灵活性。还可以暴露接口，让子类完成父类不需要完成的内容。</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">class human{
+    say(){
+        console.log(</span>'我是人'<span style="color: #000000;">);
+    }
+}
+class man extends human{  </span><span style="color: #008000;">//</span><span style="color: #008000;">多态必须要通过继承来实现。子类写一个父类同名的方法即可达到覆盖的效果</span>
+<span style="color: #000000;">    say(){
+        console.log(</span>'我是男人'<span style="color: #000000;">);
+    }
+}
+class woman extends human{
+    say(){
+        console.log(</span>'我是女人'<span style="color: #000000;">);
+        super.say();  </span><span style="color: #008000;">//</span><span style="color: #008000;">同样还可以调用父类的say方法</span>
+<span style="color: #000000;">    }
+}
+
+<p></span><span style="color: #0000ff;">new</span><span style="color: #000000;"> man().say();<br></span><span style="color: #0000ff;">new</span> woman().say();</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>重载</h3>
+<p>//根据函数的参数类型、参数个数，让函数做不一样的事情</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">class simpleCalc{
+    addCale(...args){
+        </span><span style="color: #0000ff;">if</span>(args.length &lt; 2<span style="color: #000000;">){
+            </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">this</span><span style="color: #000000;">.donot();
+        }</span><span style="color: #0000ff;">else</span><span style="color: #000000;">{
+            </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">this</span><span style="color: #000000;">.add(args);
+        }
+    }
+    donot(){
+        console.log(</span>'参数不够，不执行'<span style="color: #000000;">);
+    }
+    add(args){
+        console.log(args.reduce(</span><span style="color: #0000ff;">function</span>(a,b){<span style="color: #0000ff;">return</span> a+<span style="color: #000000;">b}));
+    }
+}
+</span><span style="color: #0000ff;">new</span> simpleCalc().addCale(1);</pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>ES5中的继承</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">function</span> P(){  <span style="color: #008000;">//</span><span style="color: #008000;">父函数</span>
+    <span style="color: #0000ff;">this</span>.name = '萌萌'<span style="color: #000000;">;
+    </span><span style="color: #0000ff;">this</span>.sex = '女'<span style="color: #000000;">;
+    </span><span style="color: #0000ff;">this</span>.say = <span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+        console.log(</span>'哈哈哈'<span style="color: #000000;">);
+    }
+}
+P.prototype.test </span>= <span style="color: #0000ff;">function</span>(){  <span style="color: #008000;">//</span><span style="color: #008000;">原型的属性和方法不可通过call继承</span>
+    console.log('我是P的原型方法'<span style="color: #000000;">);
+}
+
+<p></span><span style="color: #0000ff;">function</span> C(){  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">子函数</span><br>    P.call(<span style="color: #0000ff;">this</span>);  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这样就执行了P，并把当前this传过去。这样就继承了父函数的属性和方法，但不包括原型的属性和方法。</span><br>    <span style="color: #0000ff;">this</span>.age &#x3D; 18<span style="color: #000000;">;<br>    </span><span style="color: #0000ff;">this</span>.address &#x3D; ‘北京’<span style="color: #000000;">;<br>}</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">若需要继承父函数的原型属性和方法，需要</span><br>C.prototype &#x3D; <span style="color: #0000ff;">new</span> P(); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">C的prototype 可以访问到 P的prototype</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">P的实例也就是P函数的prototype属性，所以P的实例可以访问到P.prototype的方法</span></p>
+<p><span style="color: #0000ff;">var</span> bb &#x3D; <span style="color: #0000ff;">new</span> C();  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">实例化子函数</span><br>bb.say();  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">成功执行父函数的方法</span><br>console.log(bb.address); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">成功执行子函数的属性</span><br>bb.test();  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">成功执行父函数的原型方法</span></pre></p>
+</div>
+<p>&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/06%E3%80%81Bable%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" rel="prev" title="06、Bable安装配置">
+      <i class="fa fa-chevron-left"></i> 06、Bable安装配置
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/" rel="next" title="小程序基础">
+      小程序基础 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">类与对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">es5函数封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">es6的类封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">class的三大特性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">静态属性与静态方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text">静态属性的定义与调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.2.2.</span> <span class="nav-text">调用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.3.</span> <span class="nav-text">静态方法的定义与调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.3.2.</span> <span class="nav-text">调用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">类表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">getter、setter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text">ES5的getter、setter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.2.</span> <span class="nav-text">ES6的class中，getter、setter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.3.</span> <span class="nav-text">name属性 与 new.target属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">4.3.1.</span> <span class="nav-text">name属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">4.3.2.</span> <span class="nav-text">new.target属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.4.</span> <span class="nav-text">ES5模拟类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.5.</span> <span class="nav-text">类的继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.6.</span> <span class="nav-text">super关键字的其他内容</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">4.6.1.</span> <span class="nav-text">作为父类构造函数调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">4.6.2.</span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">4.6.3.</span> <span class="nav-text">作为对象的方式调用。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.7.</span> <span class="nav-text">简单的多态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.8.</span> <span class="nav-text">重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.9.</span> <span class="nav-text">ES5中的继承</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/05%E3%80%81ES6%20class/",
+      identifier: "/uncategorized/05、ES6 class/",
+      title     : "05、ES6 class",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="鼠标事件 click() &#x2F;&#x2F;单击鼠标时触发 $(&#39;#bn&#39;).click(function(){ alert(12324); }); dblclick() &#x2F;&#x2F;双击鼠标时触发 $(&#39;#bn&#39;).dblclick(function(){ alert(12324); }); mousedown() &#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03、jQuery事件">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/03%E3%80%81jQuery%E4%BA%8B%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="鼠标事件 click() &#x2F;&#x2F;单击鼠标时触发 $(&#39;#bn&#39;).click(function(){ alert(12324); }); dblclick() &#x2F;&#x2F;双击鼠标时触发 $(&#39;#bn&#39;).dblclick(function(){ alert(12324); }); mousedown() &#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-14T04:28:00.000Z">
+<meta property="article:modified_time" content="2026-08-20T06:32:52.363Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/03%E3%80%81jQuery%E4%BA%8B%E4%BB%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>03、jQuery事件 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/03%E3%80%81jQuery%E4%BA%8B%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          03、jQuery事件<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/03%E3%80%81jQuery%E4%BA%8B%E4%BB%B6.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-14 12:28:00" itemprop="dateCreated datePublished" datetime="2020-03-14T12:28:00+08:00">2020-03-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-08-20 14:32:52" itemprop="dateModified" datetime="2026-08-20T14:32:52+08:00">2026-08-20</time>
+              </span>
+
+          
+            <div class="post-description">鼠标事件 click() //单击鼠标时触发 $('#bn').click(function(){ alert(12324); }); dblclick() //双击鼠标时触发 $('#bn').dblclick(function(){ alert(12324); }); mousedown() /</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2>鼠标事件</h2>
+<p>click()&nbsp; &nbsp; &nbsp;//单击鼠标时触发</p>
+<div class="cnblogs_code">
+<pre>$('#bn').click(<span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+
+<p>alert(</span>12324<span style="color: #000000;">);</p>
+<p>});</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>dblclick()&nbsp; &nbsp; &nbsp;//双击鼠标时触发</p>
+<div class="cnblogs_code">
+<pre>$('#bn').dblclick(<span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+alert(</span>12324<span style="color: #000000;">);
+});</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>mousedown()&nbsp; &nbsp; &nbsp;//鼠标按下时触发</p>
+<div class="cnblogs_code">
+<pre>$('#bn').mousedown(<span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+alert(</span>12324<span style="color: #000000;">);
+});</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>mouseup()&nbsp; &nbsp; &nbsp;//鼠标松开时触发</p>
+<div class="cnblogs_code">
+<pre>$('#bn').mouseup(<span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+alert(</span>12324<span style="color: #000000;">);
+});</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>mouseenter()&nbsp; &nbsp; &nbsp;//鼠标进入时触发</p>
+<div class="cnblogs_code">
+<pre>$('#bn').mouseenter(<span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+alert(</span>12324<span style="color: #000000;">);
+});</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>mouseleave()&nbsp; &nbsp; &nbsp;//鼠标离开时触发</p>
+<div class="cnblogs_code">
+<pre>$('#bn').mouseleave(<span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+alert(</span>12324<span style="color: #000000;">);
+});</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>hover( [enter,] over )&nbsp; &nbsp; &nbsp;//鼠标经过时触发。一个参数时，进入和离开都触发第一个函数；两个函数时，进入触发第一个函数，离开触发第二个函数</p>
+<div class="cnblogs_code">
+<pre>$('#bn').hover(<span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+alert(</span>12324<span style="color: #000000;">);
+},</span><span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+
+<p>alert(</span>5678<span style="color: #000000;">);</p>
+<p>});</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><strong>不常用</strong></p>
+<p>mouseover()&nbsp; &nbsp; &nbsp;//鼠标进入指定元素&nbsp; 及其子元素时&nbsp; 触发</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">如给div绑定，div里面有一个p，进入div时触发一次，进入p时再触发一次</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>mouseout()&nbsp; &nbsp; &nbsp;//鼠标离开指定元素&nbsp; 及其子元素时&nbsp; 触发</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">如给div绑定，div里面有一个p，</span>
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">进入div后，再进p，触发一次（因为离开了div）</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">离开p后，来到div，触发一次（因为离开了p）</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">最后离开div后，触发一次</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>mousemove()&nbsp; &nbsp; &nbsp;//鼠标移动时触发（触发次数多）</p>
+<div class="cnblogs_code">
+<pre>$('#tt').mousemove(<span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+alert(</span>12324<span style="color: #000000;">);
+});</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>scroll()&nbsp; &nbsp; &nbsp;//当鼠标滚动 指定元素时触发</p>
+<div class="cnblogs_code">
+<pre>$('#tt').mousemove(<span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+alert(</span>12324<span style="color: #000000;">);
+});
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">给#tt设置固定高度，#tt里面内容一定要够多，给#tt设置overflow:auto（作用是内容溢出时产生滚动条）</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h2>键盘事件</h2>
+<p>keydown()&nbsp; &nbsp; &nbsp;//键盘按下时触发</p>
+<div class="cnblogs_code">
+<pre>$(document).keydown(<span style="color: #0000ff;">function</span>(){      <span style="color: #008000;">//</span><span style="color: #008000;">这里的function有个event参数，需要的时候可以接收</span>
+alert(12324<span style="color: #000000;">);
+});
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">如果给某个div元素绑定键盘事件，但是div没有输入框等产生焦点的地方，那么绑定的事件就不会生效</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">打开网页时，焦点默认在document上</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>keyup()&nbsp; &nbsp; &nbsp;//键盘松开时触发</p>
+<div class="cnblogs_code">
+<pre>$(document).keyup(<span style="color: #0000ff;">function</span>(){      <span style="color: #008000;">//</span><span style="color: #008000;">这里的function有个event参数，需要的时候可以接收</span>
+alert(12324<span style="color: #000000;">);
+});</span></pre>
+</div>
+<p>&nbsp;</p>
+<p><strong>不常用（慎用）</strong></p>
+<p>keypress()&nbsp; &nbsp; &nbsp;//键盘按下时触发（兼容旧版浏览器）</p>
+<div class="cnblogs_code">
+<pre>$(document).keypress(<span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+alert(</span>12324<span style="color: #000000;">);
+});</span></pre>
+</div>
+<p>缺点：</p>
+<p>//对中文输入法支持不好，无法响应中文输入</p>
+<p>//无法响应系统功能键（如delete、backspace等等）</p>
+<p>//keyCode与keydown和keyup不是很一致</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>其它事件</h2>
+<p>ready(fn)&nbsp; &nbsp; &nbsp;//当某元素载入就绪后，执行fn函数</p>
+<div class="cnblogs_code">
+<pre>$(document).ready(<span style="color: #0000ff;">function</span>(){  <span style="color: #008000;">//</span><span style="color: #008000;">code  });     //当DOM载入就绪后，执行函数里面的内容</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>resize()&nbsp; &nbsp; &nbsp;//当调整浏览器窗口大小时发生改变</p>
+<div class="cnblogs_code">
+<pre>$(window).resize(<span style="color: #0000ff;">function</span>(){ alert(123); });     <span style="color: #008000;">//</span><span style="color: #008000;">resize常用window搭配使用，换成其他对象则可能不生效。</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>focus()&nbsp; &nbsp; &nbsp;//获得焦点时触发</p>
+<div class="cnblogs_code">
+<pre>$('input').focus(<span style="color: #0000ff;">function</span>(){ console.log('获得焦点'); });    <span style="color: #008000;">//</span><span style="color: #008000;">通常与input搭配使用</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>blur()&nbsp; &nbsp; &nbsp; //失去焦点时触发</p>
+<div class="cnblogs_code">
+<pre>$('input').blur(<span style="color: #0000ff;">function</span>(){ console.log('失去获得焦点'); });    <span style="color: #008000;">//</span><span style="color: #008000;">通常与input搭配使用</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>change()&nbsp; &nbsp; &nbsp;//当某元素发生改变后触发</p>
+<div class="cnblogs_code">
+<pre>$('input').change(<span style="color: #0000ff;">function</span>(){ console.log('value发生了改变'); });    <span style="color: #008000;">//</span><span style="color: #008000;">通常与input搭配使用</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>select()&nbsp; &nbsp; //当某编辑框 内容被选中后触发</p>
+<div class="cnblogs_code">
+<pre>$('input').select(<span style="color: #0000ff;">function</span>(){ console.log('内容被选中了'); });    <span style="color: #008000;">//</span><span style="color: #008000;">一般与input、textarea等搭配使用</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>submit()&nbsp; &nbsp; //当提交表单时，发生submit事件</p>
+<p>提交表单</p>
+<div class="cnblogs_code">
+<pre>&lt;input type="button" value="按钮"&gt;       <span style="color: #008000;">//</span><span style="color: #008000;">默认不可以提交，但是加了submit方法之后就可以了</span>
+<span style="color: #000000;">
+$(</span>'input[type=button]').submit();</pre>
+</div>
+<p>阻止表单提交</p>
+<div class="cnblogs_code">
+<pre>$('input[type=button]').submit(<span style="color: #0000ff;">function</span>(){  <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">false</span>;  });      <span style="color: #008000;">//</span><span style="color: #008000;">只要在submit回调函数中返回false就可以阻止表单提交</span></pre>
+</div>
+<p>提交表单时还可以做其他事情（如一些简单的验证）</p>
+<div class="cnblogs_code">
+<pre>$('input[type=button]').submit(<span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+
+<p></span><span style="color: #0000ff;">if</span>(a&#x3D;&#x3D;b) <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">false</span>;     <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">如果a等于b，表单就不能提交</span><br><span style="color: #000000;"><br>});</span></pre></p>
+</div>
+<p>注：在form中默认提交表单的方式</p>
+<p>1、&lt;input type = "submit" &gt;</p>
+<p>2、&lt;button&gt;提交&lt;/button&gt;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>事件参数</h2>
+<p>有些事件，如mousemove和keypress，我们需要获取鼠标的位置和按键的值，否则监听这些使劲按就没有什么意义了。</p>
+<p>&nbsp;</p>
+<p>event()</p>
+<p>所有事件都会传入event对象作为参数，可以从event对象上获取到更多的信息。如：</p>
+<div class="cnblogs_code">
+<pre>$(document).keydown( <span style="color: #0000ff;">function</span><span style="color: #000000;">(event){
+
+<p>console.log( event.keyCode );     </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">打印出按键的keyCode</span><br><span style="color: #000000;"><br>} );</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">除了keyCode外还有其他属性</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>事件绑定与取消</h2>
+<p>on( events,[selector,] [data,] fn )&nbsp; &nbsp; &nbsp; &nbsp;//事件绑定（绑定一个或多个事件处理函数）</p>
+<p>&nbsp;</p>
+<p>绑定一个事件的事件处理函数，如：</p>
+<div class="cnblogs_code">
+<pre>一般形式：$('input').focus(<span style="color: #0000ff;">function</span>(){ console.log('获得焦点'<span style="color: #000000;">); });
+
+<p>on形式：   $(document).on( </span>‘focus’, ‘input’, <span style="color: #0000ff;">function</span>(){ console.log(‘获得焦点’); } );</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>绑定多个事件的事件处理函数，如：</p>
+<div class="cnblogs_code">
+<pre>$('a'<span style="color: #000000;">).add(document).on({
+mouseenter : </span><span style="color: #0000ff;">function</span>(){},      <span style="color: #008000;">//</span><span style="color: #008000;">给a标签绑定的事件</span>
+keydown      : <span style="color: #0000ff;">function</span>(){}       <span style="color: #008000;">//</span><span style="color: #008000;">给document绑定的事件</span>
+});</pre>
+</div>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">events表示：事件类型</span>
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">fn表示：执行函数</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">selector(可选)表示：选择器元素。&#x2F;&#x2F;好处：这里的选择器可以js动态生成</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">data(可选)表示：传给事件处理函数的值</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>off( events,[selector],[fn] )&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//事件取消（在选择元素上移除一个或多个事件的事件处理函数）</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">只有用on绑定事件，才能用off移除</span>
+<span style="color: #000000;">
+函数：</span><span style="color: #0000ff;">function</span> foc () {  console.log('获得焦点'<span style="color: #000000;">);  }
+
+<p>绑定：$(document).on(</span>‘focus’,’input’<span style="color: #000000;">,foc);</p>
+<p>取消：$(document).off( </span>‘focus’ , ‘input’,foc );</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>one( events,[selector],[fn] )&nbsp; &nbsp; &nbsp; &nbsp; //事件绑定一次（绑定一个 一次性 的事件处理函数）</p>
+<div class="cnblogs_code">
+<pre>函数        ：<span style="color: #0000ff;">function</span> foc () {  console.log('获得焦点'<span style="color: #000000;">);  }
+
+<p>绑定一次：$(document).one(</span>‘focus’,’input’,foc);       <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">事件只会执行一次</span></pre></p>
+</div>
+<p>&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/02%E3%80%81jQuery%E9%80%89%E6%8B%A9%E5%99%A8/" rel="prev" title="02、jQuery选择器">
+      <i class="fa fa-chevron-left"></i> 02、jQuery选择器
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/04%E3%80%81jQuery%E6%89%A9%E5%B1%95/" rel="next" title="04、jQuery扩展">
+      04、jQuery扩展 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">鼠标事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">键盘事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">其它事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">事件参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">事件绑定与取消</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/03%E3%80%81jQuery%E4%BA%8B%E4%BB%B6/",
+      identifier: "/uncategorized/03、jQuery事件/",
+      title     : "03、jQuery事件",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

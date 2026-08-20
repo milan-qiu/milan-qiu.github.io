@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="模板字符串 模板字符串与一般字符串的区别 1、一般字符串用 &#39; &#39; 或者 &quot; &quot; 拼接起来的，模板字符串是用 &#96; &#96; 来拼接的。 2、一般字符串和变量的连接是用 + 连接起来的，模板字符串是在 &#96; &#96; 里面用 ${ 变量名 } 方式来拼接的，如： function haha(name,age){ &#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03、ES6扩展">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/03%E3%80%81ES6%E6%89%A9%E5%B1%95/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="模板字符串 模板字符串与一般字符串的区别 1、一般字符串用 &#39; &#39; 或者 &quot; &quot; 拼接起来的，模板字符串是用 &#96; &#96; 来拼接的。 2、一般字符串和变量的连接是用 + 连接起来的，模板字符串是在 &#96; &#96; 里面用 ${ 变量名 } 方式来拼接的，如： function haha(name,age){ &#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-27T12:51:00.000Z">
+<meta property="article:modified_time" content="2026-08-20T06:32:52.353Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/03%E3%80%81ES6%E6%89%A9%E5%B1%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>03、ES6扩展 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/03%E3%80%81ES6%E6%89%A9%E5%B1%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          03、ES6扩展<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/03%E3%80%81ES6%E6%89%A9%E5%B1%95.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-27 20:51:00" itemprop="dateCreated datePublished" datetime="2020-04-27T20:51:00+08:00">2020-04-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-08-20 14:32:52" itemprop="dateModified" datetime="2026-08-20T14:32:52+08:00">2026-08-20</time>
+              </span>
+
+          
+            <div class="post-description">模板字符串 模板字符串与一般字符串的区别 1、一般字符串用 ' ' 或者 " " 拼接起来的，模板字符串是用 ` ` 来拼接的。 2、一般字符串和变量的连接是用 + 连接起来的，模板字符串是在 ` ` 里面用 ${ 变量名 } 方式来拼接的，如： function haha(name,age){ /</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2>模板字符串</h2>
+<h3>模板字符串与一般字符串的区别</h3>
+<p>1、一般字符串用 ' ' 或者 " " 拼接起来的，模板字符串是用 ` ` 来拼接的。</p>
+<p>2、一般字符串和变量的连接是用&nbsp; + 连接起来的，模板字符串是在 ` ` 里面用 ${ 变量名 } 方式来拼接的，如：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">function</span><span style="color: #000000;"> haha(name,age){
+</span><span style="color: #008000;">//</span><span style="color: #008000;">一般字符串的方式拼接</span>
+div1.innerText = '我的名字是' + name + '，我今年' + age + '岁了'<span style="color: #000000;">;
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">模板字符串的方式拼接</span><br>div2.innerText &#x3D; <code>我的名字是 ${name} ，我今年 ${&lt;span style=&quot;color: #000000;&quot;&gt;age} 岁了</code></p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">明显看出了模板字符串比一般字符串简洁、容易书写、不易出错的特点</span><br>}</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>3、 另外模板字符串还可以进行嵌套，如</p>
+<div class="cnblogs_code">
+<pre>div2.innerText = `我的名字是 ${ `Mr. ${name} ` } `; <span style="color: #008000;">//</span><span style="color: #008000;">在名字前面加了个Mr.</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>4、一般字符串换行 必须在尾部用 \&nbsp; &nbsp;而模板字符串换行&nbsp; 在尾部直接回车即可，如：</p>
+<div class="cnblogs_code">
+<pre>div1.innerHTML = '<span style="color: #000000;">&lt;span&gt;\
+好\
+人\
+&lt;/span&gt;</span>'<span style="color: #000000;">;
+</span><span style="color: #008000;">//</span><span style="color: #008000;">一般字符串：一个字符串必须一行填写完，若要换行就得在尾部加上 \ ，否则就会报错</span>
+<span style="color: #000000;">
+div2.innerHTML </span>= `&lt;span&gt;<span style="color: #000000;">
+好
+人
+</span>&lt;/span&gt;`
+<span style="color: #008000;">//</span><span style="color: #008000;">模板字符串：一个字符串可以分多去写，只要在尾部换行即可</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>字符串新方法</h3>
+<h4>padStart</h4>
+<p>//padStart顾名思义<strong>在xx字符串前面填充</strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">{
+    const str1 </span>= 'bb'<span style="color: #000000;">;
+
+<pre><code>let str2 &lt;/span&gt;= str1.padStart(8,&#39;hello&#39;&lt;span style=&quot;color: #000000;&quot;&gt;);
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//就是&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;以bb结尾，前面循环hello字符串达到8位。&lt;/span&gt;
+</code></pre>
+<span style="color: #000000;">
+    console.log(str2); </span><span style="color: #008000;">//</span><span style="color: #008000;">结果是 hellohbb </span>
+}</pre>
+</div>
+<h4>padEnd</h4>
+<p>//padEnd顾名思义<strong>在xx字符串后面填充</strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">{
+    const str1 </span>= 'aa'<span style="color: #000000;">;
+
+<pre><code>let str2 &lt;/span&gt;= str1.padEnd(8,&#39;hello&#39;&lt;span style=&quot;color: #000000;&quot;&gt;);
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;就是以aa开头，后面循环hello字符串达到8位。&lt;/span&gt;
+</code></pre>
+<span style="color: #000000;">
+    console.log(str2); </span><span style="color: #008000;">//</span><span style="color: #008000;">结果是 aahelloh</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<h4>repeat</h4>
+<p>//repeat顾名思义就是重复输出字符串n次</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">{
+    const str </span>= 'ha'<span style="color: #000000;">;
+
+<pre><code>let str1 &lt;/span&gt;= str.repeat(10&lt;span style=&quot;color: #000000;&quot;&gt;);
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;就是将str常量循环10次&lt;/span&gt;
+</code></pre>
+<span style="color: #000000;">
+    console.log(str1);  </span><span style="color: #008000;">//</span><span style="color: #008000;">结果是 hahahahahahahahahaha</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<h4>startsWith</h4>
+<p>//startsWith顾名思义就是检测字符串是否以xx开头，如：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">{
+    const str </span>= "I am happy!"<span style="color: #000000;">;
+
+<pre><code>let status &lt;/span&gt;= str.startsWith(&#39;I&#39;); &lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;检测字符串是否以I开头，是返回true，否返回false&lt;/span&gt;
+</code></pre>
+<span style="color: #000000;">
+    console.log(status);  </span><span style="color: #008000;">//</span><span style="color: #008000;">结果是true</span>
+}</pre>
+</div>
+<h4>endsWith</h4>
+<p>//endsWith顾名思义就是检测字符串是否以xx结尾，如：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">{
+    const str </span>= "I am happy!"<span style="color: #000000;">;
+
+<pre><code>let status &lt;/span&gt;= str.endsWith(&#39;happy!&#39;); &lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;检测字符串是否以happy!j结尾，是返回true，否返回false&lt;/span&gt;
+</code></pre>
+<span style="color: #000000;">
+    console.log(status);  </span><span style="color: #008000;">//</span><span style="color: #008000;">结果是true</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<h4>includes</h4>
+<p>//includes顾名思义就是用来检测字符串中是否含有xx，如：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">es6之前，检测字符串里是否含有xx</span>
+    <span style="color: #0000ff;">var</span> str = "I am happy!"<span style="color: #000000;">;
+    </span><span style="color: #0000ff;">if</span>(str.indexOf('am') !== -1){  <span style="color: #008000;">//</span><span style="color: #008000;">判断表达式可以改成(~str.indexOf('am'))，因为 ~x = -(x+1)</span>
+        console.log("存在"<span style="color: #000000;">)
+    } 
+
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;es6的includes方法，检测字符串里是否含有xx&lt;/span&gt;
+const stt = &quot;I am happy!&quot;&lt;span style=&quot;color: #000000;&quot;&gt;;
+&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;if&lt;/span&gt;(stt.includes(&#39;hap&#39;&lt;span style=&quot;color: #000000;&quot;&gt;)){
+    console.log(&lt;/span&gt;&#39;includes方法检测到hap存在&#39;&lt;span style=&quot;color: #000000;&quot;&gt;);
+}
+</code></pre>
+<p>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>遍历字符串</h3>
+<h4>for of 方法</h4>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">遍历字符串（es6的for of 方法）</span>
+const str = 'zhangzhanghaha'<span style="color: #000000;">;
+
+<p></span><span style="color: #0000ff;">for</span><span style="color: #000000;">(let word of str){<br>    console.log(word);<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h4>其他方法</h4>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">遍历字符串（字符串方法）</span>
+const str = 'zhangzhanghaha'<span style="color: #000000;">;
+
+<p></span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">var</span> i &#x3D; 0, len &#x3D; str.length; i &lt; len; i++<span style="color: #000000;">){<br>    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> console.log(str[i]);  &#x2F;&#x2F;这两种方法都行</span><br>    console.log(str.charAt(i)); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这两种方法都行</span><br>}</pre></p>
+</div>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">遍历字符串（字符串转数组后遍历）</span>
+const str = 'zhangzhanghaha'<span style="color: #000000;">;
+
+<p>let arr </span>&#x3D; str.split(‘’);  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">将字符串转为数组，两种方法都行</span><br>let arr &#x3D; Array.prototype.slice.call(str);  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">将字符串转为数组，两种方法都行</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> console.log(arr);</span><br><span style="color: #000000;"><br>arr.forEach(</span><span style="color: #0000ff;">function</span>(word){  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">遍历输出</span><br><span style="color: #000000;">    console.log(word);<br>});</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">遍历字符串（扩展运算符转为数组，后遍历）</span>
+const str = 'zhangzhanghaha'<span style="color: #000000;">;
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> const stt &#x3D; […str]; &#x2F;&#x2F;两种扩展方式都可以</span><br>const […stt] &#x3D; str; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">两种扩展方式都可以</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">console.log(stt); </span><br><span style="color: #000000;"><br>stt.forEach(</span><span style="color: #0000ff;">function</span>(word){  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">遍历输出</span><br><span style="color: #000000;">    console.log(word);<br>});</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>Unicode表示法</h3>
+<p>Unicode是一项标准，包含字符集、编码方案等。</p>
+<p>//它是为了解决传统的字符编码方案的局限而产生的，为每种语言中的每个字符设定了统一并且唯一的二进制编码，以满足跨语言、跨平台进行文本转换、处理的要求。</p>
+<p>1、一般浏览器只支持 0000 - ffff 的Unicode编码字符，为了解决这个局限性就有了Unicode表示法。</p>
+<p>2、ES6对这一点做出了改进，只要将码点放入大括号，就能正确解读该字符。如：</p>
+<div class="cnblogs_code">
+<pre>"\u{20BB7}"
+<span style="color: #008000;">//</span><span style="color: #008000;"> "?"</span>
+
+<p>“\u{41}\u{42}\u{43}”<br><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> “ABC”</span><br><span style="color: #000000;"><br>let hello </span>&#x3D; 123<span style="color: #000000;">;<br>hell\u{6F} </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> 123</span></p>
+<p>‘\u{1F680}’ &#x3D;&#x3D;&#x3D; ‘\uD83D\uDE80’<br><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> true</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>3、JavaScript共有6种方法可以表示一个字符。</p>
+<div class="cnblogs_code">
+<pre>'\z' === 'z'  <span style="color: #008000;">//</span><span style="color: #008000;"> true</span>
+'\172' === 'z' <span style="color: #008000;">//</span><span style="color: #008000;"> true</span>
+'\x7A' === 'z' <span style="color: #008000;">//</span><span style="color: #008000;"> true</span>
+'\u007A' === 'z' <span style="color: #008000;">//</span><span style="color: #008000;"> true</span>
+'\u{7A}' === 'z' <span style="color: #008000;">//</span><span style="color: #008000;"> true</span></pre>
+</div>
+<p>&nbsp;</p>
+<h2>正则修饰符扩展</h2>
+<p>//之前学过有i、m、g修饰符，现在es6新增有u、y</p>
+<h3>ES6构造函数的变化</h3>
+<div class="cnblogs_code">
+<pre>const reg = <span style="color: #0000ff;">new</span> RegExp(/\w/g,'i');  <span style="color: #008000;">//</span><span style="color: #008000;">第一个参数写的g修饰符，会被第二个参数的i修饰符代替掉</span></pre>
+</div>
+<h3>u修饰符</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">匹配Unicode码点，要求与正则表达式的码点保持一致</span>
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">没有加u的情况，只要含有与其对应的就返回true，后面可以增加多个</span><br>console.log(&#x2F;^\ud83d&#x2F;.test(‘\ud83d\udc36’<span style="color: #000000;">));</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">加了u的情况，将’ ‘里面的Unicode码点看作一个整体来匹配，只要完全符合才返回true</span><br>console.log(&#x2F;^\ud83d&#x2F;u.test(‘\ud83d\udc36’));</pre></p>
+</div>
+<h3>y修饰符</h3>
+<p>//也称粘连修饰符。y 修饰符的作用与 g 修饰符类似，也是全局匹配，后一次匹配都从上一次匹配成功的下一个位置开始。不同之处在于，g 修饰符只要剩余位置中存在匹配就可，而 y 修饰符确保匹配必须从剩余的第一个位置开始，这也就是&ldquo;粘连&rdquo;的含义。</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> s = 'aaa_aa_a'<span style="color: #000000;">;
+</span><span style="color: #0000ff;">var</span> r1 = /a+/<span style="color: #000000;">g;
+</span><span style="color: #0000ff;">var</span> r2 = /a+/<span style="color: #000000;">y;
+ 
+<p>console.log(r1.exec(s)) </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">[“aaa”, index: 0, input: “aaa_aa_a”]</span><br>console.log(r2.exec(s)) <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">[“aaa”, index: 0, input: “aaa_aa_a”]</span><br>console.log(r1.exec(s)) <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">[“aa”, index: 4, input: “aaa_aa_a”]</span><br>console.log(r2.exec(s)) <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">null</span><br>console.log(r1.exec(s)) <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">[“a”, index: 7, input: “aaa_aa_a”]</span><br>console.log(r2.exec(s)) <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">[“aaa”, index: 0, input: “aaa_aa_a”]</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h2>数值扩展</h2>
+<h3>新的进制表示法</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">八进制(octonary)，以0o或0O开头，o可以大写也可以小写</span>
+console.log(0o16); <span style="color: #008000;">//</span><span style="color: #008000;">结果为14</span>
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">二进制(binary)，以0b或0B开头，b可以大写也可以小写</span><br>console.log(0b1111); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">结果是15</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>新的方法</h3>
+<p>parseInt 与 parseFloat</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">本来parseInt是window的对象方法，现在转为Number对象了</span>
+ zhi = Number.parseInt('28px');    <span style="color: #008000;">//</span><span style="color: #008000;">必须以数字开头才可以提取出来，如果不是，结果NaN。</span>
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">本来parseFloat是window的对象方法，现在转为Number对象了</span><br>zhi1 &#x3D; Number.parseFloat(‘0.123abc’)； <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">从第一个字符开始解析每个字符，直至遇到一个无效的浮点数字符为止。</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">注： 如果字符串中包含有效的16进制格式，paseInt(‘0xf’)将’0x’转换为相同大小的十进制，而paseFloat(‘0xf’)只会输出0</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>isNaN</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">判断某个数字是否是NaN</span>
+console.log(Number.isNaN(NaN)); <span style="color: #008000;">//</span><span style="color: #008000;">ture</span>
+console.log(Number.isNaN(-NaN));<span style="color: #008000;">//</span><span style="color: #008000;">ture</span>
+console.log(Number.isNaN(33));<span style="color: #008000;">//</span><span style="color: #008000;">false</span>
+console.log(Number.isNaN('HI'));<span style="color: #008000;">//</span><span style="color: #008000;">false</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>isFinite</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">判断某个数字是否是有限的</span>
+console.log(Number.isFinite(123)); <span style="color: #008000;">//</span><span style="color: #008000;">true</span>
+console.log(Number.isFinite('123')); <span style="color: #008000;">//</span><span style="color: #008000;">false</span>
+console.log(Number.isFinite(8 / 0)); <span style="color: #008000;">//</span><span style="color: #008000;">false</span>
+console.log(Number.isFinite(8 / 4)); <span style="color: #008000;">//</span><span style="color: #008000;">true</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>安全数</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">最大安全数是： 2的53次减1 (Number.MAX_SAFE_INTEGER)</span>
+<span style="color: #000000;">console.log(Number.MAX_SAFE_INTEGER);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">最小安全数是： -2的53次减1 (Number.MIN_SAFE_INTEGER)</span><br><span style="color: #000000;">console.log(Number.MIN_SAFE_INTEGER);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">判断某个数字是否是安全数： Number.isSafeInteger</span><br>console.log(Number.isSafeInteger(1234567)); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">true</span><br>console.log(Number.isSafeInteger(Number.MAX_SAFE_INTEGER + 1)); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">false</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>幂运算</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">Number对象的幂运算</span>
+console.log(2**3); <span style="color: #008000;">//</span><span style="color: #008000;">2的3次</span>
+console.log((2**53) - 1); <span style="color: #008000;">//</span><span style="color: #008000;">2的53次减1</span>
+console.log(2**3**2); <span style="color: #008000;">//</span><span style="color: #008000;">不加括号的时候是从右到左运算的，先算3的2次(是9)，再算2的9次</span>
+console.log( (2**3) ** 2); <span style="color: #008000;">//</span><span style="color: #008000;">先算2的3次(是8)，在算8的2次</span>
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">Math对象也有幂运算</span><br>console.log(Math.pow(2,53) - 1); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">2的53次减1</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h2>函数扩展</h2>
+<h3>默认参数</h3>
+<p>ES6之前</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">es6之前设置默认参数</span>
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> add(a,b){
+    a </span>= a || 1; <span style="color: #008000;">//</span><span style="color: #008000;">设置默认值为1</span>
+    b = b || 1; <span style="color: #008000;">//</span><span style="color: #008000;">设置默认值为1</span>
+    <span style="color: #0000ff;">return</span> a +<span style="color: #000000;"> b;
+}
+console.log(add());</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>ES6</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">es6设置默认参数</span>
+<span style="color: #0000ff;">function</span> add(a = 1 , b = 1<span style="color: #000000;">){
+    </span><span style="color: #0000ff;">return</span> a +<span style="color: #000000;"> b;
+}
+console.log(add());</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>剩余参数（...）</h3>
+<p>//跟扩展运算符一样是...&nbsp; ，但是扩展运算符是做扩展，剩余参数是做结合的</p>
+<h4>...当扩展运算符时：</h4>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">将abc三个数组的值提取出来，合并到一个新的数组里面</span>
+const a = [1,2,3<span style="color: #000000;">];
+const b </span>= [4,5,6<span style="color: #000000;">];
+const c </span>= [7,8,9<span style="color: #000000;">];
+
+<p>const d </span>&#x3D; […a,…b,…c];  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">…a表示继承a里面的全部值</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h4>...当剩余参数时：</h4>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">function</span> add(type,...number){    <span style="color: #008000;">//</span><span style="color: #008000;">除了第一个参数，剩下的参数都结合在number里面</span>
+<span style="color: #000000;">    console.log(type);
+    console.log(...number);
+}
+add(</span>'sum',1,2,3,4,5,6);</pre>
+</div>
+<p>再如：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">function</span><span style="color: #000000;"> sum(...numbers){
+    </span><span style="color: #0000ff;">return</span> numbers.reduce(<span style="color: #0000ff;">function</span><span style="color: #000000;">(a,b){
+        </span><span style="color: #0000ff;">return</span> a+<span style="color: #000000;">b;
+    },</span>0<span style="color: #000000;">);
+}
+console.log(sum(</span>1,2,3,4,5));</pre>
+</div>
+<p>&nbsp;</p>
+<h3>箭头函数</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">当函数只有一行代码，并且有返回值时，可以</span>
+const add = ( a , b ) =&gt; a + b; <span style="color: #008000;">//</span><span style="color: #008000;">箭头前面是接收的参数，箭头后面的是返回值代码</span>
+console.log(add(1,2<span style="color: #000000;">));
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">当函数只有一行代码，并且不需要返回值时，可以</span><br>const aadd &#x3D; ( a , b ) &#x3D;&gt; <span style="color: #0000ff;">void</span> console.log(a +<span style="color: #000000;"> b);<br>aadd(</span>3,3<span style="color: #000000;">);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">当函数有多行代码，有返回值时，可以</span><br>const ha &#x3D; (a,b) &#x3D;&gt;<span style="color: #000000;"> {<br>    a </span>+&#x3D;2<span style="color: #000000;">;<br>    b </span>+&#x3D;2<span style="color: #000000;">;<br>    </span><span style="color: #0000ff;">return</span> a+<span style="color: #000000;">b;<br>}<br>console.log(ha(</span>1,2<span style="color: #000000;">));</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">当函数有多行代码，但不需要返回值，可以</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">在 { } 里面省略掉 return 即可</span></pre></p>
+</div>
+<p>注意：箭头函数没有类数组 argument ，若需要类数组可以利用剩余参数方法做，如：</p>
+<div class="cnblogs_code">
+<pre>const count = (...arg) =&gt; {     <span style="color: #008000;">//</span><span style="color: #008000;">利用剩余参数方法做一个类数组</span>
+    console.log(arg[0<span style="color: #000000;">]);
+    console.log(arg[</span>1<span style="color: #000000;">]);
+}
+count(</span>1,2,3,4,5,6,7);</pre>
+</div>
+<p>注意：箭头函数没有自己的this指向，一般函数的this指向是函数本身，箭头函数的this是自身所处环境的this</p>
+<p>&nbsp;</p>
+<h2>对象扩展</h2>
+<h3>简洁表示法</h3>
+<p>一般表示形式</p>
+<div class="cnblogs_code">
+<pre>const hah = () =&gt;<span style="color: #000000;"> {
+    const name </span>= '静静'<span style="color: #000000;">;
+    const age </span>= 23<span style="color: #000000;">;
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{
+        name : name, </span><span style="color: #008000;">//</span><span style="color: #008000;">返回一个name属性，属性值是上面定义的name</span>
+        age : age, <span style="color: #008000;">//</span><span style="color: #008000;">返回一个age属性，属性值是上面定义的age</span>
+        happy : <span style="color: #0000ff;">function</span>(){  <span style="color: #008000;">//</span><span style="color: #008000;">返回一个函数</span>
+            console.log(<span style="color: #0000ff;">this</span>.name + <span style="color: #0000ff;">this</span><span style="color: #000000;">.age);    
+        }
+    };
+};
+const mei </span>= hah();</pre>
+</div>
+<p>&nbsp;</p>
+<p>简洁表示法</p>
+<div class="cnblogs_code">
+<pre>const bbc = () =&gt;<span style="color: #000000;"> {
+    const name </span>= '萱萱'<span style="color: #000000;">;
+    const age </span>= 23<span style="color: #000000;">;
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{
+        name, </span><span style="color: #008000;">//</span><span style="color: #008000;">相当于name=name</span>
+        age,  <span style="color: #008000;">//</span><span style="color: #008000;">相当于age=age</span>
+        happy(){ <span style="color: #008000;">//</span><span style="color: #008000;">可以省略function字段</span>
+            console.log(<span style="color: #0000ff;">this</span>.name + <span style="color: #0000ff;">this</span><span style="color: #000000;">.age);
+        }
+    }
+}
+const bb </span>= bbc();</pre>
+</div>
+<p>&nbsp;</p>
+<h3>属性名表达式</h3>
+<div class="cnblogs_code">
+<pre>const name = 'ying'<span style="color: #000000;">;
+const age </span>= 23<span style="color: #000000;">;
+
+<p>const aa </span>&#x3D;<span style="color: #000000;"> {<br>    [name] : </span>‘好’, <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">属性名用上面的name变量</span><br>    [‘a’ + (age - 1)] : ‘非常好’  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">同时属性名还可以进行简单的运算</span><br>}</pre></p>
+</div>
+<p>&nbsp;</p>
+<h2>扩展运算符及新方法</h2>
+<h3>扩展运算符</h3>
+<p>扩展运算符之 复制操作</p>
+<div class="cnblogs_code">
+<pre>const oo = {    <span style="color: #008000;">//</span><span style="color: #008000;">const声明的常量，引用数据可修改，但不能清空</span>
+    a : 1<span style="color: #000000;">,
+    b : </span>2<span style="color: #000000;">,
+    c : {
+        cc : </span>'cc'<span style="color: #000000;">,
+    }
+}
+const bb </span>= {...oo}; <span style="color: #008000;">//</span><span style="color: #008000;">拷贝oo对象的数据： 基本数据类型是深拷贝，引用数据类型是浅拷贝</span>
+<span style="color: #000000;">console.log(bb);
+
+<p>bb.c.cc </span>&#x3D; ‘ddddddd’; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">因为是引用数据类型，修改bb的数据oo也会修改</span><br>console.log(oo);    </pre></p>
+</div>
+<p>扩展运算符之 合并操作</p>
+<div class="cnblogs_code">
+<pre>const a1 =<span style="color: #000000;"> {
+    a:</span>1<span style="color: #000000;">,
+    b:</span>2<span style="color: #000000;">
+}
+const b1 </span>=<span style="color: #000000;"> {
+    c:</span>3<span style="color: #000000;">,
+    d:</span>4<span style="color: #000000;">
+}
+const ab </span>= {...a1,...b1};  <span style="color: #008000;">//</span><span style="color: #008000;">拷贝a1，b1，里面是基本数据类型的话就深拷贝</span>
+<span style="color: #000000;">console.log(ab);
+
+<p>ab.a </span>&#x3D; 33;     <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">更改ab.a的话，a1.a不会受到影响</span><br>console.log(a1.a);</pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>Object.is</h3>
+<p>// 与 === 作用几乎一样，不一样的地方就是：</p>
+<div class="cnblogs_code">
+<pre>console.log(+0 === -0); <span style="color: #008000;">//</span><span style="color: #008000;">全等判断下是返回true</span>
+console.log(Object.is(+0,-0)); <span style="color: #008000;">//</span><span style="color: #008000;">Object.is判断下返回false</span>
+<span style="color: #000000;">
+console.log(NaN </span>=== NaN); <span style="color: #008000;">//</span><span style="color: #008000;">全等判断下返回false</span>
+console.log(Object.is(NaN,NaN)); <span style="color: #008000;">//</span><span style="color: #008000;">Object.is判断下返回true</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>Object.assign</h3>
+<p>// 与&nbsp; &nbsp;...扩展运算符的合并对象操作&nbsp; &nbsp;几乎一样。</p>
+<p>//不一样地地方就是： ... 有更多地功能，而Object.assign没有</p>
+<div class="cnblogs_code">
+<pre>const a1 =<span style="color: #000000;"> {
+    a:</span>1<span style="color: #000000;">,
+    b:</span>2<span style="color: #000000;">
+}
+const b1 </span>=<span style="color: #000000;"> {
+    c:</span>3<span style="color: #000000;">,
+    d:</span>4<span style="color: #000000;">
+}
+const ab </span>= Object.assign( a1 , b1 , {e:5,f:6} );  <span style="color: #008000;">//</span><span style="color: #008000;">合并对象</span>
+console.log(ab);</pre>
+</div>
+<p>&nbsp;</p>
+<h3>&nbsp;</h3>
+<h3>Object.keys</h3>
+<p>//获取对象里每一个key值</p>
+<div class="cnblogs_code">
+<pre>const a1 =<span style="color: #000000;"> {
+    a:</span>1<span style="color: #000000;">,
+    b:</span>2<span style="color: #000000;">,
+    c:</span>3<span style="color: #000000;">,
+    d:</span>4<span style="color: #000000;">,
+    e:</span>5<span style="color: #000000;">
+}
+console.log(Object.keys(a1)); </span><span style="color: #008000;">//</span><span style="color: #008000;">将对象里的key值都塞到一个数组里</span></pre>
+</div>
+<h3>Object.values</h3>
+<p>//获取对象里每一个value值</p>
+<div class="cnblogs_code">
+<pre>const a1 =<span style="color: #000000;"> {
+    a:</span>1<span style="color: #000000;">,
+    b:</span>2<span style="color: #000000;">,
+    c:</span>3<span style="color: #000000;">,
+    d:</span>4<span style="color: #000000;">,
+    e:</span>5<span style="color: #000000;">
+}
+console.log(Object.values(a1)); </span><span style="color: #008000;">//</span><span style="color: #008000;">将对象里的key值都塞到一个数组里</span></pre>
+</div>
+<h3>Object.entries</h3>
+<p>//获取对象里每一个键值对</p>
+<div class="cnblogs_code">
+<pre>const a1 =<span style="color: #000000;"> {
+    a:</span>1<span style="color: #000000;">,
+    b:</span>2<span style="color: #000000;">,
+    c:</span>3<span style="color: #000000;">,
+    d:</span>4<span style="color: #000000;">,
+    e:</span>5<span style="color: #000000;">
+}
+console.log(Object.entries(a1)); </span><span style="color: #008000;">//</span><span style="color: #008000;">将对象里的 每个键值对做一个数组  再将每一个数组塞到一个大数组里</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>遍历上面的数组</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> 遍历key值</span>
+<span style="color: #0000ff;">for</span><span style="color: #000000;">(let i of Object.keys(a1)){
+    console.log(i);
+}
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 遍历value值</span>
+<span style="color: #0000ff;">for</span><span style="color: #000000;">(let j of Object.values(a1)){
+    console.log(j);
+}
+</span><span style="color: #008000;">//</span><span style="color: #008000;">遍历键值对</span>
+<span style="color: #0000ff;">for</span><span style="color: #000000;">(let [k,v] of Object.entries(a1)){
+    console.log(k,v);
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>新方法</h2>
+<h3>__proto__</h3>
+<p>//某个对像都有的原型</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">__proto__  对象里面的原型</span>
+const a1 = {a:1<span style="color: #000000;">}; 
+console.log(a1); </span><span style="color: #008000;">//</span><span style="color: #008000;">可以看出__proto__的原型是Object</span><span style="color: #008000;">
+//</span><span style="color: #008000;">可以将这个原型打印出来</span>
+console.log(a1.__proto__);</pre>
+</div>
+<p>&nbsp;</p>
+<h3>Object.setPrototypeOf</h3>
+<p>//可以修改对象的原型。但性能比较低下，个人建议谨慎使用</p>
+<div class="cnblogs_code">
+<pre>const a =<span style="color: #000000;"> {
+    a:</span>1<span style="color: #000000;">
+}
+const b </span>=<span style="color: #000000;"> {
+    b:</span>1<span style="color: #000000;">
+}
+const obj </span>= Object.create(a); <span style="color: #008000;">//</span><span style="color: #008000;">将a对象作为原型，生成一个obj对象</span>
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这样的话 obj.<strong>proto</strong> &#x3D;&#x3D;&#x3D; a</span><br>console.log(obj.<strong>proto</strong>); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里跟输出a对象一模一样</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">现在我们开始修改对象的原型</span><br>Object.setPrototypeOf(obj,b); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">将obj对象的原型，修改成b对象的原型</span><br>console.log(obj.<strong>proto</strong>); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这样obj输出的就是b了</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>Object.getPrototypeOf</h3>
+<p>//可以读取对象的原型</p>
+<div class="cnblogs_code">
+<pre>const a =<span style="color: #000000;"> {
+    a:</span>1<span style="color: #000000;">
+}
+const obj </span>= Object.create(a); <span style="color: #008000;">//</span><span style="color: #008000;">将a对象作为原型，生成一个obj对象</span>
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这样的话 obj.<strong>proto</strong> &#x3D;&#x3D;&#x3D; Object.getPrototypeOf(obj) &#x3D;&#x3D;&#x3D; a</span><br>console.log(obj.<strong>proto</strong>); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里跟输出a对象一模一样</span><br>console.log(Object.getPrototypeOf(obj)); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里跟输出a对象一模一样</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">我们还可以判断 obj.<strong>proto</strong> 和 Object.getPrototypeOf(obj) 是否全等</span><br>console.log(obj.<strong>proto</strong> &#x3D;&#x3D;&#x3D; Object.getPrototypeOf(obj)); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">结果是true的</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>super</h3>
+<p>//可以访问&nbsp; 原型对象上的属性和方法</p>
+<div class="cnblogs_code">
+<pre>const a =<span style="color: #000000;"> {
+    name : </span>'小蝴蝶'<span style="color: #000000;">
+}
+const b </span>=<span style="color: #000000;"> {
+    say(){ </span><span style="color: #008000;">//</span><span style="color: #008000;">只有对象里的函数，并且使用的是简洁表示法才会有super</span>
+        console.log(`我的名字是${super.name}`); <span style="color: #008000;">//</span><span style="color: #008000;">2、这样这里就能访问到a对象里面的方法</span>
+<span style="color: #000000;">    }
+}
+Object.setPrototypeOf(b,a); </span><span style="color: #008000;">//</span><span style="color: #008000;">1、将a的原型赋值给b</span>
+b.say();</pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>数组扩展</h2>
+<p>数组之扩展运算符</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">数组分解成每一项参数。当然也可使用解构赋值的方法</span>
+const yy = (a,b,c,d) =&gt;<span style="color: #000000;"> {
+    console.log(a);
+    console.log(b);
+    console.log(c);
+    console.log(d);
+}
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> console.log(…[1,2,3,4]);</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">或者</span><br>const bb &#x3D; [1,2,3,4<span style="color: #000000;">];<br>console.log(…bb);<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">还可以</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">console.log ( yy.apply(null,bb) ) ;  &#x2F;&#x2F;结果跟上面这个扩展运算符没什么区别</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>数组扩展运算符的其他使用</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> 合并数组</span>
+const a = [1<span style="color: #000000;">];
+const b </span>= [2<span style="color: #000000;">];
+const c </span>= [3<span style="color: #000000;">];
+
+<p>const ob </span>&#x3D; [3,2,1,…a,…c]; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">合并现有的数组 跟 已有的数组</span><br><span style="color: #000000;">console.log(ob)</p>
+<p>const obj </span>&#x3D; […a,…b,…c]; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">合并已有的数组</span><br><span style="color: #000000;">console.log(obj);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">复制数组</span><br>const obj1 &#x3D; […a]; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">复制了a数组</span><br>const […obj2] &#x3D; a; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这样也可以复制a数组</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>生成器函数</h3>
+<p>扩展运算符还可以： 将生成器函数传出来的值，作为数组对象形成数组</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">扩展运算符可以： 将生成器函数传出来的值，作为数组对象形成数组</span>
+
+<p><span style="color: #0000ff;">function</span> *<span style="color: #000000;">ha(){<br>    console.log(</span>‘先输出这条语句’<span style="color: #000000;">);<br>    yield </span>‘传出去的第一个值’; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">[jiːld]，将引号里面的值传出去</span><br><span style="color: #000000;"><br>    console.log(</span>‘后输出这条语句’<span style="color: #000000;">);<br>    yield </span>‘传出去的第二个值’; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">[jiːld]，将引号里面的值传出去</span><br><span style="color: #000000;">}</p>
+<p>const arr </span>&#x3D; […ha()]; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">接收生成器函数传出来的值，并放在一个数组里面</span><br>console.log(arr);</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>注：生成器函数的* ，可以跟function黏在一起，也可以跟函数名黏在一起，二选一</p>
+<p>另外生成器函数是可以分段执行的</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">另外生成器函数是可以断点执行的</span>
+const gg =<span style="color: #000000;"> ha(); 
+gg.next(); </span><span style="color: #008000;">//</span><span style="color: #008000;">先执行第一个yield及以上的内容</span>
+setTimeout(<span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+    gg.next();  </span><span style="color: #008000;">//</span><span style="color: #008000;">后执行第二个yield及中间的内容</span>
+},1000);</pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>set集合</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">set集合</span>
+let set = <span style="color: #0000ff;">new</span> Set([1,2,3,4,5<span style="color: #000000;">]);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">利用扩展运算符转成数组</span><br>const a &#x3D;<span style="color: #000000;"> […set];<br>console.log(a);</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>Array.from</h3>
+<p>//将类数组 转换 为数组</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">手动创建一个类数组。手动创建的类数组，属性名必须是数组，必须手写一个length</span>
+const arg =<span style="color: #000000;"> {
+    </span>1:'diyi'<span style="color: #000000;">,
+    </span>2:'haha'<span style="color: #000000;">,
+    </span>3:'en'<span style="color: #000000;">,
+    </span>4:<span style="color: #0000ff;">false</span><span style="color: #000000;">,
+    length:</span>2  <span style="color: #008000;">//</span><span style="color: #008000;">因为长度是2，所以转换成类数组的时候只会取前面两项</span>
+<span style="color: #000000;">}
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">开始将arg类数组转换为数组</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;"> console.log(Array.from(arg));</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">Array.from还有一个回调函数。该回调函数可以改变返回的数组</span><br>console.log(Array.from(arg,<span style="color: #0000ff;">function</span>(item){  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">item表示数组的每一项</span><br>    <span style="color: #0000ff;">return</span> item + ‘123’;  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">每一项后面都加一个123的字符串</span><br>}));</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>还有其他将类数组转换为数组的方法，只是它们没有回调函数这个可选项</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">Array.prototype.slice.call();
+
+<p>[].slice.call();</p>
+<p>[…]</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>Array.of</h3>
+<p>//将传进去的参数合成一个数组</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">Array.of</span>
+console.log(Array.of(1,2,3,4,5,6)); <span style="color: #008000;">//</span><span style="color: #008000;">将传进去的参数和成一个数组</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>Array # fill</h3>
+<p>//填充数组</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">新建一个长度为10的数组</span>
+let arr = <span style="color: #0000ff;">new</span> Array(10); <span style="color: #008000;">//</span><span style="color: #008000;">长度为10的数组创建好了，但是里面是空的</span>
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">所以我们可以进行填充</span><br>let arr1 &#x3D; <span style="color: #0000ff;">new</span> Array(10).fill(3); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">在里面填充10个3</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">当然我们还可以指定填充多少个</span><br>let arr2 &#x3D; <span style="color: #0000ff;">new</span> Array(10).fill(3,0,3<span style="color: #000000;">);<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">第一个参数： 是填充的内容，</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">第二个参数： 是从下标为0的数组开始，</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">第三个参数： 填充到下标为3的值，不包括下标为3的</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">最后还有，当数组是非空数组时，里面的值会被覆盖</span><br>let arr3 &#x3D; [1,2,3,4,5<span style="color: #000000;">];<br>arr3.fill(</span>‘你好’);  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这样里面的所有值都会覆盖成’你好’</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>Array.includes</h3>
+<p>//判断某数组&nbsp; 是否含有xx值，有就返回true，没有就返回false</p>
+<div class="cnblogs_code">
+<pre>const arr = [1,2,3,4,5<span style="color: #000000;">];
+console.log(arr.includes(</span>2)); <span style="color: #008000;">//</span><span style="color: #008000;">判断arr数组是否含有2</span>
+console.log(arr.includes(22));</pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>keys、values 和 entries</h3>
+<div class="cnblogs_code">
+<pre>const arr = ['aa','bb','cc','dd','ee'<span style="color: #000000;">];
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> keys</span><br><span style="color: #0000ff;">for</span>(let i of arr.keys()){  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">输出数组每一项的下标</span><br><span style="color: #000000;">    console.log(i);<br>}</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> values</span><br><span style="color: #0000ff;">for</span>(let j of arr.values()){  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">输出数组每一项的值</span><br><span style="color: #000000;">    console.log(j);<br>}</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> entries</span><br><span style="color: #0000ff;">for</span>(let [k,v] of arr.entries()){  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">输出每一项下标 及 对应的值</span><br><span style="color: #000000;">    console.log(k,v);<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>find</h3>
+<p>//根据条件(回调函数)，按顺序遍历数组，当回调返回true时，就返回当前遍历到的<strong>值</strong></p>
+<div class="cnblogs_code">
+<pre>const arr = [1,3,4,5<span style="color: #000000;">].
+find(</span><span style="color: #0000ff;">function</span><span style="color: #000000;">(value,index,array){  
+</span><span style="color: #008000;">//</span><span style="color: #008000;">默认传入三个参数，命名随意</span><span style="color: #008000;">
+//</span><span style="color: #008000;">第一个参数： 数组的值</span><span style="color: #008000;">
+//</span><span style="color: #008000;">第二个参数： 数组的下标</span><span style="color: #008000;">
+//</span><span style="color: #008000;">第三个参数： 数组本身</span>
+<span style="color: #000000;">
+    console.log(</span>'value值为'+<span style="color: #000000;">value);
+    console.log(</span>'对应的下标为为'+<span style="color: #000000;">index);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> console.log('数组本身为'+array);</span>
+
+<pre><code>&lt;span style=&quot;color: #0000ff;&quot;&gt;return&lt;/span&gt; value % 2 === 0&lt;span style=&quot;color: #000000;&quot;&gt;; 
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;当values为偶数时，返回true&lt;/span&gt;
+&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;然后返回当前为true的那项数组，及前面遍历到的数组。即4为偶数，从值为1的开始遍历到值为4的&lt;/span&gt;
+</code></pre>
+<p>});<br />console.log(arr);  &#x2F;&#x2F;当打印这个数组时，返回的是 另其为true的value值，即4</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>findIndex</h3>
+<p>//根据条件(回调函数)，按顺序遍历数组，当回调返回true时，就返回当前遍历到的<strong>下标</strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">用法跟find一模一样，但最后返回的是下标。</span><span style="color: #008000;">
+//</span><span style="color: #008000;">用的是上面的例子，这里做一下简化</span>
+const arr = [1,3,4,5].findIndex((value,index,array) =&gt; value % 2 === 0<span style="color: #000000;">);
+
+<p>console.log(arr); </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里返回的就是4对应的下标</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>//findIndex的回调函数，return那里可以做一下复杂的判断表达式：Number.isNaN(value)&nbsp; &nbsp; .判断里面的值是否NaN</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/02%E3%80%81ES6%E5%8F%98%E9%87%8F%E7%9A%84%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC/" rel="prev" title="02、ES6变量的解构赋值">
+      <i class="fa fa-chevron-left"></i> 02、ES6变量的解构赋值
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/04%E3%80%81ES6%20Promise/" rel="next" title="04、ES6 Promise">
+      04、ES6 Promise <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">模板字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">模板字符串与一般字符串的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">字符串新方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.2.1.</span> <span class="nav-text">padStart</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.2.2.</span> <span class="nav-text">padEnd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.2.3.</span> <span class="nav-text">repeat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.2.4.</span> <span class="nav-text">startsWith</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.2.5.</span> <span class="nav-text">endsWith</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.2.6.</span> <span class="nav-text">includes</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">遍历字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.3.1.</span> <span class="nav-text">for of 方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.3.2.</span> <span class="nav-text">其他方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.4.</span> <span class="nav-text">Unicode表示法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">正则修饰符扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text">ES6构造函数的变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text">u修饰符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.3.</span> <span class="nav-text">y修饰符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">数值扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text">新的进制表示法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text">新的方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">函数扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text">默认参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.2.</span> <span class="nav-text">剩余参数（...）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">4.2.1.</span> <span class="nav-text">...当扩展运算符时：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">4.2.2.</span> <span class="nav-text">...当剩余参数时：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.3.</span> <span class="nav-text">箭头函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">对象扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.</span> <span class="nav-text">简洁表示法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.2.</span> <span class="nav-text">属性名表达式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">扩展运算符及新方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.1.</span> <span class="nav-text">扩展运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.2.</span> <span class="nav-text">Object.is</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.3.</span> <span class="nav-text">Object.assign</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.4.</span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.5.</span> <span class="nav-text">Object.keys</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.6.</span> <span class="nav-text">Object.values</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.7.</span> <span class="nav-text">Object.entries</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.8.</span> <span class="nav-text">遍历上面的数组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">新方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.1.</span> <span class="nav-text">__proto__</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.2.</span> <span class="nav-text">Object.setPrototypeOf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.3.</span> <span class="nav-text">Object.getPrototypeOf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.4.</span> <span class="nav-text">super</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">数组扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">8.1.</span> <span class="nav-text">生成器函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">8.2.</span> <span class="nav-text">set集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">8.3.</span> <span class="nav-text">Array.from</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">8.4.</span> <span class="nav-text">Array.of</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">8.5.</span> <span class="nav-text">Array # fill</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">8.6.</span> <span class="nav-text">Array.includes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">8.7.</span> <span class="nav-text">keys、values 和 entries</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">8.8.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">8.9.</span> <span class="nav-text">findIndex</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/03%E3%80%81ES6%E6%89%A9%E5%B1%95/",
+      identifier: "/uncategorized/03、ES6扩展/",
+      title     : "03、ES6扩展",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

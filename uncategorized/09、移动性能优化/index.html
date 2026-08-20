@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="CSS、js文件优化 内联css、js 优点：减少HTTP请求 缺点： 1、代码难以复用 2、使html文件变大，加载事件变长 3、写在html中不利于后期维护。（工程化手段可以解决。源码到可以上线的代码） 外联css、js 优点： 1、很好地复用代码。（有效利用浏览器静态资源缓存） 2、代码分离，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="09、移动性能优化">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/09%E3%80%81%E7%A7%BB%E5%8A%A8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="CSS、js文件优化 内联css、js 优点：减少HTTP请求 缺点： 1、代码难以复用 2、使html文件变大，加载事件变长 3、写在html中不利于后期维护。（工程化手段可以解决。源码到可以上线的代码） 外联css、js 优点： 1、很好地复用代码。（有效利用浏览器静态资源缓存） 2、代码分离，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202004/1680452-20200420233730512-1785010691.png">
+<meta property="article:published_time" content="2020-04-21T06:25:00.000Z">
+<meta property="article:modified_time" content="2026-08-20T06:32:52.432Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2020.cnblogs.com/blog/1680452/202004/1680452-20200420233730512-1785010691.png">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/09%E3%80%81%E7%A7%BB%E5%8A%A8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>09、移动性能优化 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/09%E3%80%81%E7%A7%BB%E5%8A%A8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          09、移动性能优化<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/09%E3%80%81%E7%A7%BB%E5%8A%A8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-21 14:25:00" itemprop="dateCreated datePublished" datetime="2020-04-21T14:25:00+08:00">2020-04-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-08-20 14:32:52" itemprop="dateModified" datetime="2026-08-20T14:32:52+08:00">2026-08-20</time>
+              </span>
+
+          
+            <div class="post-description">CSS、js文件优化 内联css、js 优点：减少HTTP请求 缺点： 1、代码难以复用 2、使html文件变大，加载事件变长 3、写在html中不利于后期维护。（工程化手段可以解决。源码到可以上线的代码） 外联css、js 优点： 1、很好地复用代码。（有效利用浏览器静态资源缓存） 2、代码分离，</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2>CSS、js文件优化</h2>
+<h3>内联css、js</h3>
+<p>优点：减少HTTP请求</p>
+<p>缺点：</p>
+<p>1、代码难以复用</p>
+<p>2、使html文件变大，加载事件变长</p>
+<p>3、写在html中不利于后期维护。（工程化手段可以解决。源码到可以上线的代码）</p>
+<p>&nbsp;</p>
+<h3>外联css、js</h3>
+<p>优点：</p>
+<p>1、很好地复用代码。（有效利用浏览器静态资源缓存）</p>
+<p>2、代码分离，利于后期维护。</p>
+<p>缺点：增加HTTP请求</p>
+<p>&nbsp;</p>
+<h3>综合解决方案</h3>
+<p>首屏代码用内联，其他可以用外联。</p>
+<p>&nbsp;</p>
+<h3>文件先后位置</h3>
+<p>css文件放在head里面，越早加载越好。</p>
+<p>js文件，没有dom操作的，如屏幕适配，可放head里面。</p>
+<p>js文件，有dom操作的，放在body结束前。</p>
+<p>&nbsp;</p>
+<h2>图片优化</h2>
+<h3>HTTP请求大</h3>
+<p>//如图片大，可以这样解决：</p>
+<p>1、图片压缩处理。使用更高压缩比的图片格式，如webp</p>
+<p>2、尽量少用图片。用css画图 或者 用图标字体代替图片。</p>
+<p>&nbsp;</p>
+<h3>HTTP请求多</h3>
+<p>//如图片多，可以这样解决：</p>
+<p>1、合理使用base64内嵌图片。</p>
+<p>2、合并图片，如雪碧图。（用时可background-position）</p>
+<p>&nbsp;</p>
+<h2>其他优化</h2>
+<p>1、避免重复加载css、js文件。</p>
+<p>2、上线代码删除注释、空格、换行等。（上线可使用&nbsp; 代码压缩插件 / 在线压缩工具 ）</p>
+<p>3、使用浏览器缓存。（后端解决）</p>
+<p>4、避免多重嵌套。</p>
+<p>5、空链接，如 href=" " 或 src=" " 等等，里面最好写上#。避免再发送一次http请求。</p>
+<p>6、避免慢标签，如 table 或 iframe等。浏览器会把里面内容全读完后再一次渲染到页面。（读取过程中，网页上有一块空白，读完后一下子出现）</p>
+<p>7、主要内容写在前面，次要内容写在后面。</p>
+<p>&nbsp;</p>
+<h2>CSS优化</h2>
+<h3>选择器优化</h3>
+<p>&nbsp;第一种</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">dom</span>
+&lt;div id="dd" class="dd"&gt;&lt;/div&gt;
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">css</span><br>div#dd.dd{} <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">避免这种情况，虽然更加精确，但是浏览器查找解析慢。</span><br>.dd{}  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">不冲突的情况这样即可</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>第二种</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">dom</span>
+&lt;div class="aa"&gt;
+    &lt;div class="bb"&gt;
+        &lt;div class="cc"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">css</span><br>.aa .bb .cc{} <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">避免这种情况，浏览器会从右到左一个个解析，直到所有条件匹配。而且后面不容易修改，因为这里权重比较高了。</span><br>.cc{}  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">不冲突的情况这样即可</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>第三种</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">dom</span>
+<span style="color: #000000;">...
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">css</span><br>*{    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">在项目开发阶段可以用一下，上线代码就尽量不用，因为它会找页面上所有的元素，进行清空内外边距。比较浪费资源</span><br>    padding:0<span style="color: #000000;">;<br>    margin:</span>0<span style="color: #000000;"><br>}<br>div,dd,dt{        </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">可以这样。需要清空哪些元素，就清空</span><br>    padding:0<span style="color: #000000;">;<br>    margin:</span>0<span style="color: #000000;"><br>}  </span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>&nbsp;属性优化</h3>
+<p>&nbsp;第一种</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">.cc{
+    width:100px;
+    height:100px;
+}
+.dd{
+    width:100px;
+    height:100px;
+}
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">避免写重复的属性，可以直接这样，把重复的写一块</span><br><span style="color: #000000;"><br>.cc,.dd{<br>    width:100px;<br>    height:100px;<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>第二种</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">.aa{
+    margin</span>-<span style="color: #000000;">top:10px;
+    margin</span>-<span style="color: #000000;">right:10px;
+    margin</span>-<span style="color: #000000;">bottom:10px;
+    margin</span>-<span style="color: #000000;">left:10px;
+}
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">属性能写一块就写一块，如：</span><br><span style="color: #000000;">.aa{<br>    margin:10px; </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">四边都为10px</span><br>    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">margin：10px 10px; &#x2F;&#x2F;上下 左右 </span><br>    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">margin:10px 10px 10px;    &#x2F;&#x2F;上 左右 下</span><br>    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">margin:10px 10px 10px 10px;     &#x2F;&#x2F;上右下左</span><br>}</pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>&nbsp;其他优化</h3>
+<p>1、合理开启gup加速</p>
+<p>2、移动端推荐flex，不要滥用float。（float性能消耗比flex多）</p>
+<p>3、css中尽量少用@import url('base.css')，因为在加载css中遇到会再发送一次加载base.css的请求。</p>
+<p>&nbsp;</p>
+<h2>DOM优化&nbsp;</h2>
+<p>//dom操作非常消耗性能&nbsp;</p>
+<p>三个原则</p>
+<p>1、加快单次dom操作。</p>
+<p>2、尽量减少dom操作的次数。</p>
+<p>3、能用id尽量用id，不要为了使用id而使用id</p>
+<p>&nbsp;</p>
+<p>第一种优化</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">dom</span>
+&lt;div id="aa"&gt;
+    &lt;div id="bb"&gt;123&lt;/div&gt;
+&lt;/div&gt;
+<span style="color: #008000;">//</span><span style="color: #008000;">平常获取aa、bb</span>
+<span style="color: #0000ff;">var</span> aa = document.getElementById('aa'<span style="color: #000000;">);
+</span><span style="color: #0000ff;">var</span> bb = document.getElementById('bb'<span style="color: #000000;">);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">优化：在获取bb的时候完全不用在document里面找，可以从aa里面找</span><br><span style="color: #0000ff;">var</span> bb &#x3D; aa.getElenentById(‘bb’);</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;第二种</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">var</span> i=0; i&lt;40; i++<span style="color: #000000;">){
+    aa.innerHTML </span>+=<span style="color: #000000;"> i;
+}
+</span><span style="color: #008000;">//</span><span style="color: #008000;">上面操作dom的次数就达到了40次，非常消耗资源。可以这样</span>
+<span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">var</span> i=0; i&lt;40; i++<span style="color: #000000;">){
+    html </span>+= i;            <span style="color: #008000;">//</span><span style="color: #008000;">字符串操作消耗资源非常低</span>
+<span style="color: #000000;">}
+aa.innerHTML </span>= html;    <span style="color: #008000;">//</span><span style="color: #008000;">这样操作一次dom就实现了</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>第三种。dom操作中说过</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">var</span> i=0; i&lt;30; i++<span style="color: #000000;">){
+    </span><span style="color: #0000ff;">var</span> sp = document.createElement('span');<span style="color: #008000;">//</span><span style="color: #008000;">创建30次</span>
+    sp.innerText =<span style="color: #000000;"> i;
+    aa.appendChild(sp);    </span><span style="color: #008000;">//</span><span style="color: #008000;">渲染30次</span>
+<span style="color: #000000;">}
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这样就执行了30次dom操作了，损耗资源。可以这样</span></p>
+<p><span style="color: #0000ff;">var</span> fragment &#x3D; document.createDocumentFragment();    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">创建虚拟节点对象</span><br><span style="color: #0000ff;">var</span> sp &#x3D; document.createElement(‘span’);    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">创建一次span</span></p>
+<p><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">var</span> i&#x3D;0; i&lt;30; i++<span style="color: #000000;">){<br>    </span><span style="color: #0000ff;">var</span> span &#x3D; sp.cloneNode(<span style="color: #0000ff;">true</span>); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">true表示拷贝sp本身+数据；false表示拷贝sp本身。cloneNode比createElement性能更好</span><br>    span.innerText &#x3D;<span style="color: #000000;"> i;<br>    fragment.appendChild(span);    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">将东西填充到虚拟节点对象里面，虽说填充但是完全不会进行页面渲染    </span><br><span style="color: #000000;">}<br>aa.appendChild(fragment);    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里只做了一次dom操作</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>第四种</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">var</span> a=0; a&lt;pp.length; a++<span style="color: #000000;">)
+</span><span style="color: #008000;">//</span><span style="color: #008000;">这样的话每一次都用dom获取pp的长度，可以适当将pp.length保存起来。如：</span>
+
+<p><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">var</span> a&#x3D;0,b&#x3D;pp.length; a&lt;b; a++<span style="color: #000000;">)<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这样性能更好</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>&nbsp;浏览器渲染机制</h3>
+<div class="cnblogs_code">
+<pre>渲染 = 重排 +<span style="color: #000000;"> 重绘
+
+<p>重排 </span>&#x3D;<span style="color: #000000;"> 计算网页中各个元素的位置关系<br>重绘 </span>&#x3D;<span style="color: #000000;"> 获取元素的样式，将样式绘制到浏览器中</p>
+<p>每一次dom的操作都会引发重排</span>&#x2F;重绘。<br>引发重排必定引发重绘，引发重绘只是将该元素样式重新绘制一遍</pre></p>
+</div>
+<p>如：</p>
+<div class="cnblogs_code">
+<pre>aa.style.fontSize = '20px'<span style="color: #000000;">;
+aa.style.color </span>= 'red'<span style="color: #000000;">;
+aa.style.backgroundColor </span>= 'green'<span style="color: #000000;">;
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">修改一个以上的样式，建议通过切换class名来进行，切换一次class名就重绘一次</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">若像上面直接改变样式可能会引发多次重绘（有些老式浏览器可能得重绘3次）</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h2>事件优化</h2>
+<p>&nbsp;//<strong>善用 事件委托 与 事件节流</strong></p>
+<h3><strong>事件委托</strong></h3>
+<p>//好处，不用循环遍历ul里面的每一项。js事件中有说过</p>
+<div class="cnblogs_code">
+<pre>&lt;ul id="ul"&gt;
+&lt;li class="qq"&gt; one &lt;/li&gt;
+&lt;li class="qq"&gt; two &lt;/li&gt;
+&lt;li class="qq"&gt; three &lt;/li&gt;
+&lt;/ul&gt;
+
+<p><span style="color: #0000ff;">var</span> ul &#x3D; document.getElementById(“ul”<span style="color: #000000;">);<br>ul.addEventListener(</span>“click”,<span style="color: #0000ff;">function</span><span style="color: #000000;">(event){</p>
+<p></span><span style="color: #0000ff;">if</span>(event.target.className &#x3D;&#x3D; “qq”)  alert(“触发了li元素”<span style="color: #000000;">);</p>
+<p>},</span><span style="color: #0000ff;">false</span>);</pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>&nbsp;事件节流</h3>
+<p>//scroll、resize、mousemove、touchmove等等事件每一次都多次触发。只需要触发一次的话可以</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> timer = <span style="color: #0000ff;">null</span><span style="color: #000000;">;
+window.addEventListener(</span>'scroll',<span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+    clearTimeout(timer);
+    timer </span>= setTimeout(<span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+        console.log(</span>"这样就执行一次了"<span style="color: #000000;">);
+    },</span>100<span style="color: #000000;">)
+},</span><span style="color: #0000ff;">false</span>)</pre>
+</div>
+<p>&nbsp;</p>
+<h2>按需加载（懒加载）</h2>
+<p>1、所有图片src属性路径，都设置成转圈圈gif图。</p>
+<p>2、真正需要显示的图片放到一个自定义的属性里，如data-src</p>
+<p>3、在需要 按需加载的图片标签，加一个class，如 lazyload-img。这样就可以获取到所有还没加载出来的图片&nbsp;</p>
+<p>4、获取所有按需加载的图片集合，并转为数组</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> jihe = document.querySelectorAll('.lazyload-img');     <span style="color: #008000;">//</span><span style="color: #008000;">需要使用数组的方法，所以需要转换成数组</span>
+
+<p><span style="color: #0000ff;">var</span> imgArr &#x3D; Array.prototype.slice.call(jihe);    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">用这个方法就可以，将类数组转换为数组</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>5、当页面刚加载进来时，执行一下懒加载，将可视区范围内的图片加载出来</p>
+<div class="cnblogs_code">
+<pre>lazyLoadImgs();  <span style="color: #008000;">//</span><span style="color: #008000;">函数稍后定义</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>6、集合中的图片出现在了可视区范围内，就执行按需加载</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> timer = <span style="color: #0000ff;">null</span><span style="color: #000000;">;
+window.addEventListener(</span>'scroll',<span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+    clearTimout (timer);
+    timer </span>= setTimeout(<span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+        lazyLoadImg();
+    },</span>100<span style="color: #000000;">)
+},</span><span style="color: #0000ff;">false</span>)</pre>
+</div>
+<p>&nbsp;</p>
+<p>7、lazyLoadImgs函数</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">function</span><span style="color: #000000;"> lazyLoadImgs(){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">先遍历集合里面的图片</span>
+    <span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">var</span> i=0; i&lt;imgArr.length; i++<span style="color: #000000;">){
+    
+<pre><code>    &lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;if&lt;/span&gt;(isInvisibleArea(imgArr[i])){        &lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;判断当前第i个图片是否在可视区范围内&lt;/span&gt;
+</code></pre>
+<span style="color: #000000;">
+            imgArr[i].src </span>= imgArr[i].getAttribute('data-src');     <span style="color: #008000;">//</span><span style="color: #008000;">若在可视区范围内就将src的转圈图标类名，换成真正的类名</span>
+<span style="color: #000000;">
+            imgArr.splice(i,</span>1);  <span style="color: #008000;">//</span><span style="color: #008000;">将当前显示出来图片，从集合里面移除</span>
+<span style="color: #000000;">
+            i</span>--;    <span style="color: #008000;">//</span><span style="color: #008000;"> [0,1,2,3] 当前下标为0的元素删除，末尾循环会i++，下一次再进入循环i下标1，但是下标为1的的元素变成2了，元素1还没出现过，就会漏掉一个。必须进行i--</span>
+<span style="color: #000000;">
+        }  
+    }
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>8、isInvisibleArea函数</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">function</span> isInvisibleArea(el){    <span style="color: #008000;">//</span><span style="color: #008000;">判断某元素是否在可视区范围内</span>
+    <span style="color: #0000ff;">var</span> rect =<span style="color: #000000;"> el.getBoundingClientRect(); 
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">这样top值小于屏幕宽度，元素就在可视区内；bottom值等于0元素就在可视区外。</span>
+    <span style="color: #0000ff;">return</span> rect.bottom &gt; 0 &amp;&amp; rect.top &lt; window.innerHeight; <span style="color: #008000;">//</span><span style="color: #008000;">只要条件成立就返回真</span>
+}</pre>
+</div>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202004/1680452-20200420233730512-1785010691.png" alt="" /></p>
+<p>&nbsp;</p>
+<h3>按需加载其他文件</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">dom中</span>
+&lt;div&gt;&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;div id="a"&gt;还没加载到&lt;/div&gt;
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">css部分</span><br><span style="color: #000000;">width:300px;<br>height:300px;<br>background</span>-<span style="color: #000000;">color:red;<br>font</span>-<span style="color: #000000;">size:30px;<br>color:white;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">js部分</span></p>
+<p><span style="color: #008000;">&#x2F;<em></span><span style="color: #008000;">滚动条每动一次就判断一次，该元素是否在可视区内</span><span style="color: #008000;"></em>&#x2F;</span><br><span style="color: #0000ff;">var</span> timer &#x3D; <span style="color: #0000ff;">null</span><span style="color: #000000;">;<br>window.addEventListener(</span>‘scroll’,jieliu,<span style="color: #0000ff;">false</span><span style="color: #000000;">)</p>
+<p></span><span style="color: #0000ff;">function</span><span style="color: #000000;"> jieliu(){<br>    clearTimout (timer);<br>    timer </span>&#x3D; setTimeout(<span style="color: #0000ff;">function</span><span style="color: #000000;">(){<br>        panduan(a);    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">判断函数</span><br>    },100<span style="color: #000000;">)<br>}</p>
+<p></span><span style="color: #0000ff;">function</span> panduan(el){    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">判断某元素是否在可视区范围内</span><br>    <span style="color: #0000ff;">var</span> rect &#x3D;<span style="color: #000000;"> el.getBoundingClientRect(); </p>
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;var&lt;/span&gt; jieguo = rect.bottom &amp;gt; 0 &amp;amp;&amp;amp; rect.top &amp;lt; window.innerHeight; &lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;只要条件成立就返回真&lt;/span&gt;
+
+&lt;span style=&quot;color: #0000ff;&quot;&gt;if&lt;/span&gt;(jieguo){     &lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;如果在可视区内就，加载外部js&lt;/span&gt;
+    setTimeout(&lt;span style=&quot;color: #0000ff;&quot;&gt;function&lt;/span&gt; () {    &lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;延时是为了模仿慢速网络&lt;/span&gt;
+        &lt;span style=&quot;color: #0000ff;&quot;&gt;var&lt;/span&gt; script = document.createElement(&#39;script&#39;&lt;span style=&quot;color: #000000;&quot;&gt;);
+        script.src &lt;/span&gt;= &#39;js/loadProduct.js&#39;&lt;span style=&quot;color: #000000;&quot;&gt;;
+
+         document.body.appendChild(script); &lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;将引进来的js加载到body中&lt;/span&gt;
+</code></pre>
+<span style="color: #000000;">
+            window.removeEventListener(</span>'scroll', jieliu, <span style="color: #0000ff;">false</span>); <span style="color: #008000;">//</span><span style="color: #008000;">执行完成后就可以解绑scroll</span>
+        }, 3000<span style="color: #000000;">);
+
+       
+<pre><code>}
+</code></pre>
+<p>}</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">外部js</span><br><span style="color: #0000ff;">var</span> a &#x3D; document.getElementById(‘a’<span style="color: #000000;">);<br>a.innerText </span>&#x3D; “加载到了，真好”;</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>预加载</h2>
+<p>当浏览器检测到当前空闲的时候，会把可能需要的资源下载下来。如漫画</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> img = <span style="color: #0000ff;">new</span><span style="color: #000000;"> Image();
+img.src </span>= './22.jpg';    <span style="color: #008000;">//</span><span style="color: #008000;">将预加载实际路径赋给img的src属性即可</span></pre>
+</div>
+<p>&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/08%E3%80%81%E7%A7%BB%E5%8A%A8%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" rel="prev" title="08、移动常见问题">
+      <i class="fa fa-chevron-left"></i> 08、移动常见问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/01%E3%80%81let%E3%80%81const/" rel="next" title="01、let、const">
+      01、let、const <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">CSS、js文件优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">内联css、js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">外联css、js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">综合解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.4.</span> <span class="nav-text">文件先后位置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">图片优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text">HTTP请求大</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text">HTTP请求多</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">其他优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">CSS优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text">选择器优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.2.</span> <span class="nav-text"> 属性优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.3.</span> <span class="nav-text"> 其他优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">DOM优化 </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.</span> <span class="nav-text"> 浏览器渲染机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">事件优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.1.</span> <span class="nav-text">事件委托</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.2.</span> <span class="nav-text"> 事件节流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">按需加载（懒加载）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.1.</span> <span class="nav-text">按需加载其他文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">预加载</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/09%E3%80%81%E7%A7%BB%E5%8A%A8%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/",
+      identifier: "/uncategorized/09、移动性能优化/",
+      title     : "09、移动性能优化",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

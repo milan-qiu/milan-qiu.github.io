@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="准备 一、申请小程序账号（AppID） 小程序简介：https:&#x2F;&#x2F;developers.weixin.qq.com&#x2F;miniprogram&#x2F;dev&#x2F;framework&#x2F;quickstart&#x2F;#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%AE%80%E4%BB%8B 1、打开微信公">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小程序基础">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="准备 一、申请小程序账号（AppID） 小程序简介：https:&#x2F;&#x2F;developers.weixin.qq.com&#x2F;miniprogram&#x2F;dev&#x2F;framework&#x2F;quickstart&#x2F;#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%AE%80%E4%BB%8B 1、打开微信公">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202005/1680452-20200506180010600-797519309.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202005/1680452-20200506180746165-469595839.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202005/1680452-20200506201736379-2074337181.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202005/1680452-20200506204226342-1995636339.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202005/1680452-20200507131846304-1358368242.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202005/1680452-20200507151929666-1284902463.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202005/1680452-20200507153727105-629255474.png">
+<meta property="article:published_time" content="2020-05-07T08:02:00.000Z">
+<meta property="article:modified_time" content="2026-08-20T06:32:52.653Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2020.cnblogs.com/blog/1680452/202005/1680452-20200506180010600-797519309.png">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>小程序基础 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          小程序基础<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-07 16:02:00" itemprop="dateCreated datePublished" datetime="2020-05-07T16:02:00+08:00">2020-05-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-08-20 14:32:52" itemprop="dateModified" datetime="2026-08-20T14:32:52+08:00">2026-08-20</time>
+              </span>
+
+          
+            <div class="post-description">准备 一、申请小程序账号（AppID） 小程序简介：https://developers.weixin.qq.com/miniprogram/dev/framework/quickstart/#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%AE%80%E4%BB%8B 1、打开微信公</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2>准备</h2>
+<h3>一、申请小程序账号（AppID）</h3>
+<p>小程序简介：<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/framework/quickstart/#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%AE%80%E4%BB%8B">https://developers.weixin.qq.com/miniprogram/dev/framework/quickstart/#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%AE%80%E4%BB%8B</a></p>
+<p>1、打开微信公众平台，注册小程序账号。地址：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/">https://mp.weixin.qq.com/</a></p>
+<p>2、打开小程序后台设置，获取 AppID :<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/wxamp/basicprofile/index?token=591929860&amp;lang=zh_CN">https://mp.weixin.qq.com/wxamp/basicprofile/index?token=591929860&amp;lang=zh_CN</a></p>
+<p>&nbsp;</p>
+<h3>二、下载并安装微信开发者工具</h3>
+<p>1、下载安装微信开发者工具：<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/devtools/stable.html">https://developers.weixin.qq.com/miniprogram/dev/devtools/stable.html</a></p>
+<p>2、打开后，扫码登陆</p>
+<p>3、点击 + 号，按照具体需求添加项目</p>
+<p>&nbsp;</p>
+<h2>开发工具的UI简介</h2>
+<p>一、根据具体需求，用鼠标点击按钮，进行显示与隐藏</p>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202005/1680452-20200506180010600-797519309.png" alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>二、新建page时，会生成与之对应的四个文件，如：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">xx.js
+xx.json
+xx.wxml
+xx.wxss</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>三、在编辑器的输入状态下，按F1会显示全部的快捷键</p>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202005/1680452-20200506180746165-469595839.png" alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>四、在编辑完代码后，除了手动点击编译外，还可以 ctrl + s 自动编译。</p>
+<p>&nbsp;</p>
+<h2>小程序调试</h2>
+<h3>一、在控制台调试</h3>
+<p>1、点击打开调试器即可看到。</p>
+<p>&nbsp;</p>
+<h3>二、断点调试</h3>
+<p>1、打开调试器后，转换到 Sources ，点击需要调试的页面，最好打开带有sm结尾的。</p>
+<p>2、用鼠标点击左边的行号即可设置断点。</p>
+<p>3、然后重新编译，即可。</p>
+<p>4、鼠标移到某个变量上面，即显示实时数据。</p>
+<p>5、最后按F10直接运行到最后，也可以点击如下按钮</p>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202005/1680452-20200506201736379-2074337181.png" alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>编写页面</h2>
+<h3>详解三种格式的文件</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">一个页面一般用一个文件夹装起来，每个文件夹都有三种类型的文件</span>
+<span style="color: #000000;">.js文件，用来做交互操作的
+.wxml文件，相当于html文件，用来写结构层的
+.wxss文件，相当于css文件，用来写表现层的</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>应用程序级别文件</h3>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202005/1680452-20200506204226342-1995636339.png" alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;1、应用程序级别的文件是全局的，且只能有一个</p>
+<p>&nbsp;2、具有就近原则，如全局的 app.wxss 设置了文字为红色，页面的.wxss设置了文字为蓝色，那么最终显示效果为页面.wxss设置的为准。</p>
+<p>&nbsp;3、utils里面放着帮助类的文件</p>
+<p>&nbsp;4、project.config.json文件，记录开发者&nbsp; 使用&nbsp; 小程序工具时的配置选项，称为项目配置文件。</p>
+<p>&nbsp;5、小程序的目录结构自由，可不必按照推荐的目录结构来开发。</p>
+<p>&nbsp;</p>
+<h3>页面层级问题</h3>
+<p>页面层级最多不要超过5层。</p>
+<p>小程序体积大的话可以适当使用分包加载。</p>
+<p>&nbsp;</p>
+<h3>编写准备</h3>
+<p>1、将种子页面的多数文件删除掉，留下一个pages文件夹，跟project.config.json文件</p>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202005/1680452-20200507131846304-1358368242.png" alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>2、新建应用级别的文件，app.js、app.wxss、app.json 文件</p>
+<p>3、在pages下，新建一个页面的目录，如welcome。</p>
+<p>4、在welcome目录下，新建一个四件套，js、wxss、wsml、json</p>
+<p>5、编写welcome.wxml文件</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">view</span><span style="color: #0000ff;">&gt; &lt;!-- view差不多相当于网页的div --&gt;</span>
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">text</span><span style="color: #0000ff;">&gt;</span>Hello<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">text</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">view</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>6、在app.json中写入页面</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">{
+    </span>"pages"<span style="color: #000000;">: [
+        </span>"pages/welcome/welcome"  <span style="color: #008000;">/*</span><span style="color: #008000;">数组第一项是小程序首页</span><span style="color: #008000;">*/</span>
+          <span style="color: #008000;">/*</span><span style="color: #008000;">不用写页面的后缀。复制时这里的注释都要去掉</span><span style="color: #008000;">*/</span><span style="color: #000000;">
+    ]  /*这里还可以创建页面，写一个不存在的页面，保存后，会自动新建出那个页面*/
+}    </span></pre>
+</div>
+<p>&nbsp;</p>
+<p>7、在welcome.json中，写入一对花括号，或删除welcome.json文件</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">{
+  </span><span style="color: #008000;">/*</span><span style="color: #008000;">welcome.js不是必须的，复制时删除注释</span><span style="color: #008000;">*/</span><span style="color: #000000;">
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>8、在welcome.js中写入</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">Page({
+
+<p>})</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>9、若要拷贝项目到别的电脑，最好连同project.config.json文件一起拷。</p>
+<p>&nbsp;</p>
+<h2>实战案例</h2>
+<p>1、welcome.wxml中</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">view class="container"</span><span style="color: #0000ff;">&gt;</span> <span style="color: #008000;">&lt;!--</span><span style="color: #008000;">view组件一般用来当普通容器使用</span><span style="color: #008000;">--&gt;</span>
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">image </span><span style="color: #ff0000;">src</span><span style="color: #0000ff;">="/images/bb.png"</span><span style="color: #0000ff;">&gt;&lt;/</span><span style="color: #800000;">image</span><span style="color: #0000ff;">&gt;</span> <span style="color: #008000;">&lt;!--</span><span style="color: #008000;">image组件里面承载着媒体文件</span><span style="color: #008000;">--&gt;</span>
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">text class="username"</span><span style="color: #0000ff;">&gt;</span>你好，xx<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">text</span><span style="color: #0000ff;">&gt;</span> <span style="color: #008000;">&lt;!--</span><span style="color: #008000;">text组件里面填写文字，若文字中包含\n，那么就会换行</span><span style="color: #008000;">--&gt;</span>
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">view class="moto-container"</span><span style="color: #0000ff;">&gt;</span>
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">text class="moto"</span><span style="color: #0000ff;">&gt;</span>开启你的xx之路<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">text</span><span style="color: #0000ff;">&gt;</span>
+    <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">view</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">view</span><span style="color: #0000ff;">&gt;</span>    <br />&lt;!--image组件插入的图片，默认大小是300px * 250px--&gt;</pre>
+</div>
+<p>&nbsp;</p>
+<p>2、新建images文件夹，粘贴bb.png图片</p>
+<p>3、小程序的单位最好使用rpx，因为rpx会根据机型大小的变化而变化。px就不会</p>
+<p>4、welcome.wxss文件</p>
+<div class="cnblogs_code">
+<pre>Page{ <span style="color: #008000;">/*</span><span style="color: #008000;">整个小程序默认被 Page 标签包裹</span><span style="color: #008000;">*/</span><span style="color: #000000;">
+    background: #b3d4db;
+}
+.container{
+    display:flex;
+    flex</span>-<span style="color: #000000;">direction: column;
+    align</span>-<span style="color: #000000;">items: center;
+}
+image{
+    margin</span>-<span style="color: #000000;">top: 160rpx;
+    width:200rpx;
+    height:200rpx;
+}
+.username{
+    font</span>-<span style="color: #000000;">size: 32rpx;
+    font</span>-<span style="color: #000000;">weight: bold;
+}
+.moto</span>-<span style="color: #000000;">container{
+    margin</span>-<span style="color: #000000;">top: 200rpx;
+    width: 200rpx;
+    height: 80rpx;
+    border: 1px solid #405f80;
+    border</span>-<span style="color: #000000;">radius: 5px;
+    text</span>-<span style="color: #000000;">align: center;
+}
+.moto{
+    font</span>-<span style="color: #000000;">size: 22rpx;
+    line</span>-<span style="color: #000000;">height: 80rpx;
+    color: #405f80;
+    font</span>-<span style="color: #000000;">weight: bold;
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;5、在app.wxss中加入全局样式</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">text{
+    font</span>-<span style="color: #000000;">family: MicroSoft yahei;
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>6、修改状态栏颜色，在app.json中</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">{
+    </span>"pages"<span style="color: #000000;">: [
+        </span>"pages/welcome/welcome"<span style="color: #000000;">
+    ],
+    </span>"window"<span style="color: #000000;">:{
+        </span>"navigationBarBackgroundColor": "#b3d4db"<span style="color: #000000;">
+    }
+}  </span></pre>
+</div>
+<p>&nbsp;</p>
+<p>7、效果展示&nbsp;</p>
+<p>&nbsp;<img src="https://img2020.cnblogs.com/blog/1680452/202005/1680452-20200507151929666-1284902463.png" alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>&nbsp;移动设备的分辨率与rpx</h2>
+<p>&nbsp;一般psd设计图宽为750px，而iphone6宽为350px。这是逻辑分辨率与实际分辨率的问题</p>
+<p>&nbsp;<img src="https://img2020.cnblogs.com/blog/1680452/202005/1680452-20200507153727105-629255474.png" alt="" width="587" height="320" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;pt为逻辑分辨率，与屏幕物理尺寸有关系，长度单位，能直接看到的</p>
+<p>&nbsp;px为物理分辨率，像素点，和屏幕没有关系，一个pt可以有多个px的像素点</p>
+<p>&nbsp;</p>
+<h3>rpx单位</h3>
+<p>&nbsp;1、小程序里面px单位使用的是逻辑分辨率，所以需要使用rpx单位</p>
+<p>&nbsp;2、使用rpx，小程序会自动在不同的分辨率下进行切换，而使用px不会</p>
+<p>&nbsp;3、不是所有单位都适合用rpx</p>
+<p>&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/05%E3%80%81ES6%20class/" rel="prev" title="05、ES6 class">
+      <i class="fa fa-chevron-left"></i> 05、ES6 class
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/01%E3%80%81HTTP%20%20HTML%20%20%E6%B5%8F%E8%A7%88%E5%99%A8%E5%9F%BA%E7%A1%80/" rel="next" title="01、HTTP / HTML / 浏览器基础">
+      01、HTTP / HTML / 浏览器基础 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">一、申请小程序账号（AppID）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">二、下载并安装微信开发者工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">开发工具的UI简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">小程序调试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text">一、在控制台调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text">二、断点调试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">编写页面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text">详解三种格式的文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.2.</span> <span class="nav-text">应用程序级别文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.3.</span> <span class="nav-text">页面层级问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.4.</span> <span class="nav-text">编写准备</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">实战案例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text"> 移动设备的分辨率与rpx</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.1.</span> <span class="nav-text">rpx单位</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/",
+      identifier: "/uncategorized/小程序基础/",
+      title     : "小程序基础",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

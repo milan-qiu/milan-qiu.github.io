@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一、获取 &#x2F; 发送 请求前先引入（控制器页） use Illuminate\Http\Request; 二、配置好路由 三、上代码 public function qingqiu(Request $request){ &#x2F;&#x2F; 1、获取url的某个值 echo $request-&gt;input(&#39;name">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7、Controller之Request">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/7%E3%80%81Controller%E4%B9%8BRequest/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="一、获取 &#x2F; 发送 请求前先引入（控制器页） use Illuminate\Http\Request; 二、配置好路由 三、上代码 public function qingqiu(Request $request){ &#x2F;&#x2F; 1、获取url的某个值 echo $request-&gt;input(&#39;name">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-06-21T10:56:00.000Z">
+<meta property="article:modified_time" content="2026-08-20T06:32:52.567Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/7%E3%80%81Controller%E4%B9%8BRequest/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>7、Controller之Request | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/7%E3%80%81Controller%E4%B9%8BRequest/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          7、Controller之Request<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/7%E3%80%81Controller%E4%B9%8BRequest.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-21 18:56:00" itemprop="dateCreated datePublished" datetime="2020-06-21T18:56:00+08:00">2020-06-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-08-20 14:32:52" itemprop="dateModified" datetime="2026-08-20T14:32:52+08:00">2026-08-20</time>
+              </span>
+
+          
+            <div class="post-description">一、获取 / 发送 请求前先引入（控制器页） use Illuminate\Http\Request; 二、配置好路由 三、上代码 public function qingqiu(Request $request){ // 1、获取url的某个值 echo $request->input('name</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>一、获取 / 发送 请求前先引入（控制器页）</p>
+<div class="cnblogs_code">
+<pre>use Illuminate\Http\Request;</pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>二、配置好路由</p>
+<p>&nbsp;</p>
+<p>三、上代码</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">public</span><span style="color: #000000;"> function qingqiu(Request $request){
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 1、获取url的某个值</span>
+    echo $request-&gt;input(<span style="color: #800000;">'</span><span style="color: #800000;">name</span><span style="color: #800000;">'</span><span style="color: #000000;">);
+
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 2、给某个值设置默认，以防获取不到&lt;/span&gt;
+echo $request-&amp;gt;input(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;name&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;,&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;zhangzhang&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;);
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 3、判断url是否存在某值&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;if&lt;/span&gt;($request-&amp;gt;has(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;name&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;)){
+    echo $request&lt;/span&gt;-&amp;gt;input(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;name&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;);
+}&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;else&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;{
+    echo &lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;那个值不存在&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;;
+}
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 4、获取url的所有参数&lt;/span&gt;
+$res = $request-&amp;gt;&lt;span style=&quot;color: #000000;&quot;&gt;all();
+dd($res);
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 5、输出当前请求的类型&lt;/span&gt;
+echo $request-&amp;gt;&lt;span style=&quot;color: #000000;&quot;&gt;method();
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 6、判断当前请求类型是否是xx类型&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;if&lt;/span&gt;($request-&amp;gt;isMethod(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;POST&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;)){
+    echo &lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;yes&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;;
+}&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;else&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;{
+    echo &lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;no&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;;
+}
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 判断当前请求类型是否是ajax请求&lt;/span&gt;
+$res = $request-&amp;gt;&lt;span style=&quot;color: #000000;&quot;&gt;ajax();
+dd($res);
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 7、判断当前url是否有Xxx前缀&lt;/span&gt;
+$res = $request-&amp;gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;is&lt;/span&gt;(&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;Xxx/*&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&#39;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;);
+var_dump($res);
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 8、获取当前url&lt;/span&gt;
+$url = $request-&amp;gt;&lt;span style=&quot;color: #000000;&quot;&gt;url();
+echo $url;
+</code></pre>
+<p>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/PHP%E8%AF%BB%E5%8F%96Excel%EF%BC%8C%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93%20-%20PhpSpreadsheet/" rel="prev" title="PHP读取Excel，批量插入数据库 - PhpSpreadsheet">
+      <i class="fa fa-chevron-left"></i> PHP读取Excel，批量插入数据库 - PhpSpreadsheet
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/8%E3%80%81Controller%E4%B9%8BSession/" rel="next" title="8、Controller之Session">
+      8、Controller之Session <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/7%E3%80%81Controller%E4%B9%8BRequest/",
+      identifier: "/uncategorized/7、Controller之Request/",
+      title     : "7、Controller之Request",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

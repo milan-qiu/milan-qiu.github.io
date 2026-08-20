@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="环境准备 1、安装node.js，为了使用npm 2、装完后，cmd进入控制台，查看node版本号node -v，查看npm版本号npm -v 3、查看path环境变量，cmd进入控制台，输入path查看是否有node字样，没问题进入下一步。 4、安装git，为了快捷地开发 5、装完之后，在需要开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02、Vue基础详解">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/02%E3%80%81Vue%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="环境准备 1、安装node.js，为了使用npm 2、装完后，cmd进入控制台，查看node版本号node -v，查看npm版本号npm -v 3、查看path环境变量，cmd进入控制台，输入path查看是否有node字样，没问题进入下一步。 4、安装git，为了快捷地开发 5、装完之后，在需要开发">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-05T12:13:00.000Z">
+<meta property="article:modified_time" content="2020-04-07T08:07:00.000Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/02%E3%80%81Vue%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>02、Vue基础详解 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/02%E3%80%81Vue%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          02、Vue基础详解<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/02%E3%80%81Vue%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-05 20:13:00" itemprop="dateCreated datePublished" datetime="2020-04-05T20:13:00+08:00">2020-04-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-07 16:07:00" itemprop="dateModified" datetime="2020-04-07T16:07:00+08:00">2020-04-07</time>
+              </span>
+
+          
+            <div class="post-description">环境准备 1、安装node.js，为了使用npm 2、装完后，cmd进入控制台，查看node版本号node -v，查看npm版本号npm -v 3、查看path环境变量，cmd进入控制台，输入path查看是否有node字样，没问题进入下一步。 4、安装git，为了快捷地开发 5、装完之后，在需要开发</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2>环境准备</h2>
+<p>1、安装node.js，为了使用npm</p>
+<p>2、装完后，cmd进入控制台，查看node版本号node -v，查看npm版本号npm -v</p>
+<p>3、查看path环境变量，cmd进入控制台，输入path查看是否有node字样，没问题进入下一步。</p>
+<p>&nbsp;</p>
+<p>4、安装git，为了快捷地开发</p>
+<p>5、装完之后，在需要开发的文件夹里面右击，选择Git Bash Here</p>
+<p>&nbsp;</p>
+<p>6、由于npm源在国外速度慢，可以选择换源，或者使用淘宝镜像工具</p>
+<p>7、安装淘宝npm镜像，可以使用cnpm，代替npm</p>
+<div class="cnblogs_code">
+<pre>npm install -g cnpm --registry=https:<span style="color: #008000;">//</span><span style="color: #008000;">registry.npm.taobao.org</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>8、安装vue（其中的npm命令可以适当换成cnpm）</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">全局安装vue-cli</span>
+npm install --global vue-<span style="color: #000000;">cli
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">创建一个基于webpack模板的新项目</span><br>vue init webpack my-<span style="color: #000000;">project<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">其他选项都可以直接回车或输入N回车，在vue-router的时候，输入Y回车<br />&#x2F;&#x2F;当看见All packages installed，就完成了<br /></span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">安装依赖包</span><br>cd my-<span style="color: #000000;">project<br>npm install<br>npm run dev</span></pre></p>
+</div>
+<p>&nbsp;9、项目进行中时不要关闭git，若关闭了重新打开：cd my-project&nbsp; ,npm run dev 即可</p>
+<p>&nbsp;</p>
+<h2>项目的创建</h2>
+<p>&nbsp;1、在src目录下面创建自己的项目文件夹，如bb</p>
+<p>&nbsp;2、在该项目下面创建视图文件，xxx.vue</p>
+<div class="cnblogs_code">
+<pre>&lt;template&gt;
+　　&lt;p&gt;Hello World&lt;/p&gt;
+&lt;/template&gt;</pre>
+</div>
+<p>&nbsp;3、设置路由，src目录下的router下的index.js，如：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">import HelloWorld from </span>'@/components/HelloWorld' <span style="color: #008000;">/*</span><span style="color: #008000;">当前@表示src目录</span><span style="color: #008000;">*/</span><span style="color: #000000;">
+import xiangmu from </span>'@/xiangmu/index.vue' <span style="color: #008000;">/*</span><span style="color: #008000;">第二种引入方式</span><span style="color: #008000;">*/</span><span style="color: #000000;">
+
+<p>export </span><span style="color: #0000ff;">default</span> <span style="color: #0000ff;">new</span><span style="color: #000000;"> Router({<br>  routes: [{<br>      path: </span>‘&#x2F;‘, <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">当地址栏输入&#x2F;的时候，找到下面component的地址</span><br>      name: ‘HelloWorld’, <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">按照需求给这个路由命名</span><br>      component: HelloWorld <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">地址栏</span><br>    }, <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">记得两个路由之间要加上逗号</span><br><span style="color: #000000;">    {<br>      path: </span>‘&#x2F;xiangmu’<span style="color: #000000;">,<br>      name: </span>‘xiangmu’<span style="color: #000000;">,<br>      </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> component: require(‘@&#x2F;xiangmu&#x2F;index.vue’) &#x2F;&#x2F;第一种引入方式，这种方式有些版本不支持</span><br>      component: xiangmu <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">第二种方式，全通用</span><br><span style="color: #000000;">    }<br>  ]<br>})</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;4、去掉默认大logo，src目录下App.vue，删除开头的的&lt;img src="./assets/logo.png"&gt;标签，完成</p>
+<p>&nbsp;5、浏览器访问&nbsp; http://localhost:8080/#/&nbsp; 到达首页</p>
+<p>&nbsp;&nbsp;</p>
+<h2>生命周期</h2>
+<p>生命周期图片：<a target="_blank" rel="noopener" href="https://cn.vuejs.org/images/lifecycle.png">https://cn.vuejs.org/images/lifecycle.png</a></p>
+<p>组件生成的时候就会自动调用生命周期函数，具体生命周期的实现如：</p>
+<div class="cnblogs_code">
+<pre>&lt;script&gt;<span style="color: #000000;">
+    export </span><span style="color: #0000ff;">default</span><span style="color: #000000;">{
+        data(){   </span><span style="color: #008000;">//</span><span style="color: #008000;">每个组件都会有data这个函数</span>
+            <span style="color: #0000ff;">return</span><span style="color: #000000;">{}
+        },  </span><span style="color: #008000;">//</span><span style="color: #008000;">两函数之间要用逗号隔开</span>
+<span style="color: #000000;">
+        beforeCreate(){
+            console.log(</span>'beforeCreate 创建之前'<span style="color: #000000;">);
+        },
+        created(){
+            console.log(</span>'created 已经创建'<span style="color: #000000;">);
+        },
+        beforeMount(){
+            console.log(</span>'beforeMount 挂载之前'<span style="color: #000000;">);
+        },
+        mounted(){
+            console.log(</span>'mounted 已经挂载'<span style="color: #000000;">);
+        },
+                
+<pre><code>    &lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;生命周期函数监听到才触发&lt;/span&gt;
+</code></pre>
+<span style="color: #000000;">
+        beforeUpdate(){
+            console.log(</span>'beforeUpdate 更新之前'<span style="color: #000000;">);
+        },
+        updated(){
+            console.log(</span>'updated 已经更新'<span style="color: #000000;">);
+        },
+        beforeDestroy(){
+            console.log(</span>'beforeDestroy 销毁之前'<span style="color: #000000;">);
+        },
+        destroyed(){
+            console.log(</span>'destroyed 已经销毁'<span style="color: #000000;">);
+        }
+    }
+</span>&lt;/script&gt;</pre>
+</div>
+<p>&nbsp;</p>
+<h2>选项数据</h2>
+<h3>data</h3>
+<div class="cnblogs_code">
+<pre>  export <span style="color: #0000ff;">default</span><span style="color: #000000;"> {
+    data() {
+      </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> {
+        bb: </span>'hello', <span style="color: #008000;">//</span><span style="color: #008000;">两个变量之间用逗号分隔</span>
+        cc: 'how are you' <span style="color: #008000;">//</span><span style="color: #008000;">这里定义的是全局变量，视图模板可以用，后续函数也可以用</span>
+<span style="color: #000000;">      }
+    },<br />　　//code...
+  }</span></pre>
+</div>
+<p>模板调用</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">template</span><span style="color: #0000ff;">&gt;</span>
+  <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;　　&lt;!-- 如需调用不多个选项数据，那必须在该div里面 --&gt;</span>
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span>{{bb}}<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span> <span style="color: #008000;">&lt;!--</span><span style="color: #008000;">模板调用只需要 {{变量名}} 即可</span><span style="color: #008000;">--&gt;<br />　　&lt;!-- code... --&gt;</span>
+  <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">template</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<h2>computed</h2>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">//接着上面的export default 里面定义<br />computed: { </span><span style="color: #008000;">//</span><span style="color: #008000;">computed是一个对象，里面可以定义各种函数</span>
+<span style="color: #000000;">　　hi() {
+</span><span style="color: #0000ff;">　　　　return</span> <span style="color: #0000ff;">this</span>.bb + <span style="color: #0000ff;">this</span>.cc; <span style="color: #008000;">//</span><span style="color: #008000;">调用data里面的变量 = this.变量名</span>
+<span style="color: #000000;">　　}
+}, </span></pre>
+</div>
+<p>模板调用</p>
+<div class="cnblogs_code">
+<pre>//接着在模板{{bb}}后面写<br />&lt;div&gt;{{hi}}&lt;/div&gt;</pre>
+</div>
+<p>&nbsp;</p>
+<h2>methods</h2>
+<div class="cnblogs_code">
+<pre>methods:{  <span style="color: #008000;">//</span><span style="color: #008000;">methods对象，里面定义各种行为性的函数</span>
+<span style="color: #000000;">　　hello(){
+　　　　alert(</span>"hello"<span style="color: #000000;">);
+　　}
+}</span></pre>
+</div>
+<p>模板调用</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">接着在模板{{hi}}后面写</span>
+&lt;div @click="hello()"&gt;打招呼&lt;/div&gt;  //用@click给该div绑定点击事件<br />//函数不需要传参时，后面()可写可不写</pre>
+</div>
+<p>&nbsp;</p>
+<h2>模板语法&nbsp;</h2>
+<h3>data语法</h3>
+<p>//在模板输出data属性（选项数据说过）</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">data定义</span>
+<span style="color: #000000;">data() {
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> {
+        bb: </span>'Hello!'<span style="color: #000000;">
+    }
+}    
+</span><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div&gt;{{bb}}&lt;/div&gt;</pre>
+</div>
+<p>&nbsp;</p>
+<h3>嵌入js语法</h3>
+<p>//在模板上面嵌入js</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">data定义</span>
+<span style="color: #000000;">data() {
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> {
+        bb: </span>'Hello!  ', <span style="color: #008000;">//</span><span style="color: #008000;">两个变量之间用逗号分隔</span>
+        cc: 'How are you?' <span style="color: #008000;">//</span><span style="color: #008000;">这里定义的是全局变量，视图模板可以用，后续函数也可以用</span>
+<span style="color: #000000;">    }
+}  
+</span><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div&gt;{{bb + cc +bb}}&lt;/div&gt;  //js的字符串拼接 </pre>
+</div>
+<p>&nbsp;</p>
+<h3>v-html</h3>
+<p>//动态地嵌入html标签</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">data定义</span>
+<span style="color: #000000;">data() {
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> {
+        dt:</span>"&lt;p&gt;html是动态的，更改data里面属性值，html就会变化&lt;/p&gt;"<span style="color: #000000;">
+    }
+}
+</span><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div v-html="dt"&gt;&lt;/div&gt;    //将dt里面的html嵌入到这个div里面</pre>
+</div>
+<p>&nbsp;</p>
+<h3>v-bind</h3>
+<p>//动态的属性名</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">data定义</span>
+<span style="color: #000000;">data() {
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> {
+        lei:</span>"nihao"<span style="color: #000000;">
+    }
+}
+</span><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div v-bind:class="lei"&gt;&lt;/div&gt;    
+<span style="color: #008000;">//</span><span style="color: #008000;">class = data里面lei的value 。</span><span style="color: #008000;">
+//</span><span style="color: #008000;">更改lei的value，该div的class就会发生改变</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>v-on</h3>
+<p>//绑定事件函数</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">methods定义</span>
+<span style="color: #000000;">methods:{
+    say(h){
+        alert(h);
+    }
+}
+</span><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div v-on:click="say(hi)"&gt;点击触发函数&lt;/div&gt;    
+<span style="color: #008000;">//</span><span style="color: #008000;">缩写形式：@click="say(hi)"</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>过滤器</h3>
+<p>//对模板中的变量进行过滤，通过过滤器，改变原来的输出</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">data定义</span>
+<span style="color: #000000;">data() {
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> {
+        bb:</span>"你好！"<span style="color: #000000;">
+    }
+},
+</span><span style="color: #008000;">//</span><span style="color: #008000;">filters定义，filters里面定义各种过滤器函数</span>
+<span style="color: #000000;">methods:{
+    say(h){
+        alert(h</span>+<span style="color: #000000;">h);
+    }
+}
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">模板输出</span><br>&lt;div&gt; {{bb | say(bb)}} &lt;&#x2F;div&gt;    &#x2F;&#x2F;输出结果：你好！你好！<br><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">没有过滤器的时候直接输出bb变量，通过say(bb)过滤器,输出了两个bb变量</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>计算属性（computed）</h3>
+<p>//模板与js分离（过多的嵌套js会导致模板页面维护成本变高）</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">js分离：模板文件容易维护</span>
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">data定义</span><br><span style="color: #000000;">data() {<br>    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> {<br>        bb:</span>“Hello！”<span style="color: #000000;"><br>    }<br>},<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">computed定义</span><br><span style="color: #000000;">computed: {<br>    fanzhuan(){<br>        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">this</span>.bb.split(‘’).reverse().join(‘’<span style="color: #000000;">);<br>    }<br>}<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">模板输出</span><br>&lt;div&gt; {{bb}} &lt;&#x2F;div&gt;</pre></p>
+</div>
+<p>&nbsp;</p>
+<h2>class动态绑定</h2>
+<h3>第一种方式</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div v-bind:class="{'inner':isinner,'active':isactive}"&gt;第一种&lt;/div&gt; 
+&lt;!-- 用了引号的是class名，没用引号的是变量 --&gt;
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">data定义</span><br><span style="color: #000000;">data(){<br />　　return{<br>     isinner:</span><span style="color: #0000ff;">true</span>,    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">true表示该属性生效</span><br>     isactive:<span style="color: #0000ff;">false</span>  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">false表示该属性不生效<br />　　}<br /></span>}</pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>第二种方式（个人推荐）</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div :class="classObject"&gt;第二种&lt;/div&gt;
+&lt;!-- :class 是 v-bind:class 的缩写 --&gt;
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">data定义</span><br><span style="color: #000000;">data(){<br>    </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{<br>        isinner:</span><span style="color: #0000ff;">false</span>,    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">false表示该属性不生效</span><br>        isactive:<span style="color: #0000ff;">true</span>  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">true表示该属性生效</span><br>        <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里可以添加适当多的class</span><br><span style="color: #000000;">    }<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>第三种</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div :class="[aclass,bclass]"&gt;第三种&lt;/div&gt;
+&lt;!-- 这里aclass和bclass指的是data的变量 --&gt;
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">data定义</span><br><span style="color: #000000;">data(){<br>    </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{<br>        aclass:</span>‘abc’<span style="color: #000000;">,<br>        bclass:</span>‘def’<span style="color: #000000;"><br>    }<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>style动态绑定</h2>
+<p>//不推荐style嵌套在html中</p>
+<h3>第一种</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div v-bind:style="{'color':color1,'background-color':color2}"&gt;style第一种&lt;/div&gt;
+&lt;!-- 这里color1 和 color2指的是data的变量 --&gt;
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">data定义</span><br><span style="color: #000000;">data(){<br>    </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{<br>        color1:</span>‘red’,    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里所有不加引号的都表示变量</span><br>        color2:’orange’  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">加了引号的才表示字符串</span><br><span style="color: #000000;">    }<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>第二种</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div v-bind:style="styleObject"&gt;style第二种&lt;/div&gt;
+&lt;!-- 所有样式都可以存储在styleObject里面 --&gt;
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">data定义</span><br><span style="color: #000000;">data(){<br>    </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{<br>        styleObject:{<br>            </span>‘color’:’yellow’<span style="color: #000000;">,<br>            </span>‘background-color’:’green’<br>            <span style="color: #008000;">&#x2F;<em></span><span style="color: #008000;">这里可以添加各种样式</span><span style="color: #008000;"></em>&#x2F;</span><span style="color: #000000;"><br>       }<br>    }<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>第三种</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div v-bind:style="[ziti,beijing]"&gt;style第三种&lt;/div&gt;
+&lt;!-- 数组里面的ziti和beijing都是对象，每个对象都可以有多种样式 --&gt;
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">data定义</span><br><span style="color: #000000;">data(){<br>    </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{<br>       ziti:{ </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里可以添加多种样式</span><br>         ‘color’:’cyan’<span style="color: #000000;"><br>       },<br>       beijing:{ </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里可以添加多种样式</span><br>         ‘background-color’:’blue’<span style="color: #000000;"><br>       }<br>    }<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h2>条件渲染</h2>
+<h3>v-if</h3>
+<p>//当v-if的属性值为真就执行</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div v-<span style="color: #0000ff;">if</span>="bb"&gt;当bb为真，打印出if语句&lt;/div&gt;
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">data定义</span><br><span style="color: #000000;">data(){<br>    </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{<br>        bb:</span><span style="color: #0000ff;">true</span><span style="color: #000000;"><br>    }<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>v-if&nbsp; v-else</h3>
+<p>//若v-if条件为假，则执行v-else的内容</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div v-<span style="color: #0000ff;">if</span>="bb === 'A'"&gt;选项A&lt;/div&gt;&lt;!-- 判断bb变量的值是否===A，是就执行 --&gt;
+&lt;div v-<span style="color: #0000ff;">else</span>&gt;其他选项&lt;/div&gt;
+&lt;!-- 注意v-else后面不需要属性值 --&gt;
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">data定义</span><br><span style="color: #000000;">data(){<br>    </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{<br>        bb:</span>‘A’    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里控制if和else哪个输出</span><br><span style="color: #000000;">    }<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>v-if&nbsp; v-else-if&nbsp; v-else</h3>
+<p>//若条件不等于v-if v-else-if，则输出v-else</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div v-<span style="color: #0000ff;">if</span>="dd==='D'"&gt;dd==='D'输出这项&lt;/div&gt;
+&lt;div v-<span style="color: #0000ff;">else</span>-<span style="color: #0000ff;">if</span>="dd==='E'"&gt;dd==='E'输出这项&lt;/div&gt;
+&lt;div v-<span style="color: #0000ff;">else</span>&gt;dd的变量非DE，输出这项&lt;/div&gt;
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">data定义</span><br><span style="color: #000000;">data(){<br>    </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{<br>        dd:</span>‘E’    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里控制输出语句</span><br><span style="color: #000000;">    }<br>}</span></pre></p>
+</div>
+<h3>&nbsp;v-show</h3>
+<p>//跟v-if差不多一样，只要条件为真就输出</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div v-show="bb"&gt;当bb为真输出此语句&lt;/div&gt;
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">data定义</span><br><span style="color: #000000;">data(){<br>    </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{<br>        bb:</span><span style="color: #0000ff;">true</span><span style="color: #000000;"><br>    }<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>列表渲染</h2>
+<h3>v-for循环输出数组</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div&gt;
+&lt;ul&gt;
+    &lt;li v-<span style="color: #0000ff;">for</span>="child in parents"&gt;{{child}}&lt;/li&gt;
+    &lt;!-- 其中parents为数组变量，child为数组中的每一项数据，child名字自定以 --&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">data定义</span><br><span style="color: #000000;">data(){<br>    </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{<br>        parents:[</span>1,2,3,4,5]     <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">数组定义</span><br><span style="color: #000000;">    }<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>v-for循环数组，带下标</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div&gt;
+&lt;ul&gt;
+    &lt;li v-<span style="color: #0000ff;">for</span>="(child,index) in parents"&gt;{{child}}下标为{{index}}&lt;/li&gt;
+    &lt;!-- 其中parents为数组变量，child为数组中的每一项数据，index为所对应的数组下标 --&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">data定义</span><br><span style="color: #000000;">data(){<br>    </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{<br>        parents:[</span>1,2,3,4,5]     <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">数组定义</span><br><span style="color: #000000;">    }<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>v-for循环输出对象</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div&gt;
+&lt;ul&gt;
+      &lt;li v-<span style="color: #0000ff;">for</span>="(value,key) in obj"&gt;{{key}}:{{value}}&lt;/li&gt;
+      &lt;!-- ()里面的值，第一个必须是属性值value，其次才是key，不然容易混乱 --&gt;
+      &lt;!-- obj为对象变量--&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">data定义</span><br><span style="color: #000000;">data(){<br>    </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{<br>        obj:{<br>          </span>‘name’:’张三’<span style="color: #000000;">,<br>          </span>‘age’:’18岁’<span style="color: #000000;">,<br>          </span>‘sex’:’female’<span style="color: #000000;">,<br>          </span>‘address’:’beijing’<span style="color: #000000;"><br>        }<br>    }<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h2>事件处理器</h2>
+<p>//v-on:click的缩写是@click</p>
+<p>行内直接执行</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;按钮被点击了{{a}}次&lt;/p&gt;
+      &lt;button v-on:click="a+=1"&gt;计算点击次数&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+<span style="color: #008000;">//</span><span style="color: #008000;">data定义</span>
+<span style="color: #000000;">data(){
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{
+       a:</span>0<span style="color: #000000;">
+    }
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>行内调用函数（不传参）</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;按钮被点击了{{a}}次&lt;/p&gt;
+      &lt;button v-on:click="count"&gt;计算点击次数&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+<span style="color: #008000;">//</span><span style="color: #008000;">data定义</span>
+<span style="color: #000000;">data(){
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{
+       a:</span>0<span style="color: #000000;">
+    }
+}
+</span><span style="color: #008000;">//</span><span style="color: #008000;">methods定义</span>
+<span style="color: #000000;">methods:{
+    count(){
+        </span><span style="color: #0000ff;">this</span>.a+=1<span style="color: #000000;">;
+    }
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>行内调用函数（传参）</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">模板输出</span>
+&lt;div&gt;
+    &lt;div&gt;
+      &lt;button v-on:click="hello('打招呼实参')"&gt;调用传参的函数&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+<span style="color: #008000;">//</span><span style="color: #008000;">methods定义</span>
+<span style="color: #000000;">methods:{
+    hello(a){
+        alert(a);
+    }
+}</span></pre>
+</div>
+<p>&nbsp;默认冒泡机制（不阻止）</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//点击会有两个弹框<br />//</span><span style="color: #008000;">模板输出</span>
+&lt;div&gt;
+    &lt;div @click="hello('第二次冒泡')"&gt;
+        &lt;button v-on:click="hello('第一次冒泡')"&gt;调用传参的函数&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+<span style="color: #008000;">//</span><span style="color: #008000;">methods定义</span>
+<span style="color: #000000;">methods:{
+    hello(a){
+        alert(a);
+    }
+}</span></pre>
+</div>
+<p>阻止冒泡</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//只会出现一个弹框<br />//</span><span style="color: #008000;">模板输出</span>
+&lt;div&gt;
+    &lt;div @click="hello('第二次冒泡')"&gt;
+        &lt;button v-on:click="hello('第一次冒泡')"&gt;调用传参的函数&lt;/button&gt;
+<span style="color: #008000;">//</span><span style="color: #008000;">阻止冒泡只需在v-on:click或@click后面加上 .stop 即可</span>
+    &lt;/div&gt;
+&lt;/div&gt;
+<span style="color: #008000;">//</span><span style="color: #008000;">methods定义</span>
+<span style="color: #000000;">methods:{
+    hello(a){
+        alert(a);
+    }
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<h2>自定义组件</h2>
+<h3>首先</h3>
+<p>在src的components下面写好组件</p>
+<div class="cnblogs_code">
+<pre>&lt;template&gt;
+   &lt;div&gt;{{time}}&lt;/div&gt;
+&lt;/template&gt;
+
+<p>&lt;script&gt;<span style="color: #000000;"><br> export </span><span style="color: #0000ff;">default</span><span style="color: #000000;">{<br>   data(){<br>     </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{<br>       time:</span>100<span style="color: #000000;"><br>     }<br>   },<br>   mounted(){  </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">组件被挂载之后执行</span><br>   <span style="color: #0000ff;">var</span> t &#x3D; <span style="color: #0000ff;">this</span><span style="color: #000000;">;<br>   </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">把整个data函数存储路径复制过来，这样修改time值才会改变</span><br>   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">原理是引用数据类型直接赋值的是路径，而不是数据本身，直接修改的话是修改源函数</span><br>   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">若直接把this.time复制过来的话，复制的是基本数据类型，更改基本数据类型的数据起不到页面数据更改的效果</span><br>   setInterval(<span style="color: #0000ff;">function</span><span style="color: #000000;">(){<br>       t.time</span>–; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这样更改才会改变data里面的源数据</span><br>     },1000<span style="color: #000000;">)<br>   }<br> }<br></span>&lt;&#x2F;script&gt;</pre></p>
+</div>
+<h3><span style="font-size: 1.17em;">接着</span></h3>
+<p>在需要组件的页面上</p>
+<div class="cnblogs_code">
+<pre>&lt;template&gt;
+  &lt;div&gt;
+    &lt;div&gt;引入components插件&lt;/div&gt;
+    <span style="color: #008000;">//</span><span style="color: #008000;">&lt;!-- 第四步：在模板某个地方生成组件 --&gt;</span>
+    &lt;daoji&gt; 若在第三步更换了名字，则标签就是该名字 &lt;/daoji&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+<p>&lt;script&gt;<br><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">第一步：像写路由一样，把页面引进来</span><br>import daoji from ‘@&#x2F;components&#x2F;daoji.vue’<span style="color: #000000;"></p>
+<p>  export </span><span style="color: #0000ff;">default</span><span style="color: #000000;">{<br>    data(){<br>      </span><span style="color: #0000ff;">return</span><span style="color: #000000;">{<br>      }<br>    },<br>    components:{  </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">第二步：把引进来的组件写进去才能生效</span><br>      daoji   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">第三步：可以更换名字，如：’aa’:daoji，这样也能生效</span><br><span style="color: #000000;">    }<br>  }<br></span>&lt;&#x2F;script&gt;</pre></p>
+</div>
+<p>&nbsp;</p>
+<h2>添加组件样式</h2>
+<p>1、在调用组件的页面，传参到components组件页</p>
+<div class="cnblogs_code">
+<pre>&lt;jj col="red"&gt;这是生成组件的标签&lt;/jj&gt;
+    <span style="color: #008000;">//</span><span style="color: #008000;">将col属性传入components页</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>2、在components组件页，script部分接收参数</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">这个对象定义在export default里面<br /></span>
+props:{  <span style="color: #008000;">//</span><span style="color: #008000;">接收数据的对象</span>
+    col:{    <span style="color: #008000;">//</span><span style="color: #008000;">发送过来的col，满足下面条件才生效</span>
+        type:String,  <span style="color: #008000;">//</span><span style="color: #008000;">要求接收到的是字符串,String首字母一定要大写</span>
+        <span style="color: #0000ff;">default</span>:'black'  <span style="color: #008000;">//</span><span style="color: #008000;">默认值，没接收到数据时用</span>
+<span style="color: #000000;">    }
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>3、在components组件页，template部分定义样式</p>
+<div class="cnblogs_code">
+<pre>&lt;template&gt;
+   &lt;p :style="{color:col}"&gt;{{time}}&lt;/p&gt;
+&lt;/template&gt;</pre>
+</div>
+<p>&nbsp;</p>
+<h2>添加组件行为</h2>
+<p>1、components组件页中，当倒计时结束时，触发函数end</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">if</span>(t.time == 0<span style="color: #000000;">){
+t.$emit(</span>"end"); <span style="color: #008000;">//</span><span style="color: #008000;">当time=0时，触发end，end是自定义的名称</span>
+<span style="color: #000000;">clearInterval(dd);
+}</span></pre>
+</div>
+<p>2、在调用页中定义@end，并指定页面中触发的函数ending</p>
+<div class="cnblogs_code">
+<pre>&lt;jj @end="ending"&gt; 这是生成组件的标签 &lt;/jj&gt;</pre>
+</div>
+<p>3、同时在调用页中定义ending函数</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">methods:{
+    ending(){
+        alert(</span>"结束了"<span style="color: #000000;">);
+    }
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<h2>DOM操作</h2>
+<p>首先在模板文件定义ref属性，如</p>
+<div class="cnblogs_code">
+<pre>&lt;div ref="hhead"&gt;&lt;/div&gt;   //ref属性值自定义</pre>
+</div>
+<p>接着在mounted下操作DOM</p>
+<div class="cnblogs_code">
+<pre>mounted(){  <span style="color: #008000;">//</span><span style="color: #008000;">在mounted下，所有的DOM都是真实DOM</span>
+  <span style="color: #0000ff;">this</span>.$refs.hhead.innerText = '经过Dom操作出来的内容'<span style="color: #000000;">;
+ </span><span style="color: #008000;">//</span><span style="color: #008000;">this . $refs . 模板ref属性值 . innerText等操作</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<h2>&nbsp;过渡效果</h2>
+<p>&nbsp;//没有过渡效果时，隐藏和出现都是一闪而过</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">template模板</span>
+&lt;div id="demo"&gt;
+    &lt;button v-on:click="show = !show"&gt;    <span style="color: #008000;">//</span><span style="color: #008000;">点击按钮实现show的真假转换</span>
+<span style="color: #000000;">        Toggle
+    </span>&lt;/button&gt;
+    &lt;transition name="fade"&gt;    <span style="color: #008000;">//</span><span style="color: #008000;">vue框架的过渡标签，不定义样式不起效果</span>
+        &lt;p v-<span style="color: #0000ff;">if</span>="show"&gt;hello&lt;/p&gt;    //通过获取show的真假，实现p标签是否输出
+    &lt;/transition&gt;
+&lt;/div&gt;
+<span style="color: #008000;">//</span><span style="color: #008000;">data函数定义</span>
+<span style="color: #000000;">data() {
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> {
+        show: </span><span style="color: #0000ff;">true</span><span style="color: #000000;">
+    }
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>//添加过渡效果，实现淡入淡出</p>
+<div class="cnblogs_code">
+<pre>&lt;style&gt;
+<span style="color: #008000;">/*</span><span style="color: #008000;">获取transition标签的name属性</span><span style="color: #008000;">*/</span><span style="color: #000000;">
+.fade</span>-leave,.fade-enter-to{ <span style="color: #008000;">/*</span><span style="color: #008000;">一般默认opacity都是1，这项可省略</span><span style="color: #008000;">*/</span><span style="color: #000000;">
+  opacity:</span>1<span style="color: #000000;">;
+}
+.fade</span>-leave-active,.fade-enter-<span style="color: #000000;">active{
+  transition: opacity .5s;  </span><span style="color: #008000;">/*</span><span style="color: #008000;">过渡效果为opacity，在0.5秒内完成</span><span style="color: #008000;">*/</span><span style="color: #000000;">
+}
+.fade</span>-leave-to,.fade-<span style="color: #000000;">enter{
+  opacity:</span>0<span style="color: #000000;">;
+}
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">样式中.fade表示transition的name值</span><span style="color: #008000;">*/</span>
+&lt;/style&gt;
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">（淡入）隐藏效果opacity从1到0，分为三个状态呈现</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">.fade-leave(1) -&gt; .fade-leave-active(.5) -&gt; .fade-leave-to(0)</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">（淡出）出现效果opacity从0到1，分为三个状态呈现</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">.fade-enter(0) -&gt; .fade-enter-active(.5) -&gt; .fade-enter-to(1)</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h2>路由跳转（vue-router）</h2>
+<h3>模板直接跳转</h3>
+<div class="cnblogs_code">
+<pre>&lt;div&gt;
+    &lt;router-link to="/liebiao"&gt;列表渲染（直接跳转）&lt;/router-link&gt;
+    <span style="color: #008000;">//</span><span style="color: #008000;">&lt;!-- router-link相当于a标签，to相当于href，to的属性值为路由表的path --&gt;</span>
+&lt;/div&gt;</pre>
+</div>
+<h3>模板带参数跳转（带params）</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">视图模板（发送页）</span>
+&lt;div&gt;
+    &lt;router-link :to="{name:'tiaojian',params:{name:'zhangsan'}}"&gt;条件渲染（带参数跳转）&lt;/router-link&gt;
+    <span style="color: #008000;">//</span><span style="color: #008000;">&lt;!-- :to表示v-bind:to，后面的参数可以直接用变量 --&gt;</span>
+    <span style="color: #008000;">//</span><span style="color: #008000;">&lt;!-- 跳转方式可以用name跳转（name:'tiaojian'），也可以用path跳转（path:'/tiaojian'）,参照router下的路由表 --&gt;</span>
+    <span style="color: #008000;">//</span><span style="color: #008000;">&lt;!-- params后面的参数是通过get的方式发送， --&gt;</span>
+&lt;/div&gt;
+<span style="color: #008000;">//</span><span style="color: #008000;">路由表</span>
+<span style="color: #000000;">{
+    path:</span>'/tiaojian/:name',      <span style="color: #008000;">//</span><span style="color: #008000;">:name表示：接收name属性 所对应的对象params，及后面的对象query，的所有内容</span>
+    name:'tiaojian'<span style="color: #000000;">,
+    component:tiaojian
+}
+</span><span style="color: #008000;">//</span><span style="color: #008000;">mounted函数（接收页）</span>
+<span style="color: #000000;">mounted(){
+    alert(</span><span style="color: #0000ff;">this</span><span style="color: #000000;">.$route.params.name);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 接收params数据用：this.$route.params.属性名</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<h3>模板带参数跳转（带params &amp; query）</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">视图模板（发送页）</span>
+&lt;div&gt;
+    &lt;router-link :to="{ name:'bangding',params:{name:'张三',address:'北京'},query:{age:18} }"&gt;<span style="color: #000000;">
+    css与style绑定
+    </span>&lt;/router-link&gt;
+&lt;/div&gt;
+<span style="color: #008000;">//</span><span style="color: #008000;">路由表</span>
+<span style="color: #000000;">{
+    path: </span>'/bangding/:name',  <span style="color: #008000;">//</span><span style="color: #008000;">:name表示：接收name属性 所对应的对象params，及后面的对象query，的所有内容</span>
+    name: 'bangding'<span style="color: #000000;">,
+    component: bangding
+}
+</span><span style="color: #008000;">//</span><span style="color: #008000;">mounted函数（接收页）</span>
+<span style="color: #000000;">mounted(){
+    alert(</span><span style="color: #0000ff;">this</span><span style="color: #000000;">.$route.query.age);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">接收query数据：this.$route.query.属性名</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<h3>js直接跳转</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">视图模板（发送页）</span>
+&lt;div @click="toUrl"&gt;组件(js直接跳)&lt;/div&gt;
+<span style="color: #008000;">//</span><span style="color: #008000;">methods（发送页）</span>
+<span style="color: #000000;">methods:{
+    toUrl(){
+        </span><span style="color: #0000ff;">this</span>.$router.push({ path:'/zujian'<span style="color: #000000;"> });
+    }
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>js跳转（带params）</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">视图模板（发送页）</span>
+&lt;div v-on:click="url"&gt;事件处理（js跳，带params）&lt;/div&gt;
+<span style="color: #008000;">//</span><span style="color: #008000;">methods（发送页）</span>
+<span style="color: #000000;">methods:{
+    url(){
+      </span><span style="color: #0000ff;">this</span>.$router.push({name:'shijian',params:{fa:'带params参数跳'<span style="color: #000000;">}});
+    }
+}
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">接收页的路由表</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">根据实际情况选择写或不写</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">mounted函数（接收页）</span><br><span style="color: #000000;">mounted(){<br>    alert(</span><span style="color: #0000ff;">this</span><span style="color: #000000;">.$route.params.fa);<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>js跳转（带params &amp; query）</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">视图模板（发送页）</span>
+&lt;div @click="uurl"&gt;项目（js跳，带params &amp; query）&lt;/div&gt;
+<span style="color: #008000;">//</span><span style="color: #008000;">methods（发送页）</span>
+<span style="color: #000000;">methods:{
+    uurl(){
+      </span><span style="color: #0000ff;">this</span>.$router.push({ name:'xiangmu',params:{msg:'params&gt;msg属性值'},query:{gg:'query&gt;gg 属性值'<span style="color: #000000;">} });
+    }
+}
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">接收页的路由表</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">根据实际情况选择写或不写</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">mounted函数（接收页）</span><br><span style="color: #000000;">mounted(){<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">路由表没有添加params的属性情况</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">1、则地址栏接收不到params，但是页面实际是可以收到的</span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">2、地址栏可以正常接收query</span><br>      alert(<span style="color: #0000ff;">this</span><span style="color: #000000;">.$route.params.msg);<br>      alert(</span><span style="color: #0000ff;">this</span><span style="color: #000000;">.$route.query.gg);<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>建议：不带参数时用path跳转，带参数时用name跳转</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/Sublime%20Text3/" rel="prev" title="Sublime Text3">
+      <i class="fa fa-chevron-left"></i> Sublime Text3
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/03%E3%80%81Vue%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3%E4%BA%8C/" rel="next" title="03、Vue基础详解二">
+      03、Vue基础详解二 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">项目的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">选项数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text">data</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">computed</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">模板语法 </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.1.</span> <span class="nav-text">data语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.2.</span> <span class="nav-text">嵌入js语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.3.</span> <span class="nav-text">v-html</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.4.</span> <span class="nav-text">v-bind</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.5.</span> <span class="nav-text">v-on</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.6.</span> <span class="nav-text">过滤器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.7.</span> <span class="nav-text">计算属性（computed）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">class动态绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">8.1.</span> <span class="nav-text">第一种方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">8.2.</span> <span class="nav-text">第二种方式（个人推荐）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">8.3.</span> <span class="nav-text">第三种</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">9.</span> <span class="nav-text">style动态绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.1.</span> <span class="nav-text">第一种</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.2.</span> <span class="nav-text">第二种</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.3.</span> <span class="nav-text">第三种</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">10.</span> <span class="nav-text">条件渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">10.1.</span> <span class="nav-text">v-if</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">10.2.</span> <span class="nav-text">v-if  v-else</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">10.3.</span> <span class="nav-text">v-if  v-else-if  v-else</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">10.4.</span> <span class="nav-text"> v-show</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">11.</span> <span class="nav-text">列表渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.1.</span> <span class="nav-text">v-for循环输出数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.2.</span> <span class="nav-text">v-for循环数组，带下标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.3.</span> <span class="nav-text">v-for循环输出对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">12.</span> <span class="nav-text">事件处理器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">13.</span> <span class="nav-text">自定义组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">13.1.</span> <span class="nav-text">首先</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">13.2.</span> <span class="nav-text">接着</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">14.</span> <span class="nav-text">添加组件样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">15.</span> <span class="nav-text">添加组件行为</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">16.</span> <span class="nav-text">DOM操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">17.</span> <span class="nav-text"> 过渡效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">18.</span> <span class="nav-text">路由跳转（vue-router）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">18.1.</span> <span class="nav-text">模板直接跳转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">18.2.</span> <span class="nav-text">模板带参数跳转（带params）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">18.3.</span> <span class="nav-text">模板带参数跳转（带params &amp; query）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">18.4.</span> <span class="nav-text">js直接跳转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">18.5.</span> <span class="nav-text">js跳转（带params）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">18.6.</span> <span class="nav-text">js跳转（带params &amp; query）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/02%E3%80%81Vue%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3/",
+      identifier: "/uncategorized/02、Vue基础详解/",
+      title     : "02、Vue基础详解",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="什么是Sass？ Sass是一种CSS的开发工具，提供了许多便利的写法，大大节省了设计者的时间，使得CSS的开发，变得简单和可维护。 安装Sass过程 一、安装Ruby（Windows） Ruby + Devkit 2.6.5-1（x64）地址： https:&#x2F;&#x2F;github.com&#x2F;oneclic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01、Sass基础">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/01%E3%80%81Sass%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="什么是Sass？ Sass是一种CSS的开发工具，提供了许多便利的写法，大大节省了设计者的时间，使得CSS的开发，变得简单和可维护。 安装Sass过程 一、安装Ruby（Windows） Ruby + Devkit 2.6.5-1（x64）地址： https:&#x2F;&#x2F;github.com&#x2F;oneclic">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202004/1680452-20200402220204824-824701610.jpg">
+<meta property="article:published_time" content="2020-04-03T15:11:00.000Z">
+<meta property="article:modified_time" content="2020-04-15T05:19:00.000Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2020.cnblogs.com/blog/1680452/202004/1680452-20200402220204824-824701610.jpg">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/01%E3%80%81Sass%E5%9F%BA%E7%A1%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>01、Sass基础 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/01%E3%80%81Sass%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          01、Sass基础<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/01%E3%80%81Sass%E5%9F%BA%E7%A1%80.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-03 23:11:00" itemprop="dateCreated datePublished" datetime="2020-04-03T23:11:00+08:00">2020-04-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-15 13:19:00" itemprop="dateModified" datetime="2020-04-15T13:19:00+08:00">2020-04-15</time>
+              </span>
+
+          
+            <div class="post-description">什么是Sass？ Sass是一种CSS的开发工具，提供了许多便利的写法，大大节省了设计者的时间，使得CSS的开发，变得简单和可维护。 安装Sass过程 一、安装Ruby（Windows） Ruby + Devkit 2.6.5-1（x64）地址： https://github.com/oneclic</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2>什么是Sass？</h2>
+<p>Sass是一种CSS的开发工具，提供了许多便利的写法，大大节省了设计者的时间，使得CSS的开发，变得简单和可维护。</p>
+<p>&nbsp;</p>
+<h2>安装Sass过程</h2>
+<h3>一、安装Ruby（Windows）</h3>
+<p>Ruby + Devkit 2.6.5-1（x64）地址： <a href="https://github.com/oneclick/rubyinstaller2/releases/download/RubyInstaller-2.6.5-1/rubyinstaller-devkit-2.6.5-1-x64.exe" target="_blank">https://github.com/oneclick/rubyinstaller2/releases/download/RubyInstaller-2.6.5-1/rubyinstaller-devkit-2.6.5-1-x64.exe</a><a class="downloadlink download-recommended" target="_blank" rel="noopener" href="https://github.com/oneclick/rubyinstaller2/releases/download/RubyInstaller-2.6.5-1/rubyinstaller-devkit-2.6.5-1-x64.exe"><span><br /></span></a></p>
+<p>&nbsp;</p>
+<p>&nbsp;安装时除了更改路径外，其他都可以按照默认选项进行，直到安装完成的那个页面，把最后的勾去掉，如：</p>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202004/1680452-20200402220204824-824701610.jpg" alt="" width="418" height="323" /></p>
+<p>&nbsp;</p>
+<p>cmd进入控制台进行配置</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">查看是否安装成功</span>
+ruby -<span style="color: #000000;">v
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">如安装成功会打印</span><br>ruby 2.6.5p114 (2019-10-01 revision 67812) [x64-<span style="color: #000000;">mingw32]</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">尽可能更新RubyGems版本</span><br>gem update –system <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">该命令请翻墙一下</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">更新后查看RubyGems版本</span><br>gem -<span style="color: #000000;">v<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">gem版本号</span><br>3.0.3  </p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">删除替换原gem源</span><br>gem sources –add https:<span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">gems.ruby-china.com&#x2F; –remove <a target="_blank" rel="noopener" href="https://rubygems.org/">https://rubygems.org/</a></span><span style="color: #008000;"><br>&#x2F;&#x2F;</span><span style="color: #008000;">打印是否替换成功</span><br>gem sources -<span style="color: #000000;">l<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">确保只有 gems.ruby-china.com</span><br>https:<span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">gems.ruby-china.com </span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>&nbsp;二、安装Sass</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">Sass安装</span>
+<span style="color: #000000;">gem install sass
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">安装完之后查看版本，以确保安装成功</span><br>sass -<span style="color: #000000;">v</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">Sass常用命令</span><br>gem update sass  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">更新sass</span><br>sass -v     <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">查看sass版本</span><br>sass -h     <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">查看sass帮助</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>三、安装Compass</h3>
+<p>// compass 是一个 sass 的库，compass 里面有很多封装好的 mixin ，有了它，我们就可以很快的写出完美的，兼容的样式。</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">安装compass</span>
+<span style="color: #000000;">gem install compass
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">安装完之后查看版本，以确保安装成功</span><br>compass -v</pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>四、编译sass的方法</h3>
+<p>CMD控制台</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">单文件转换命令</span>
+<span style="color: #000000;">sass input.scss output.css
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">单文件监听命令</span><br>sass –<span style="color: #000000;">watch input.scss:output.css</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">如果有很多sass文件的目录，可以监听整个目录</span><br>sass –watch c:&#x2F;baidu&#x2F;bbb</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>Sublime Text插件</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">Sass Build 插件</span>
+<span style="color: #000000;">
+安装完成后，工具 </span>-&gt; 编译系统 -&gt;<span style="color: #000000;"> SASS
+
+<p>.scss 文件，ctrl</span>+s保存后，ctrl+<span style="color: #000000;">b编译，这时会在相同目录下，生成相同名字的.css 文件，还有同名的.css.map 文件。</p>
+<p>如果：工具 </span>-&gt; 编译系统 -&gt; SASS -<span style="color: #000000;"> Compressed ,那么生成的代码就是压缩的.css 文件。</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">SublimeOnSaveBuild 插件</span><br>（按ctrl+s 就相当于：ctrl+s 和 ctrl+<span style="color: #000000;">b）</p>
+<p>安装完成后，不需要配置，编写完.scss 文件，ctrl</span>+s 即可完成所需操作</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>VS Code插件：Live Sass Compiler</p>
+<p>编译软件Koala：<a target="_blank" rel="noopener" href="https://www.sass.hk/skill/koala-app.html">https://www.sass.hk/skill/koala-app.html</a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>Sass基本语法</h2>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">变量名以$开头</span>
+<span style="color: #000000;">$width:300px;
+$height:300px;
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">在写属性值的时候可以引用变量</span><br><span style="color: #000000;">div{<br>    width: $width;<br>    height: $height;<br>}</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">变量名相同，最后的会覆盖之前的</span><br><span style="color: #000000;">$color:black;<br>$color:purple;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">!default表示默认的属性值</span><br>$position:static !<span style="color: #0000ff;">default</span>;</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>字符串变量及拼接</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">变量可以是字符串</span>
+$str:'xxx.jpg'<span style="color: #000000;">;
+$class:</span>'.div'<span style="color: #000000;">;
+</span><span style="color: #008000;">//</span><span style="color: #008000;">某些字符串可以不加引号</span>
+<span style="color: #000000;">$string:abcdefg;
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">引用字符串</span><br><span style="color: #000000;">.div{<br>    background</span>-image: url(‘.&#x2F;img&#x2F;‘+<span style="color: #000000;">$str);<br>}<br></span><span style="color: #008000;">&#x2F;&#x2F;插</span><span style="color: #008000;">值变量的方法引用字符串( #{} )</span><br><span style="color: #000000;">.div{<br>    background</span>-image: url(‘.&#x2F;img&#x2F;#{$str}’<span style="color: #000000;">);<br>}<br>#{$class} {<br>    color: $color;<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>变量作用域</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">全局作用域。在{}外面写，每个地方都可以引用</span>
+<span style="color: #000000;">$width:100px;
+.div{
+    width: $width;
+}
+.bb{
+    height: $width;
+}
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">局部作用域,{}内部定义只能内部使用</span><br><span style="color: #000000;">.div{<br>    $color:red;<br>    color: $color;<br>}<br>.bb{<br>    color: $color; </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这样会报错，除非全局有$color</span><br>}</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>@import不需要编译</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">在sass文件中用@import，不会编译引入文件的情况（四种）<br /></span>
+@import 'aa.css';   <span style="color: #008000;">//</span><span style="color: #008000;">以.css结尾</span>
+@import 'http://www.qmlqmlqml.shop/bbc.scss'    <span style="color: #008000;">//</span><span style="color: #008000;">以http://开头，无论文件是scss还是css都不会编译</span>
+@import 'url(bbc.css)';     <span style="color: #008000;">//</span><span style="color: #008000;">文件名是url()</span><span style="color: #008000;">
+//</span><span style="color: #008000;">还有一种，@import 里面包含 media queries 的情况</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>@import需要编译，推荐的引入方式</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">引入的文件名以 _ 开头，文件扩展名 .scss/.sass ，如：</span>
+<span style="color: #000000;">_demo.scss
+</span><span style="color: #008000;">//</span><span style="color: #008000;">这样的好处就是，保存的时候不会单独地生成.css的文件，以koala软件为例</span>
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">引入时，去掉 _ 和扩展名，如：</span><br>@import ‘demo’;<br /><br />注意：不可以同时存在添加下划线 与 未添加下划线的 同名文件，添加下划线的文件将会被忽略</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>Sass基本数据类型</h2>
+<p>number类型</p>
+<div class="cnblogs_code">
+<pre>$zoomValue = 3<span style="color: #000000;">;
+.div{
+    zoom:$zoomValue;
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>color类型</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">$color:red;
+$colour:#fe3232;
+.div{
+    background</span>-<span style="color: #000000;">color:$color;
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>string类型</p>
+<div class="cnblogs_code">
+<pre>$str:'asdff.png'<span style="color: #000000;">
+.div{
+    background</span>-image:url('../shanghai/'+<span style="color: #000000;">$str);
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>list类型（数组）</p>
+<div class="cnblogs_code">
+<pre>$list:(3,'ab'<span style="color: #000000;">,#fe3232,100px);
+.div{
+    color: nth($list,</span>3);  <span style="color: #008000;">//</span><span style="color: #008000;">获取数组下标为3的元素，下标从1开始，不是0</span>
+    zoom:index($list,'ab'); <span style="color: #008000;">//</span><span style="color: #008000;">数组从头开始查找字符串'ab'，返回下标数字</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<p>map类型（对象）</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">$map:(position:absolute,top:3px,right:3px,bottom:5px,left:5px);
+.div{
+    position:map</span>-get($map,position); <span style="color: #008000;">//</span><span style="color: #008000;">用map-get方法，获取$map里面的position属性</span>
+    top:map-<span style="color: #000000;">get($map,top);
+    left:map</span>-<span style="color: #000000;">get($map,left);
+}
+</span><span style="color: #008000;">//</span><span style="color: #008000;">map类型的循环遍历</span>
+<span style="color: #000000;">.div{
+    @each $key,$value </span><span style="color: #0000ff;">in</span><span style="color: #000000;"> $map{
+        #{$key} : #{$value};    
+    }
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<h2>算术运算</h2>
+<h3>变量</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">.div{
+    $num1:100px;
+    $num2:200px;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">加</span>
+    width: $num1 +<span style="color: #000000;"> $num2;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">减</span>
+    height:$num2 -<span style="color: #000000;"> $num1;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">乘，这里变量只能乘数字，两个变量相乘会报错</span>
+    margin:$num1*3<span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">除，这里只能乘数字</span>
+    border:$num2/25;
+}</pre>
+</div>
+<p>&nbsp;</p>
+<h3>非变量</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">.div{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">加</span>
+    width: (10px+3<span style="color: #000000;">);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">减</span>
+    height: (10px-4<span style="color: #000000;">);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">乘</span>
+    margin: (8px*4<span style="color: #000000;">);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">除</span>
+    border: (8px/2);
+    <span style="color: #008000;">//</span><span style="color: #008000;">注：非变量的加减乘除要在()里面，几个数之间只需要一个带单位即可</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<h3>颜色运算</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">.div{
+   $color1:#fe0325;
+   $color2:#c8f9l3;
+   
+<p>   </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">两个16进制的数值相加（即将淘汰）</span><br>   color: $color1 +<span style="color: #000000;"> $color2; </p>
+<p>   </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">两种颜色混合</span><br><span style="color: #000000;">   colour:mix($color1,$color2);</p>
+<p>   color: red($color1);</span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取$color1的红色素</span><br><span style="color: #000000;"><br>   color: green($color1);</span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取$color1的绿色素</span><br><span style="color: #000000;"><br>   color: blue($color1);</span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取$color1的蓝色素</span></p>
+<p>   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">输出结果与$color1的值相同</span><br><span style="color: #000000;">   color: rgb(red($color1),green($color1),blue($color1));<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>字符串运算（介绍string类型时说过）</h3>
+<div class="cnblogs_code">
+<pre>$str:'asdff.png'<span style="color: #000000;">
+.div{
+    background</span>-image:url('../shanghai/'+<span style="color: #000000;">$str);
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>一般的mixin（混合宏）</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">定义时：@mixin 名字 {}  ，里面可以放各种样式</span>
+<span style="color: #000000;">@mixin hello{
+    display: block;
+    font: {
+        size: 20px;<br />　　　　　weight:500;
+    };
+    color:blue;
+}
+
+<p>.div{<br>    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">引入时：@include 名字</span><br><span style="color: #000000;">    @include hello;<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>嵌套的mixin</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">@mixin hello{
+    display: block;
+    font</span>-<span style="color: #000000;">size: 20px;;
+    color:blue;
+}
+@mixin hi{
+    name:hello;
+    age:</span>18<span style="color: #000000;">;
+    @include hello;  </span><span style="color: #008000;">//</span><span style="color: #008000;">这里尾部，引入hello代码块</span>
+<span style="color: #000000;">}
+.div{
+    cursor: pointer;
+    @include hi;    </span><span style="color: #008000;">//</span><span style="color: #008000;">这里引入hi代码块</span>
+    font-family: "agency fb"<span style="color: #000000;">;
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>带参数的mixin</h3>
+<div class="cnblogs_code">
+<pre>@mixin seeyou($name,$age){  <span style="color: #008000;">//</span><span style="color: #008000;">这里可以用,隔开，接收多个参数</span>
+<span style="color: #000000;">    name:$name;
+    age:$age;
+    border: 88px;
+}
+.div{
+    @include seeyou(</span>'zhangsan',18); <span style="color: #008000;">//</span><span style="color: #008000;">这里调用mixin的时候要给实参</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<h2>Sass继承</h2>
+<h3>简单继承</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">.div1{
+    color: red;
+}
+.div2{
+    @extend .div1;  </span><span style="color: #008000;">//</span><span style="color: #008000;">继承：@extend 需要继承选择器的名字</span>
+    background-<span style="color: #000000;">color: blue;
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>关联属性继承&nbsp;</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">.div1{
+    color: red;
+}
+.div1.other{
+    background</span>-<span style="color: #000000;">color: blue;
+}
+.dd{
+    @extend .div1; </span><span style="color: #008000;">//</span><span style="color: #008000;">不单单继承div1，选择器中包含div1的也继承</span>
+}</pre>
+</div>
+<h3>&nbsp;</h3>
+<h3>链式继承&nbsp;</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">.div1{
+    color: red;
+}
+.div2{
+    background</span>-<span style="color: #000000;">color: blue;
+    @extend .div1;  </span><span style="color: #008000;">//</span><span style="color: #008000;">继承了div1</span>
+<span style="color: #000000;">}
+.dd{
+    cursor: pointer;
+    @extend .div2;  </span><span style="color: #008000;">//</span><span style="color: #008000;">不仅继承div2，div2里面继承了div1，所以div1跟div2都继承了</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<h3>伪类继承</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">a:hover{
+    background</span>-<span style="color: #000000;">color: red;
+}
+.div{
+    @extend :hover; </span><span style="color: #008000;">//</span><span style="color: #008000;">继承了a的伪类</span>
+<span style="color: #000000;">    color: black;
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>Sass嵌套</h2>
+<h3>一般嵌套.</h3>
+<p>div &gt; .inner &gt; .cc</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">.div{
+    color: cyan;
+    font</span>-<span style="color: #000000;">size: 30px;
+    .inner{    </span><span style="color: #008000;">//</span><span style="color: #008000;">div里面的inner</span>
+<span style="color: #000000;">        position: relative;
+        top: 20px;
+        left: 10px;
+        .cc{    </span><span style="color: #008000;">//</span><span style="color: #008000;">div里面的inner里面的cc</span>
+<span style="color: #000000;">            width: 200px;
+        }
+    }
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>特殊嵌套</h3>
+<p>一般以横杠分离的属性都可以嵌套，如：background-color、background-clip，可把color、clip嵌套到background里面去</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">.div{
+    background:{
+        image:url(</span>'../haha.jpg');   <span style="color: #008000;">//</span><span style="color: #008000;">表示background-image</span>
+        clip: border-box;       <span style="color: #008000;">//</span><span style="color: #008000;">表示background-clip</span>
+<span style="color: #000000;">    };
+    font:{
+        size: 30px;     </span><span style="color: #008000;">//</span><span style="color: #008000;">表示font-size</span>
+        family:'abc';   <span style="color: #008000;">//</span><span style="color: #008000;">表示font-family</span>
+<span style="color: #000000;">    };
+}</span>&nbsp;</pre>
+</div>
+<p>&nbsp;</p>
+<h2>Sass条件控制语句</h2>
+<h3>if else 语句</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> {}里面可以用</span>
+$name:'zhangsan'<span style="color: #000000;">;
+.div{
+    @</span><span style="color: #0000ff;">if</span> $name == 'lisi'<span style="color: #000000;">{
+        color: red;
+    }@</span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> $name == 'xiaoming'<span style="color: #000000;">{
+        color: orange;
+    }@</span><span style="color: #0000ff;">else</span><span style="color: #000000;">{
+        color: purple;
+    }
+}
+</span><span style="color: #008000;">//</span><span style="color: #008000;">注意if else 语句前面记得加@，判断语句不需要括号</span></pre>
+</div>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">{}外面也能使用</span>
+@<span style="color: #0000ff;">if</span> $name == '123'<span style="color: #000000;">{
+    .div{
+        position: absolute;
+    }
+}@</span><span style="color: #0000ff;">else</span><span style="color: #000000;">{
+    .bb{
+        height: 30px;
+    }
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>for语句</h3>
+<div class="cnblogs_code">
+<pre>@<span style="color: #0000ff;">for</span> $i from 1 through 5{   <span style="color: #008000;">//</span><span style="color: #008000;">循环1-5次，包含第5次，实际5次</span>
+<span style="color: #000000;">    .cc#{$i}{
+        color: blue;
+    }
+}
+@</span><span style="color: #0000ff;">for</span> $i from 1 to 5{    <span style="color: #008000;">//</span><span style="color: #008000;">循环1-5次，不包含第5次，实际4次</span>
+<span style="color: #000000;">    .aa#{$i}{
+        color: blue;
+    }
+}</span>&nbsp;</pre>
+</div>
+<p>&nbsp;</p>
+<h3>for遍历list</h3>
+<div class="cnblogs_code">
+<pre>$list:(1,2,3,4,5<span style="color: #000000;">);
+@</span><span style="color: #0000ff;">for</span> $i from 1 through length($list){    <span style="color: #008000;">//</span><span style="color: #008000;">遍历一般用through，length($list)表示$list的数组长度</span>
+<span style="color: #000000;">    .div#{$i} {
+        width: 100px;
+    }
+}</span></pre>
+</div>
+<p>&nbsp;&nbsp;</p>
+<h3>while语句</h3>
+<div class="cnblogs_code">
+<pre>$i:1<span style="color: #000000;">;
+@</span><span style="color: #0000ff;">while</span> $i&lt;5 {   <span style="color: #008000;">//</span><span style="color: #008000;">符合条件才能进入循环</span>
+<span style="color: #000000;">    .div#{$i} {
+        color: white;
+    }
+    $i:$i</span>+1;    <span style="color: #008000;">//</span><span style="color: #008000;">记得要对循环数做操作，不然报错死循环</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<h3>each遍历map</h3>
+<div class="cnblogs_code">
+<pre>$map:(top:10px,right:10px,bottom:5px,left:7px); <span style="color: #008000;">//</span><span style="color: #008000;">记得map是用()的</span>
+<span style="color: #000000;">.div{
+    @each $key,$value </span><span style="color: #0000ff;">in</span> $map {     <span style="color: #008000;">//</span><span style="color: #008000;">$key表示键，$value表示值</span>
+        #{$key}:$value;   <span style="color: #008000;">//</span><span style="color: #008000;">将键值对循环输出</span>
+<span style="color: #000000;">    }
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>&nbsp;内置函数</h2>
+<h3>Number函数</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">.div {
+    zoom: percentage(</span>0.33); <span style="color: #008000;">//</span><span style="color: #008000;">转换为百分比</span>
+<span style="color: #000000;">    
+    zoom: round(</span>4.5);   <span style="color: #008000;">//</span><span style="color: #008000;">四舍五入</span>
+<span style="color: #000000;">    
+    zoom: ceil(</span>22.5);   <span style="color: #008000;">//</span><span style="color: #008000;">向上取整</span>
+<span style="color: #000000;">    
+    zoom: floor(</span>22.5);  <span style="color: #008000;">//</span><span style="color: #008000;">向下取整</span>
+<span style="color: #000000;">    
+    zoom: abs(</span>-33);    <span style="color: #008000;">//</span><span style="color: #008000;">取绝对值</span>
+<span style="color: #000000;">    
+    zoom: random(</span>10);   <span style="color: #008000;">//</span><span style="color: #008000;">取0-10之间的数，若省略数字，则取0-1之间的数</span>
+<span style="color: #000000;">    
+    $a: </span>1<span style="color: #000000;">;
+    $b: </span>2<span style="color: #000000;">;
+    $c: </span>3<span style="color: #000000;">;
+    zoom: min($a, $b, $c);  </span><span style="color: #008000;">//</span><span style="color: #008000;">取最小值，里面必须是变量，切要两个以上</span>
+    zoom: max($a, $b, $c);  <span style="color: #008000;">//</span><span style="color: #008000;">取最大值，规则同上</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<h3>List函数（数组）&nbsp;</h3>
+<div class="cnblogs_code">
+<pre>$list:(5,4,3,2,1<span style="color: #000000;">);
+
+<p>@debug length($list);    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取数组长度</span><br><span style="color: #000000;"><br>@debug nth($list,</span>3);    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取指定数组下标的元素</span><br><span style="color: #000000;"><br>@debug set</span>-nth($list,1,’bb’);    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取下标为1的元素，替换为bb</span><br><span style="color: #000000;"><br>$list2:(</span>‘aa’,’bb’,’cc’<span style="color: #000000;">);</p>
+<p>@debug join($list,$list2);        </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">将$list和$list2拼接在一起。只能两个数组拼接</span><br>@debug join($list,(33,44<span style="color: #000000;">));</p>
+<p>@debug append($list2,</span>‘dd’);    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">将’dd’拼接到数组后面</span><br><span style="color: #000000;"><br>@debug index($list2,</span>‘ff’);     <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">查找’aa’是否存在，存在返回下标，不存在返回null</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>String函数（字符串）</h3>
+<div class="cnblogs_code">
+<pre>$da:'HELLO'<span style="color: #000000;">;
+$xiao:hello;
+.div{
+    color:unquote($da);      </span><span style="color: #008000;">//</span><span style="color: #008000;">去除字符串引号</span>
+    color:quote($xiao);      <span style="color: #008000;">//</span><span style="color: #008000;">添加字符串引号</span>
+<span style="color: #000000;">    } 
+@debug str</span>-length($xiao);     <span style="color: #008000;">//</span><span style="color: #008000;">获取字符串长度</span>
+<span style="color: #000000;">
+@debug str</span>-index($xiao,'c');    <span style="color: #008000;">//</span><span style="color: #008000;">查看字符串是否存在'e'，存在返回下标，不存在返回null</span>
+<span style="color: #000000;">
+@debug to</span>-upper-<span style="color: #0000ff;">case</span>($xiao);    <span style="color: #008000;">//</span><span style="color: #008000;">小写转大写</span>
+@debug to-lower-<span style="color: #0000ff;">case</span>($da);        <span style="color: #008000;">//</span><span style="color: #008000;">大写转小写</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>&nbsp;Map函数（对象）</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">$map:(top:10px,right:10px,bottom:5px,left:7px);
+
+<p>@debug map</span>-get($map,top);    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取$map的top，若存在返回所对应的value值，若不存在返回null</span><br>@debug map-has-key($map,top);    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">查看$map是否有top这个key值，有就返回true，否则false</span><br><span style="color: #000000;"><br>@debug map</span>-remove($map,top);    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">删除$map里面的top值，后返回剩下的key和value</span><br><span style="color: #000000;"><br>@debug map</span>-keys($map);    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">返回$map的所有key值</span><br>@debug map-values($map);    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">返回$map的所有value值</span></pre></p>
+</div>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">@mixin hello($ags...){
+    @debug keywords($ags);    </span><span style="color: #008000;">//</span><span style="color: #008000;">用keywords方法，打印出接收到的所有参数</span>
+<span style="color: #000000;">}
+@include hello($name:</span>'zhangsan',$sex:'male',$age:18);    <span style="color: #008000;">//</span><span style="color: #008000;">注意：key值要以$开头</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>Function函数</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">自定义函数</span>
+@<span style="color: #0000ff;">function</span> haha($aa,$bb){  <span style="color: #008000;">//</span><span style="color: #008000;">接收两个参数</span>
+    @<span style="color: #0000ff;">return</span> $aa+$bb;   <span style="color: #008000;">//</span><span style="color: #008000;">返回两个参数相加的结果</span>
+<span style="color: #000000;">}
+.div{
+    width: haha(10px,20px);  </span><span style="color: #008000;">//</span><span style="color: #008000;">调用haha函数，并按照需求传入两个参数</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/11%E3%80%81Swiper%E5%BF%AB%E9%80%9F%E5%88%87%E6%8D%A2%E6%8F%92%E4%BB%B6/" rel="prev" title="11、Swiper快速切换插件">
+      <i class="fa fa-chevron-left"></i> 11、Swiper快速切换插件
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/Sublime%20Text3/" rel="next" title="Sublime Text3">
+      Sublime Text3 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">什么是Sass？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">安装Sass过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text">一、安装Ruby（Windows）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text"> 二、安装Sass</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.3.</span> <span class="nav-text">三、安装Compass</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.4.</span> <span class="nav-text">四、编译sass的方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Sass基本语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">Sass基本数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">算术运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.2.</span> <span class="nav-text">非变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.3.</span> <span class="nav-text">颜色运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.4.</span> <span class="nav-text">字符串运算（介绍string类型时说过）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.5.</span> <span class="nav-text">一般的mixin（混合宏）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.6.</span> <span class="nav-text">嵌套的mixin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.7.</span> <span class="nav-text">带参数的mixin</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">Sass继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.1.</span> <span class="nav-text">简单继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.2.</span> <span class="nav-text">关联属性继承 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.3.</span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.4.</span> <span class="nav-text">链式继承 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.5.</span> <span class="nav-text">伪类继承</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">Sass嵌套</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.1.</span> <span class="nav-text">一般嵌套.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.2.</span> <span class="nav-text">特殊嵌套</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">Sass条件控制语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">8.1.</span> <span class="nav-text">if else 语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">8.2.</span> <span class="nav-text">for语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">8.3.</span> <span class="nav-text">for遍历list</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">8.4.</span> <span class="nav-text">while语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">8.5.</span> <span class="nav-text">each遍历map</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">9.</span> <span class="nav-text"> 内置函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.1.</span> <span class="nav-text">Number函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.2.</span> <span class="nav-text">List函数（数组） </span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.3.</span> <span class="nav-text">String函数（字符串）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.4.</span> <span class="nav-text"> Map函数（对象）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.5.</span> <span class="nav-text">Function函数</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/01%E3%80%81Sass%E5%9F%BA%E7%A1%80/",
+      identifier: "/uncategorized/01、Sass基础/",
+      title     : "01、Sass基础",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

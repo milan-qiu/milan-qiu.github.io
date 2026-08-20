@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1、自定义函数 局部变量：函数内部定义的变量，只能内部使用 全局变量：从函数定义后的地方，一直到代码结尾都可以使用 超全局变量：函数内&#x2F;外定义的函数，在哪里都可以被访问 &#x2F;&#x2F;超全局变量 $GLOBALS $_SERVER $_GET&#x2F;$_POST $_FILES $_COOKIE $_REQUEST">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02、PHP函数库">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/02%E3%80%81PHP%E5%87%BD%E6%95%B0%E5%BA%93/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="1、自定义函数 局部变量：函数内部定义的变量，只能内部使用 全局变量：从函数定义后的地方，一直到代码结尾都可以使用 超全局变量：函数内&#x2F;外定义的函数，在哪里都可以被访问 &#x2F;&#x2F;超全局变量 $GLOBALS $_SERVER $_GET&#x2F;$_POST $_FILES $_COOKIE $_REQUEST">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202009/1680452-20200905153038960-9173072.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202009/1680452-20200905161939673-1892534350.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202009/1680452-20200905162100539-1130301819.png">
+<meta property="article:published_time" content="2020-09-05T11:07:00.000Z">
+<meta property="article:modified_time" content="2026-08-20T06:32:52.335Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2020.cnblogs.com/blog/1680452/202009/1680452-20200905153038960-9173072.png">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/02%E3%80%81PHP%E5%87%BD%E6%95%B0%E5%BA%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>02、PHP函数库 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/02%E3%80%81PHP%E5%87%BD%E6%95%B0%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          02、PHP函数库<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/02%E3%80%81PHP%E5%87%BD%E6%95%B0%E5%BA%93.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-05 19:07:00" itemprop="dateCreated datePublished" datetime="2020-09-05T19:07:00+08:00">2020-09-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-08-20 14:32:52" itemprop="dateModified" datetime="2026-08-20T14:32:52+08:00">2026-08-20</time>
+              </span>
+
+          
+            <div class="post-description">1、自定义函数 局部变量：函数内部定义的变量，只能内部使用 全局变量：从函数定义后的地方，一直到代码结尾都可以使用 超全局变量：函数内/外定义的函数，在哪里都可以被访问 //超全局变量 $GLOBALS $_SERVER $_GET/$_POST $_FILES $_COOKIE $_REQUEST</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2>1、自定义函数</h2>
+<p>局部变量：函数内部定义的变量，只能内部使用</p>
+<p>全局变量：从函数定义后的地方，一直到代码结尾都可以使用</p>
+<p>超全局变量：函数内/外定义的函数，在哪里都可以被访问</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">超全局变量</span>
+<span style="color: #000000;">$GLOBALS
+$_SERVER
+$_GET</span>/<span style="color: #000000;">$_POST
+$_FILES
+$_COOKIE
+$_REQUEST
+$_SESSION</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>跟标识符命名规则相同，必须驼峰标记法，所有函数都是全局作用域，不支持重载、不支持取消定义、不支持重定义已声明的函数</p>
+<p><strong>定义及使用：</strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">function add($a,$b){
+  echo $a</span>+<span style="color: #000000;">$b;
+}
+add(</span><span style="color: #800080;">1</span>,<span style="color: #800080;">2</span><span style="color: #000000;">);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">或者</span><br><span style="color: #000000;">function add($a,$b){<br>  </span><span style="color: #0000ff;">return</span> $a+<span style="color: #000000;">$b;<br>}<br>$c </span>&#x3D; add(<span style="color: #800080;">1</span>,<span style="color: #800080;">2</span>);</pre></p>
+</div>
+<p>&nbsp;</p>
+<p><strong>函数内对全局变量进行操作：</strong>$GLOBALS(超全局变量)&nbsp; 或者 global 关键字实现</p>
+<div class="cnblogs_code">
+<pre>$n = <span style="color: #800080;">1</span><span style="color: #000000;">;
+function add(){
+  $GLOBALS[</span><span style="color: #800000;">'</span><span style="color: #800000;">n</span><span style="color: #800000;">'</span>]++<span style="color: #000000;">;
+  echo $n;  </span><span style="color: #008000;">//</span><span style="color: #008000;">2</span>
+<span style="color: #000000;">}
+add();</span></pre>
+</div>
+<p>echo strrpos('name','a');&nbsp; //从最后开始找，返回a在字符串里面的下标</p>
+<p>echo substr('name',1);&nbsp; //截取字符串，从第1位开始截，返回截取后的值</p>
+<p>echo strtolower('HELLO');&nbsp; //将大写转换为小写</p>
+<p>&nbsp;</p>
+<h3>引用传值</h3>
+<p>引用传值必须在参数的前面加上 &amp; 符号</p>
+<p>引用传值的参数只能是变量</p>
+<p>引用传值会改变函数外的值</p>
+<p>引用指向原始变量</p>
+<div class="cnblogs_code">
+<pre>$a = <span style="color: #800000;">'</span><span style="color: #800000;">hahaha</span><span style="color: #800000;">'</span><span style="color: #000000;">;
+
+<p>$b </span>&#x3D; &amp;$a; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">将$a的原始值指向$b，$b改变$a也改变</span><br><span style="color: #000000;"><br>$b </span>&#x3D; <span style="color: #800000;">‘</span><span style="color: #800000;">xixixi</span><span style="color: #800000;">‘</span>; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这样$a的原始值就会改变</span><br><span style="color: #000000;"><br>echo $a;  </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里会输出 ‘xixixi’</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>实例：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">function ha($a){
+  $a</span>++<span style="color: #000000;">;
+  echo $a; </span><span style="color: #008000;">//</span><span style="color: #008000;">这里是34</span>
+<span style="color: #000000;">}
+$a </span>= <span style="color: #800080;">33</span><span style="color: #000000;">;
+ha($a); </span><span style="color: #008000;">//</span><span style="color: #008000;">这里是34（局部的）</span><span style="color: #000000;">
+echo $a; </span><span style="color: #008000;">//</span><span style="color: #008000;">这里仍然是33（全局的）</span>
+
+<p><span style="color: #808080;">&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;</span><span style="color: #008000;">&#x2F; 函数内部不能改变函数外部的值，但利用引用传值可以，如： </span><span style="color: #808080;">&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;</span><span style="color: #008000;">&#x2F;</span><br><span style="color: #000000;"><br>function ha(</span>&amp;<span style="color: #000000;">$a){<br>  $a</span>++<span style="color: #000000;">;<br>  echo $a; </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里是34</span><br><span style="color: #000000;">}<br>$a </span>&#x3D; <span style="color: #800080;">33</span><span style="color: #000000;">;<br>ha($a); </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里是34（局部的）</span><br>echo $a; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里是34（全局的）</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>可变参数</h3>
+<p>php5.5前</p>
+<p>func_get_args()&nbsp; //获取所有参数，并组合成数组，</p>
+<p>func_get_arg()&nbsp; //获取传递给函数的某一项</p>
+<p>func_num_args();&nbsp; //获取参数的数量</p>
+<p>array_sum();&nbsp; //对数组所有值求和</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">function avg(){
+  $arr </span>=<span style="color: #000000;"> func_get_args();
+  print_r($arr); </span><span style="color: #008000;">//</span><span style="color: #008000;">这里会获取到所有传递过来的参数的数组
+  
+<p>  </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">对接收到的所有参数，进行求和</span><br>  echo array_sum($arr);  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这里输出结果值</p>
+<p>  </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取当前参数的数量</span><br>  $arr_len &#x3D;<span style="color: #000000;"> func_num_args();<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>php5.5后</p>
+<p>...xxx&nbsp; &nbsp;//获取所有传递过来的参数</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">function avg(...arr){
+  print_r($arr); </span><span style="color: #008000;">//</span><span style="color: #008000;">这里会获取到所有传递过来的参数的数组</span>
+}</pre>
+</div>
+<p>&nbsp;</p>
+<p>函数返回值</p>
+<p>略。。。</p>
+<p>&nbsp;</p>
+<h2>回调函数</h2>
+<p>callback回调函数是：作为参数，传进另一个函数中使用的函数</p>
+<p>如：call_user_func('回调' , '参数')</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">function</span> add (<span style="color: #800080;">$a</span><span style="color: #000000;">){
+  </span><span style="color: #0000ff;">echo</span> <span style="color: #800080;">$a</span><span style="color: #000000;">;  
+}
+
+<p></span><span style="color: #008080;">call_user_func</span>(‘add’,’输出的内容’<span style="color: #000000;">);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">这样就会间接调用add函数</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h2>递归函数</h2>
+<p>递归函数：是指直接或间接调用函数本身的函数</p>
+<p>递归函数条件：</p>
+<p>1、在每一次调用自己时，必须是（在某种意义上）更接近于解</p>
+<p>2、必须有一个终止处理或计算的准则</p>
+<p>如：计算1-100的累加和</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">function</span> recursive (<span style="color: #800080;">$n</span><span style="color: #000000;">){
+  </span><span style="color: #0000ff;">if</span>(<span style="color: #800080;">$n</span> &gt;= 1<span style="color: #000000;">){
+   </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">$n</span> + recursive(<span style="color: #800080;">$n</span> - 1<span style="color: #000000;">) ;      
+  }  
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<h2>可变函数</h2>
+<p>可变函数：是指如果一个变量名后有圆括号，PHP将寻找与变量的值同名的函数，并尝试执行它</p>
+<p>用途：可以用来实现包括回调函数，函数表在内的用途</p>
+<p>注意：可变函数不能用于，echo、print、unset、isset、empty、include、require 以及类似的语言结构。</p>
+<p>用可变函数的语法来调用一个对象的方法，如：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$a</span> = '123'<span style="color: #000000;">;
+</span><span style="color: #0000ff;">function</span> echoit(<span style="color: #800080;">$haha</span><span style="color: #000000;">){
+    </span><span style="color: #0000ff;">echo</span> <span style="color: #800080;">$haha</span><span style="color: #000000;">;
+}
+</span><span style="color: #800080;">$c</span> = 'echoit'<span style="color: #000000;">;
+</span><span style="color: #800080;">$c</span>(<span style="color: #800080;">$a</span>);</pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>&nbsp;字符串函数</h2>
+<p>strlen：获取字符串长度，如</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> <span style="color: #008080;">strlen</span>('hahaixixixi');</pre>
+</div>
+<p>&nbsp;</p>
+<p>strtolower：将字符串转换为小写，如</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> <span style="color: #008080;">strtolower</span>('SDLFKJSLDKFLS');    </pre>
+</div>
+<p>strtoupper：将字符串转为大写，如</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> <span style="color: #008080;">strtoupper</span>('hahaixixixi');</pre>
+</div>
+<p>&nbsp;</p>
+<p>ucfirst：将句子首字母转换为大写，如</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> <span style="color: #008080;">ucfirst</span>('are you ok?');</pre>
+</div>
+<p>ucwords：将每个单词的首字母转换为大写，如　　</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> <span style="color: #008080;">ucwords</span>('are you ok?');</pre>
+</div>
+<p>&nbsp;</p>
+<p>str_replace：查找字符串中的字符，并进行替换，如</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> <span style="color: #008080;">str_replace</span>('a','1','hahahaha');<span style="color: #008000;">//</span><span style="color: #008000;">查找字符串中的a，将a替换成1</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>htmlspecialchars：预定义字符转为 HTML 实体，如</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> $str = "&lt;h1&gt;转为实体&lt;/h1&gt;";
+// $echoi = htmlspecialchars($str,ENT_COMPAT);//ENT_COMPAT仅编码双引号，默认
+// echo $echoi;
+
+<p>&#x2F;&#x2F; $str &#x3D; ‘&lt;h1&gt;转为实体&lt;&#x2F;h1&gt;’;<br>&#x2F;&#x2F; $echoi &#x3D; htmlspecialchars($str,ENT_QUOTES);&#x2F;&#x2F;ENT_QUOTES仅编码 双引号 和 单引号<br>&#x2F;&#x2F; echo $echoi;</span></p>
+<p><span style="color: #800080;">$str</span> &#x3D; “&lt;h1&gt;转为实体&lt;&#x2F;h1&gt;”<span style="color: #000000;">;<br></span><span style="color: #800080;">$echoi</span> &#x3D; <span style="color: #008080;">htmlspecialchars</span>(<span style="color: #800080;">$str</span>,ENT_NOQUOTES);<span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">不编码任何引号</span><br><span style="color: #0000ff;">echo</span> <span style="color: #800080;">$echoi</span>;</pre></p>
+</div>
+<p>//即将单引号或双引号里面的，&amp; &gt; &lt; " ' 等转为html字符</p>
+<p>&nbsp;</p>
+<p>ltrim：实现删除字符串开始位置的空格或其他字符</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> $str = "Hello    World!";
+// echo $str . "&lt;br&gt;";
+// echo ltrim($str,"Hello");//从字符串左边，截取Hello，返回截取后的结果
+
+<p>&#x2F;&#x2F;若第二个参数省略，则去除以下所有字符<br>&#x2F;&#x2F; “\0” - NULL<br>&#x2F;&#x2F; “\t” - 制表符<br>&#x2F;&#x2F; “\n” - 换行<br>&#x2F;&#x2F; “\x0B” - 垂直制表符<br>&#x2F;&#x2F; “\r” - 回车<br>&#x2F;&#x2F; “ “ - 空格</span><br><span style="color: #800080;">$str</span> &#x3D; “ \0     HelloWorld!”<span style="color: #000000;">;<br></span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">ltrim</span>(<span style="color: #800080;">$str</span>);</pre></p>
+</div>
+<p>&nbsp;rtrim：实现删除字符串结束位置的空格或其他字符</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> $str = "Hello    World!";
+// echo $str . "&lt;br&gt;";
+// echo ltrim($str,"World");//从字符串右边，截取World，返回截取后的结果
+
+<p>&#x2F;&#x2F;若第二个参数省略，则去除以下所有字符<br>&#x2F;&#x2F; “\0” - NULL<br>&#x2F;&#x2F; “\t” - 制表符<br>&#x2F;&#x2F; “\n” - 换行<br>&#x2F;&#x2F; “\x0B” - 垂直制表符<br>&#x2F;&#x2F; “\r” - 回车<br>&#x2F;&#x2F; “ “ - 空格</span><br><span style="color: #800080;">$str</span> &#x3D; “Hello World!\0    “<span style="color: #000000;">;<br></span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">ltrim</span>(<span style="color: #800080;">$str</span>);</pre></p>
+</div>
+<p>&nbsp;trim：实现删除字符串 开始和结束位置 的空格和其他字符</p>
+<p>&nbsp;</p>
+<p>strpos：返回一个字符出现在另一个字符串，第一次出现的位置</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> <span style="color: #008080;">strpos</span>('lksdjlkasdkf','a'); <span style="color: #008000;">//7  </span><span style="color: #008000;">返回a在字符串里面第一次出现的位置</span></pre>
+</div>
+<p>stripos：返回一个字符出现在另一个字符串，第一次出现的位置，忽略大小写</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> <span style="color: #008080;">strpos</span>('lksdjlkAsdkf','a'); <span style="color: #008000;">//7  </span><span style="color: #008000;">返回a在字符串里面第一次出现的位置，忽略大小写</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>strrpos：返回一个字符在另一个字符串，最后一次出现的位置</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> <span style="color: #008080;">strrpos</span>('lksdjlkasdkfa','a'); <span style="color: #008000;">//</span><span style="color: #008000;">12  返回a在字符串里面，最后一次出现的位置</span></pre>
+</div>
+<p>&nbsp;strrpos：返回一个字符在另一个字符串，最后一次出现的位置，忽略大小写</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> <span style="color: #008080;">strrpos</span>('lksdjlkasdkfA','a'); <span style="color: #008000;">//</span><span style="color: #008000;">12  返回a在字符串里面，最后一次出现的位置，忽略大小写</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>explode：字符串转数组</p>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$str</span> = 'a|b|c|d'<span style="color: #000000;">;
+</span><span style="color: #008080;">print_r</span>(<span style="color: #008080;">explode</span>('|' , <span style="color: #800080;">$str</span>)); //以 | 为分界线进行分割</pre>
+</div>
+<p>implode：将数组转为字符串</p>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$arr</span> = <span style="color: #0000ff;">array</span>('a' , 'b' , 'c' , 'd'<span style="color: #000000;">);
+</span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">implode</span>(<span style="color: #800080;">$arr</span>); <span style="color: #008000;">//</span><span style="color: #008000;">将数组每一项拼接起来，没有分隔</span>
+<span style="color: #0000ff;">echo</span> '&lt;br&gt;'<span style="color: #000000;">;
+</span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">implode</span>(',' , <span style="color: #800080;">$arr</span>); <span style="color: #008000;">//</span><span style="color: #008000;">将数组每一项拼接起来，用逗号分隔</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>substr：截取字符串</p>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$str</span> = 'abcdefg'<span style="color: #000000;">;
+</span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">substr</span>(<span style="color: #800080;">$str</span> , 0 , 2);<span style="color: #008000;">//</span><span style="color: #008000;">从第0为开始，截取长度为2，若长度为负数，则往回截取</span>
+<span style="color: #0000ff;">echo</span> '&lt;br&gt;'<span style="color: #000000;">;
+</span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">substr</span>(<span style="color: #800080;">$str</span> , 0); <span style="color: #008000;">//</span><span style="color: #008000;">若省略长度，则截取到最后一位</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>strstr：将搜索一个字符串在另一个字符串中第一次出现的位置，区分大小写。返回字符串的其余部分</p>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$str1</span> = 'abcdefg'<span style="color: #000000;">;
+</span><span style="color: #800080;">$str2</span> = 'c'<span style="color: #000000;">;
+</span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">strstr</span>(<span style="color: #800080;">$str1</span> , <span style="color: #800080;">$str2</span>); <span style="color: #008000;">//</span><span style="color: #008000;">将返回str2第一次出现的位置，直到最后。即cdefg</span></pre>
+</div>
+<p>stristr：将搜索一个字符串在另一个字符串中第一次出现的位置，不区分大小写。返回字符串的其余部分</p>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$str1</span> = 'abcdefg'<span style="color: #000000;">;
+</span><span style="color: #800080;">$str2</span> = 'C'<span style="color: #000000;">;
+</span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">strstr</span>(<span style="color: #800080;">$str1</span> , <span style="color: #800080;">$str2</span>); <span style="color: #008000;">//</span><span style="color: #008000;">将返回str2第一次出现的位置，直到最后。即cdefg</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>md5：字符串加密，或者说计算字符串的md5的哈希值</p>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$str</span>  = 'hahaha'<span style="color: #000000;">;
+</span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">md5</span>(<span style="color: #800080;">$str</span>);</pre>
+</div>
+<p>&nbsp;</p>
+<p>str_shuffle：随机打乱字符串</p>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$str</span> = 'aslkjfsldfklsdf'<span style="color: #000000;">;
+</span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">str_shuffle</span>(<span style="color: #800080;">$str</span>);</pre>
+</div>
+<p>&nbsp;</p>
+<p>sprintf：字符串格式函数</p>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$num</span> = 5<span style="color: #000000;">;
+</span><span style="color: #800080;">$str</span> = 'apple'<span style="color: #000000;">;
+</span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">sprintf</span>(' there are %d %s ' , <span style="color: #800080;">$num</span>,<span style="color: #800080;">$str</span><span style="color: #000000;">);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">若一个只有一个变量的话</span><br><span style="color: #0000ff;">echo</span> <span style="color: #008080;">sprintf</span>(‘ there are %1d  and %1d ‘,<span style="color: #800080;">$num</span><span style="color: #000000;">);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">若设置小数点长度</span><br><span style="color: #0000ff;">echo</span> <span style="color: #008080;">sprintf</span>(‘ there are %.2f ‘,<span style="color: #800080;">$num</span>);</pre></p>
+</div>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">规定字符串以及如何格式化其中的变量</span>
+%%  <span style="color: #008000;">//</span><span style="color: #008000;">返回一个百分号%</span>
+%b   <span style="color: #008000;">//</span><span style="color: #008000;">二进制数</span>
+%d   <span style="color: #008000;">//</span><span style="color: #008000;">包含正负号的十进制数</span>
+%e   <span style="color: #008000;">//</span><span style="color: #008000;">使用小写的科学计数法（例如 1.2e+2）</span>
+%s   <span style="color: #008000;">//</span><span style="color: #008000;">字符串</span>
+%f   <span style="color: #008000;">//</span><span style="color: #008000;">浮点数（本地设置）</span>
+
+<p> . <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">附加的格式值，必须放置在%和字母之间（例如%.2f）</span></p>
+<ul>
+<li><ul>
+<li><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">在数字前面加上 + 或 - 来定义数字的正负性。只有负数才做标记，正数不做标记</span><br> -‘<span style="color: #000000;"> &#x2F;&#x2F;规定使用什么作为填充，默认是空格。它必须与宽度指定器一起使用<br> – &#x2F;&#x2F;左调整变量值<br> -[0-9] &#x2F;&#x2F;规定变量的最小宽度<br> -.[0-9] &#x2F;&#x2F;规定小数位数或最大字符串长度 </span></pre></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>数学函数库</h2>
+<p>ceil：向上取整</p>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$num</span> = 3.14<span style="color: #000000;">;
+</span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">ceil</span>(<span style="color: #800080;">$num</span>); <span style="color: #008000;">//</span><span style="color: #008000;">输出4</span></pre>
+</div>
+<p>floor：向下取整</p>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$num</span> = 3.14<span style="color: #000000;">;
+</span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">floor</span>(<span style="color: #800080;">$num</span>); <span style="color: #008000;">//</span><span style="color: #008000;">输出3</span></pre>
+</div>
+<p>round：四舍五入</p>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$n</span> = 3.14159<span style="color: #000000;">;
+</span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">round</span>(<span style="color: #800080;">$n</span>); <span style="color: #008000;">//</span><span style="color: #008000;">3</span>
+<span style="color: #0000ff;">echo</span> <span style="color: #008080;">round</span>(<span style="color: #800080;">$n</span> , 3); <span style="color: #008000;">//</span><span style="color: #008000;">3.142    取到小数点后3位</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;number_format：以千位分隔符方式，格式化数字</p>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$n</span> = 2348.456<span style="color: #000000;">;
+</span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">number_format</span>(<span style="color: #800080;">$n</span>); <span style="color: #008000;">//</span><span style="color: #008000;">2,348</span>
+<span style="color: #0000ff;">echo</span> <span style="color: #008080;">number_format</span>(<span style="color: #800080;">$n</span> , 2); <span style="color: #008000;">//</span><span style="color: #008000;">2,348.46    格式化到小数位后两位，附带四舍五入</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>pow：幂运算</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> <span style="color: #008080;">pow</span>(2 , 3);  <span style="color: #008000;">//</span><span style="color: #008000;">8    2的3次方</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>sqrt：平方根</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> <span style="color: #008080;">sqrt</span>(4); <span style="color: #008000;">//</span><span style="color: #008000;">2     4的平方根</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>rand：随机数</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> <span style="color: #008080;">rand</span>(0,100); <span style="color: #008000;">//</span><span style="color: #008000;">输出0-100之间的随机数</span></pre>
+</div>
+<p>mt_rand：更好的随机数，速度比 rand 快3倍左右</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> <span style="color: #008080;">mt_rand</span>(0-100); <span style="color: #008000;">//</span><span style="color: #008000;">输出0-100之间的随机数</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>fmod：浮点数余数</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">浮点数余数</span>
+echo fmod(<span style="color: #800080;">7.8</span> , <span style="color: #800080;">3</span>); <span style="color: #008000;">//</span><span style="color: #008000;">1.8</li>
+</ul>
+</li>
+</ul>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">整数余数</span><br>echo <span style="color: #800080;">7.8</span> % <span style="color: #800080;">3</span>; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">1 </span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;max：获取两个或以上数字的最大值</p>
+<div class="cnblogs_code">
+<pre>$x = <span style="color: #800080;">3</span><span style="color: #000000;">;
+$y </span>= <span style="color: #800080;">7</span><span style="color: #000000;">;
+$z </span>= <span style="color: #800080;">8.8</span><span style="color: #000000;">;
+echo max($x,$y,$z); </span><span style="color: #008000;">//</span><span style="color: #008000;">8.8</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;min：获取两个或以上数字的最小值</p>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$x</span> = 3<span style="color: #000000;">;
+</span><span style="color: #800080;">$y</span> = 7<span style="color: #000000;">;
+</span><span style="color: #800080;">$z</span> = 8.8<span style="color: #000000;">;
+</span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">min</span>(<span style="color: #800080;">$x</span>,<span style="color: #800080;">$y</span>,<span style="color: #800080;">$z</span>); <span style="color: #008000;">//</span><span style="color: #008000;">3</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>&nbsp;日期时间函数库</h2>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202009/1680452-20200905153038960-9173072.png" alt="" width="744" height="222" loading="lazy" /></p>
+<h3>配置文件修改时区</h3>
+<p>1、php.ini 中查找Date</p>
+<p>2、将 date.timezone 前的分号去掉</p>
+<p>3、在 date.timezone = 后面加上 'Asia/Shanghai'</p>
+<p>4、 重启Apachech服务器</p>
+<h3>PHP函数修改时区</h3>
+<div class="cnblogs_code">
+<pre>date_default_timezone_set('Asia/Shanghai');</pre>
+</div>
+<p>&nbsp;</p>
+<h3>获取当前时区</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> date_default_timezone_get();</pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>函数操作</h3>
+<p>date：格式化本地时间 / 日期</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> <span style="color: #008080;">date</span>('Y年m月d日 , H:i:s');<br /><br />echo '昨天这个时候的时间是' . date('Y-m-d H:i:s' , time()-86400);  //将时间戳转为正常时间</pre>
+<pre>echo date('Y-m-d H:i:s' , 23423434...); //将时间戳转为正常时间</pre>
+</div>
+<p>&nbsp;</p>
+<p>strtotime：将字符串转Unix时间戳，即精确计算某个时间点的时间戳</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> '三个星期之前的时间戳为' , <span style="color: #008080;">strtotime</span>('-3 weeks');<br />echo '上个月的第一天的时间戳为' , strtotime('last day of -1 month'); //不能直接用 -1 month，因为 -1 month 是以30天为单位计算的</pre>
+</div>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202009/1680452-20200905161939673-1892534350.png" alt="" width="922" height="283" loading="lazy" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;<img src="https://img2020.cnblogs.com/blog/1680452/202009/1680452-20200905162100539-1130301819.png" alt="" width="299" height="287" loading="lazy" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;microtime：返回 unix 时间戳和微秒数</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> <span style="color: #008080;">microtime</span>(); <span style="color: #008000;">//</span><span style="color: #008000;">返回当前的微秒数 及时间戳，空格隔开</span>
+
+<p><span style="color: #0000ff;">echo</span> <span style="color: #008080;">microtime</span>(<span style="color: #0000ff;">true</span>); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">返回当前时间戳，含微秒数</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>uniqid：生成唯一的id号</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">echo</span> <span style="color: #008080;">uniqid</span>(); <span style="color: #008000;">//</span><span style="color: #008000;">唯一id号</span>
+
+<p><span style="color: #0000ff;">echo</span> <span style="color: #008080;">uniqid</span>(‘haha’); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">给id号加前缀 haha</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>getdate：获取当前时间的信息，数组形式返回</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">print_r</span>( <span style="color: #008080;">getdate</span>() );</pre>
+</div>
+<p>&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/01%E3%80%81PHP%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/" rel="prev" title="01、PHP基本常识">
+      <i class="fa fa-chevron-left"></i> 01、PHP基本常识
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/04%E3%80%81PHP%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/" rel="next" title="04、PHP常用操作">
+      04、PHP常用操作 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">1、自定义函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">引用传值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">可变参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">回调函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">递归函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">可变函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text"> 字符串函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">数学函数库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text"> 日期时间函数库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.1.</span> <span class="nav-text">配置文件修改时区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.2.</span> <span class="nav-text">PHP函数修改时区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.3.</span> <span class="nav-text">获取当前时区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.4.</span> <span class="nav-text">函数操作</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/02%E3%80%81PHP%E5%87%BD%E6%95%B0%E5%BA%93/",
+      identifier: "/uncategorized/02、PHP函数库/",
+      title     : "02、PHP函数库",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1、利用Tools里面database进行表的创建与删除 2、关联表前，先建立BREAD，然后才能关联 3、slect dropdown 下拉菜单型（单选按钮） { &quot;default&quot; : &quot;radio1&quot;, &quot;options&quot; : { &quot;radio1&quot;: &quot;Radio Button 1 Text&quot;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2、Voyager基本操作">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/2%E3%80%81Voyager%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="1、利用Tools里面database进行表的创建与删除 2、关联表前，先建立BREAD，然后才能关联 3、slect dropdown 下拉菜单型（单选按钮） { &quot;default&quot; : &quot;radio1&quot;, &quot;options&quot; : { &quot;radio1&quot;: &quot;Radio Button 1 Text&quot;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202102/1680452-20210220171306980-1451289949.png">
+<meta property="article:published_time" content="2021-02-20T09:34:00.000Z">
+<meta property="article:modified_time" content="2021-02-22T10:35:00.000Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2020.cnblogs.com/blog/1680452/202102/1680452-20210220171306980-1451289949.png">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/2%E3%80%81Voyager%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>2、Voyager基本操作 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/2%E3%80%81Voyager%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2、Voyager基本操作<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/2%E3%80%81Voyager%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-20 17:34:00" itemprop="dateCreated datePublished" datetime="2021-02-20T17:34:00+08:00">2021-02-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-22 18:35:00" itemprop="dateModified" datetime="2021-02-22T18:35:00+08:00">2021-02-22</time>
+              </span>
+
+          
+            <div class="post-description">1、利用Tools里面database进行表的创建与删除 2、关联表前，先建立BREAD，然后才能关联 3、slect dropdown 下拉菜单型（单选按钮） { "default" : "radio1", "options" : { "radio1": "Radio Button 1 Text"</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>1、利用Tools里面database进行表的创建与删除</p>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202102/1680452-20210220171306980-1451289949.png" alt="" width="1158" height="318" loading="lazy" /></p>
+<p>&nbsp;2、关联表前，先建立BREAD，然后才能关联</p>
+<p>&nbsp;</p>
+<h3>3、slect dropdown 下拉菜单型（单选按钮）</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">{
+    </span>"default" : "radio1",
+    "options" :<span style="color: #000000;"> {
+        </span>"radio1": "Radio Button 1 Text",
+        "radio2": "Radio Button 2 Text"<span style="color: #000000;">
+    }
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>若是选项少也可以radio button</p>
+<p>&nbsp;</p>
+<p>4、添加bread时记得选择输入方式，不然在bread进行输入数据</p>
+<p>&nbsp;</p>
+<h3>5、图片输入函数改为</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">{
+    </span>"resize":<span style="color: #000000;"> {
+        </span>"width": "1000",
+        "height": <span style="color: #0000ff;">null</span><span style="color: #000000;">
+    }</span>,
+    "quality" : "70%",
+    "upsize" : <span style="color: #0000ff;">true</span>,
+    "thumbnails":<span style="color: #000000;"> [
+        {
+            </span>"name": "medium",
+            "scale": "50%"<span style="color: #000000;">
+        }</span>,<span style="color: #000000;">
+        {
+            </span>"name": "small",
+            "scale": "25%"<span style="color: #000000;">
+        }</span>,<span style="color: #000000;">
+        {
+            </span>"name": "cropped",
+            "crop":<span style="color: #000000;"> {
+                </span>"width": "300",
+                "height": "250"<span style="color: #000000;">
+            }
+        }
+    ]
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>即上传时会出现4种不同尺寸的图片，原始、中等、缩小、裁剪</p>
+<p>&nbsp;</p>
+<p>项目中使用略缩图等，在图片的模型（官方文档：助手模型）</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">use</span><span style="color: #000000;"> TCG\Voyager\Traits\Resizable;
+
+<p></span><span style="color: #0000ff;">class</span> Post <span style="color: #0000ff;">extends</span><span style="color: #000000;"> Model<br>{<br>    </span><span style="color: #0000ff;">use</span><span style="color: #000000;"> Resizable;<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>在视图使用。可以指定可选的图像字段名（属性），默认为<code>image</code></p>
+<div class="cnblogs_code">
+<pre>@<span style="color: #0000ff;">foreach</span>(<span style="color: #800080;">$posts</span> <span style="color: #0000ff;">as</span> <span style="color: #800080;">$post</span><span style="color: #000000;">)
+    </span>&lt;img src="{{Voyager::image(<span style="color: #800080;">$post</span>-&gt;thumbnail('small'))}}" /&gt;<span style="color: #000000;">
+@</span><span style="color: #0000ff;">endforeach</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>6、多图像选择器使用</h3>
+<p>bread输入方式改为multiple images</p>
+<p>&nbsp;</p>
+<h3>7、文件选择</h3>
+<p>bread输入方式改为multiple images</p>
+<p>若选择的文件比较多，字段必须改为text型</p>
+<p>&nbsp;</p>
+<p>media picker就是选择媒体库的文件</p>
+<p>若expanded为true，则编辑时会自动打开媒体库选择</p>
+<p>&nbsp;</p>
+<h3>8、过滤显示</h3>
+<p>model写对应函数</p>
+<div class="cnblogs_code">
+<pre>    <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">function</span> scopeDraft(<span style="color: #800080;">$query</span><span style="color: #000000;">){
+        </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">$query</span>-&gt;where('status',1<span style="color: #000000;">);
+    }</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>bread&nbsp; -&gt;&nbsp; scope&nbsp; 选择完对应函数后，就会过滤显示</p>
+<p>&nbsp;</p>
+<p>9、关于安全问题，修改后台路由admin为其他。</p>
+<p>&nbsp;</p>
+<p>10、添加统计控件，voyager配置文件添加user控件</p>
+<div class="cnblogs_code">
+<pre>        'widgets' =&gt;<span style="color: #000000;"> [
+            \TCG\Voyager\Widgets\UserDimmer</span>::<span style="color: #0000ff;">class</span><span style="color: #000000;">
+        ]</span>,</pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>11、复写users视图文件（解决users表新增字段不能修改问题）</p>
+<p>先在resources -&gt; views&nbsp; &nbsp;建立文件夹&nbsp; &nbsp;vendor/voyager/users</p>
+<p>建立edit-add.blade.php视图文件</p>
+<p>&nbsp;</p>
+<p>12、bread慢的原因是引用了google的东西</p>
+<p>全局搜索</p>
+<div>https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css</div>
+<div>或</div>
+<div>
+<div>https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js</div>
+<div>将这两个链接</div>
+</div>
+<p>改为<a href="https://www.bootcdn.cn/jqueryui/1.12.0/" target="_blank">https://www.bootcdn.cn/jqueryui/1.12.0/</a>里面的链接</p>
+<p>&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/1%E3%80%81%E5%AE%89%E8%A3%85Voyager/" rel="prev" title="1、安装Voyager">
+      <i class="fa fa-chevron-left"></i> 1、安装Voyager
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/1%E3%80%81Redis%E5%9F%BA%E7%A1%80/" rel="next" title="1、Redis基础">
+      1、Redis基础 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">3、slect dropdown 下拉菜单型（单选按钮）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">5、图片输入函数改为</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">6、多图像选择器使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">7、文件选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">8、过滤显示</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/2%E3%80%81Voyager%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/",
+      identifier: "/uncategorized/2、Voyager基本操作/",
+      title     : "2、Voyager基本操作",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

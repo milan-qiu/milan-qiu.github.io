@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="固有属性（property） 自定义属性（atrributes）  获取div的xx属性值 console.log(div.attributes.getNamedIteam(&#39;xx&#39;).nodeValue); console.log(div.at">
+<meta property="og:type" content="article">
+<meta property="og:title" content="07-JS DOM属性">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/07-JS%20DOM%E5%B1%9E%E6%80%A7/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="固有属性（property） 自定义属性（atrributes）  获取div的xx属性值 console.log(div.attributes.getNamedIteam(&#39;xx&#39;).nodeValue); console.log(div.at">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-01-22T07:06:00.000Z">
+<meta property="article:modified_time" content="2026-08-20T06:32:52.418Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/07-JS%20DOM%E5%B1%9E%E6%80%A7/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>07-JS DOM属性 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/07-JS%20DOM%E5%B1%9E%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          07-JS DOM属性<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/07-JS%20DOM%E5%B1%9E%E6%80%A7.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-22 15:06:00" itemprop="dateCreated datePublished" datetime="2020-01-22T15:06:00+08:00">2020-01-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-08-20 14:32:52" itemprop="dateModified" datetime="2026-08-20T14:32:52+08:00">2026-08-20</time>
+              </span>
+
+          
+            <div class="post-description">固有属性（property） 自定义属性（atrributes） <div id="ml" xx="xx" a="b"> 获取div的xx属性值 console.log(div.attributes.getNamedIteam('xx').nodeValue); console.log(div.at</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2>&nbsp;</h2>
+<p><strong><span style="font-size: 18pt; font-family: 幼圆;">固有属性（property）</span></strong></p>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 18pt;">自定义属性（atrributes）</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div   </span><span style="color: #ff0000;">id</span><span style="color: #0000ff;">="ml"   </span><span style="color: #ff0000;">xx</span><span style="color: #0000ff;">="xx"   </span><span style="color: #ff0000;">a</span><span style="color: #0000ff;">="b"</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px;"><strong>获取div的xx属性值</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">console.log(div.attributes.getNamedIteam('xx').nodeValue);
+
+<p>console.log(div.attributes.[‘xx’].nodeValue);</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px;"><strong>删除div的xx属性值</strong></span></p>
+<div class="cnblogs_code">
+<pre>div.attributes.removeNamedIteam('xx');</pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px;"><strong>创建div的yy属性</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span>  attr =<span style="color: #000000;"> document.createAttribute('yy');
+
+<p>attr.value </span>&#x3D;<span style="color: #000000;"> ‘bbq’ ;</p>
+<p>div.attributes.setNamedIteam(attr);</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 18pt;"><strong><span style="font-family: 幼圆;">布尔属性</span></strong></span></p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">input </span><span style="color: #ff0000;">type </span><span style="color: #0000ff;">= "checkbox"</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">北京
+</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">input </span><span style="color: #ff0000;">type </span><span style="color: #0000ff;">= "checkbox" </span><span style="color: #ff0000;">checked</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">上海
+</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">input </span><span style="color: #ff0000;">type </span><span style="color: #0000ff;">="checkbox"</span><span style="color: #0000ff;">&gt;</span>广州</pre>
+</div>
+<p><strong>除了用checked选中外，还可以</strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> inputs =<span style="color: #000000;"> document.qureySelectorAll("input");
+
+<p>inputs[</span>1].checked &#x3D; 1 ;    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">只要令该表达式为真就可以被选中</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">select </span><span style="color: #ff0000;">name</span><span style="color: #0000ff;">="city" </span><span style="color: #ff0000;">id</span><span style="color: #0000ff;">="city"</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">option </span><span style="color: #ff0000;">value</span><span style="color: #0000ff;">="北京"</span><span style="color: #0000ff;">&gt;</span>  北京 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">option</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">option </span><span style="color: #ff0000;">value</span><span style="color: #0000ff;">="上海" </span><span style="color: #ff0000;">selected</span><span style="color: #0000ff;">&gt;</span>  上海 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">option</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">option </span><span style="color: #ff0000;">value</span><span style="color: #0000ff;">="广州"</span><span style="color: #0000ff;">&gt;</span>  广州 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">option</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">select</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p><strong>除了用selected选中外，还可以</strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> city =<span style="color: #000000;"> document.getElementById("city");
+</span><span style="color: #0000ff;">var</span> options =<span style="color: #000000;"> city.options;
+options[</span>1].selected = <span style="color: #0000ff;">true</span>;       <span style="color: #008000;">//</span><span style="color: #008000;">只要令该表达式为真就可以被选中</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre>国籍：<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">input </span><span style="color: #ff0000;">type</span><span style="color: #0000ff;">="text" </span><span style="color: #ff0000;">value</span><span style="color: #0000ff;">="中国" </span><span style="color: #ff0000;">id</span><span style="color: #0000ff;">="country" </span><span style="color: #ff0000;">readonly</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p><strong>除了用readonly外，还可以</strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> country =<span style="color: #000000;"> document.getElementById("country");
+
+<p>country.readOnly </span>&#x3D; <span style="color: #0000ff;">true</span>;      <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">只要令该表达式为真就变成只读</span></pre></p>
+</div>
+<p><strong>readonly跟disable的区别</strong></p>
+<div class="cnblogs_code">
+<pre>readonly可以提交到后端，disable不可以</pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">select </span><span style="color: #ff0000;">name</span><span style="color: #0000ff;">="city" </span><span style="color: #ff0000;">id</span><span style="color: #0000ff;">="city" </span><span style="color: #ff0000;">multiple</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">option </span><span style="color: #ff0000;">value</span><span style="color: #0000ff;">="北京"</span><span style="color: #0000ff;">&gt;</span>  北京 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">option</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">option </span><span style="color: #ff0000;">value</span><span style="color: #0000ff;">="上海"</span><span style="color: #0000ff;">&gt;</span>  上海 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">option</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">option </span><span style="color: #ff0000;">value</span><span style="color: #0000ff;">="广州"</span><span style="color: #0000ff;">&gt;</span>  广州 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">option</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">select</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p><strong>除了用multiple实现多选外，还可以</strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> city =<span style="color: #000000;"> document.getElementById("city");
+
+<p>city.multiple </span>&#x3D; <span style="color: #0000ff;">true</span>;       <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">只要令该表达式为真就可以实现多选</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div </span><span style="color: #ff0000;">id</span><span style="color: #0000ff;">="uu" </span><span style="color: #ff0000;">hidden</span><span style="color: #0000ff;">&gt;</span>文字文字文字<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p><strong>除了用hidden进行隐藏外，还可以</strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> uu =<span style="color: #000000;"> document.getElementById("uu");
+
+<p>uu.hidden </span>&#x3D; <span style="color: #0000ff;">true</span>;     <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">只要令该表达式为真就可以实现隐藏</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 18pt;"><strong><span style="font-family: 幼圆;">字符串属性</span></strong></span></p>
+<p><span style="font-size: 16px;"><strong><span style="font-family: 幼圆;">常见的字符串属性</span></strong></span></p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre>id、title、href、src、lang、dir、accesskey、name、value、class</pre>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">W3C全局属性</span></strong></p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre>accesskey、class、contenteditable、dir、hidden、id、lang、spellcheck、style、tabindex、title、translate</pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 18pt;"><strong><span style="font-family: 幼圆;">data属性</span></strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">button </span><span style="color: #ff0000;">id</span><span style="color: #0000ff;">="btn" </span><span style="color: #ff0000;">type</span><span style="color: #0000ff;">="button" </span><span style="color: #ff0000;">data-toggle</span><span style="color: #0000ff;">="12345&Prime; </span><span style="color: #ff0000;">data-xx-yy</span><span style="color: #0000ff;">="67890&Prime;</span><span style="color: #0000ff;">&gt;</span>按钮<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">buttom</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p><span style="font-size: 16px; font-family: 幼圆;"><strong>获取data属性的值</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> btn =<span style="color: #000000;"> document.getElementById("btn");
+
+<p>console.log(btn.dataset.toggle);   </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">根据data-后面的名字获取</span><br><span style="color: #000000;"><br>console.log(btn.dataset.xxYy);     </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">如果data后面有两个-，那么采用驼峰形式的来获取</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 18pt;"><strong><span style="font-family: 幼圆;">class属性（classList方法）</span></strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">body </span><span style="color: #ff0000;">class</span><span style="color: #0000ff;">=" </span><span style="color: #ff0000;">aaa bbb ccc "</span><span style="color: #0000ff;">&gt;</span>
+
+<p><span style="color: #0000ff;">&lt;&#x2F;</span><span style="color: #800000;">body</span><span style="color: #0000ff;">&gt;</span>&amp;nbsp;</pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px;"><strong>获取class各个属性名,用数组的形式输出</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> CC =<span style="color: #000000;"> {
+
+<p>getClass : </span><span style="color: #0000ff;">function</span><span style="color: #000000;">(ele){</p>
+<p></span><span style="color: #0000ff;">return</span> ele.className.replace(&#x2F;\s+&#x2F;<span style="color: #000000;">, “ “).split(“ “);</p>
+<p>}</p>
+<p>}</p>
+<p></span><span style="color: #0000ff;">var</span> body &#x3D;<span style="color: #000000;"> document.body;</p>
+<p>console.log(CC.getClass(body));</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px;"><strong>判断&nbsp; 元素对象的className&nbsp; 是否存在</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> CC =<span style="color: #000000;"> {
+
+<p>hasClass : </span><span style="color: #0000ff;">function</span><span style="color: #000000;">(ele,cls){</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">方法一</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">return -1 &lt; (“ “ + ele.className + “ “).indexOf(“ “ + cls + “ “);</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">方法二(classList方法)</span></p>
+<p><span style="color: #0000ff;">return</span><span style="color: #000000;"> ele.classList.contains(cls);</p>
+<p>}</p>
+<p>}</p>
+<p></span><span style="color: #0000ff;">var</span> body &#x3D;<span style="color: #000000;"> document.body;</p>
+<p>console.log(CC.hasClass(body,’bbb’));    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">如果bbb的类名存在则返回true</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px;"><strong>给元素对象添加一个新的className</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> CC =<span style="color: #000000;"> {
+
+<p>addClass : </span><span style="color: #0000ff;">function</span><span style="color: #000000;">(ele,cls){</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">方法一</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">if ( !this.hasClass(ele,cls) )</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">ele.className +&#x3D; “ “ + cls;</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">方法二(classList方法)</span><br><span style="color: #000000;"><br>ele.classList.add(cls);</p>
+<p>}</p>
+<p>}</p>
+<p></span><span style="color: #0000ff;">var</span> body &#x3D;<span style="color: #000000;"> docement.body;</p>
+<p>CC.addClass(body,’ddd’);     </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">如果body里面不存在ddd，则添加ddd类名</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px;"><strong>删除元素的类名</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> CC =<span style="color: #000000;"> {
+
+<p>removeClass : </span><span style="color: #0000ff;">function</span><span style="color: #000000;">(ele,cls){</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">方法一</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">if ( this.hasClass(ele,cls) )</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">var reg &#x3D; new RegExp( ‘(\s|^)’ + cls + ‘(\s|$)’ , “gi” );</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">ele.className &#x3D; ele.className.replace(reg, “ “);</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">方法二(classList方法)</span><br><span style="color: #000000;"><br>ele.classList.remove(cls);</p>
+<p>}</p>
+<p>}</p>
+<p></span><span style="color: #0000ff;">var</span> body &#x3D;<span style="color: #000000;"> document.body;</p>
+<p>CC.removeClass(body,’aaa’);    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">如果body里面存在aaa，则删除掉</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px;"><strong>元素类名 存在就删除，不存在就添加</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> CC =<span style="color: #000000;"> {
+
+<p>toggleClass : </span><span style="color: #0000ff;">function</span><span style="color: #000000;">(ele,cls){</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">方法一</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">if ( this.hasClass(ele,cls) )</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">{</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">this.remove(ele,cls);</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">}else{</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">this.addClass(ele,cls);</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">}</span></p>
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">方法二(classList方法)</span></p>
+<p><span style="color: #0000ff;">return</span><span style="color: #000000;"> ele.classList.toggle(cls);</p>
+<p>}</p>
+<p>}</p>
+<p></span><span style="color: #0000ff;">var</span> body &#x3D;<span style="color: #000000;"> document.body;</p>
+<p>CC.toggleClass(body,’aaa’);     </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">如果aaa存在执行删除，不存在执行添加</span></pre></p>
+</div>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/06-JS%20DOM%E6%93%8D%E4%BD%9C/" rel="prev" title="06-JS DOM操作">
+      <i class="fa fa-chevron-left"></i> 06-JS DOM操作
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/08-JS%20DOM%E4%BA%8B%E4%BB%B6/" rel="next" title="08-JS DOM事件">
+      08-JS DOM事件 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"> </span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/07-JS%20DOM%E5%B1%9E%E6%80%A7/",
+      identifier: "/uncategorized/07-JS DOM属性/",
+      title     : "07-JS DOM属性",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

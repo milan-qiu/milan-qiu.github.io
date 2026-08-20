@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一、文件操作 文件目录函数库 文件相关 &#x2F;&#x2F;获取文件$file_name &#x3D; &quot;.&#x2F;text.txt&quot;; &#x2F;&#x2F;返回文件类型 echo filetype($file_name),&#39;&#39;; &#x2F;&#x2F;返回文件大小（字节数） echo filesize($file_name),&#39;&#39;; &#x2F;&#x2F;返回文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="04、PHP常用操作">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/04%E3%80%81PHP%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="一、文件操作 文件目录函数库 文件相关 &#x2F;&#x2F;获取文件$file_name &#x3D; &quot;.&#x2F;text.txt&quot;; &#x2F;&#x2F;返回文件类型 echo filetype($file_name),&#39;&#39;; &#x2F;&#x2F;返回文件大小（字节数） echo filesize($file_name),&#39;&#39;; &#x2F;&#x2F;返回文件">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202012/1680452-20201206104830384-2071230946.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202012/1680452-20201206192137737-2089970047.png">
+<meta property="article:published_time" content="2020-12-06T15:34:00.000Z">
+<meta property="article:modified_time" content="2020-12-18T05:06:00.000Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2020.cnblogs.com/blog/1680452/202012/1680452-20201206104830384-2071230946.png">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/04%E3%80%81PHP%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>04、PHP常用操作 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/04%E3%80%81PHP%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          04、PHP常用操作<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/04%E3%80%81PHP%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-06 23:34:00" itemprop="dateCreated datePublished" datetime="2020-12-06T23:34:00+08:00">2020-12-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-18 13:06:00" itemprop="dateModified" datetime="2020-12-18T13:06:00+08:00">2020-12-18</time>
+              </span>
+
+          
+            <div class="post-description">一、文件操作 文件目录函数库 文件相关 //获取文件$file_name = "./text.txt"; //返回文件类型 echo filetype($file_name),'<br>'; //返回文件大小（字节数） echo filesize($file_name),'<br>'; //返回文件</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1>一、文件操作</h1>
+<h2>文件目录函数库</h2>
+<h3>文件相关</h3>
+<div class="cnblogs_code">
+<pre>//获取文件<br />$file_name = "./text.txt";</pre>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">返回文件类型</span>
+<span style="color: #0000ff;">echo</span> <span style="color: #008080;">filetype</span>(<span style="color: #800080;">$file_name</span>),'&lt;br&gt;'<span style="color: #000000;">;
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">返回文件大小（字节数）</span><br><span style="color: #0000ff;">echo</span> <span style="color: #008080;">filesize</span>(<span style="color: #800080;">$file_name</span>),’&lt;br&gt;’<span style="color: #000000;">;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">返回文件创建时间戳</span><br><span style="color: #0000ff;">echo</span> <span style="color: #008080;">filectime</span>(<span style="color: #800080;">$file_name</span>),’&lt;br&gt;’<span style="color: #000000;">;<br></span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">date</span>(‘Y年m月d日 H:i:s’,<span style="color: #008080;">filectime</span>(<span style="color: #800080;">$file_name</span>)),’&lt;br&gt;’<span style="color: #000000;">;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">返回文件修改时间</span><br><span style="color: #0000ff;">echo</span> <span style="color: #008080;">filemtime</span>(<span style="color: #800080;">$file_name</span>),’&lt;br&gt;’<span style="color: #000000;">;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">返回文件最后访问时间</span><br><span style="color: #0000ff;">echo</span> <span style="color: #008080;">fileatime</span>(<span style="color: #800080;">$file_name</span>),’&lt;br&gt;’<span style="color: #000000;">;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">检测是否为文件</span><br><span style="color: #008080;">var_dump</span>(<span style="color: #008080;">is_file</span>(<span style="color: #800080;">$file_name</span><span style="color: #000000;">));<br></span><span style="color: #0000ff;">echo</span> ‘&lt;br&gt;’<span style="color: #000000;">;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">检测文件是否可读、可写、可执行</span><br><span style="color: #008080;">var_dump</span><span style="color: #000000;">(<br>    </span><span style="color: #008080;">is_readable</span>(<span style="color: #800080;">$file_name</span>),<br>    <span style="color: #008080;">is_writable</span>(<span style="color: #800080;">$file_name</span>),<br>    <span style="color: #008080;">is_executable</span>(<span style="color: #800080;">$file_name</span><span style="color: #000000;">)<br>);</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>文件路径相关</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$pathinfo</span> = <span style="color: #008080;">pathinfo</span>(<span style="color: #800080;">$file_name</span><span style="color: #000000;">);
+</span><span style="color: #008080;">print_r</span>(<span style="color: #800080;">$pathinfo</span><span style="color: #000000;">);
+</span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">pathinfo</span>(<span style="color: #800080;">$file_name</span>,PATHINFO_DIRNAME),'&lt;br&gt;';<span style="color: #008000;">//</span><span style="color: #008000;">dirname：若是当前目录就为 .</span>
+<span style="color: #0000ff;">echo</span> <span style="color: #008080;">pathinfo</span>(<span style="color: #800080;">$file_name</span>,PATHINFO_BASENAME),'&lt;br&gt;';<span style="color: #008000;">//</span><span style="color: #008000;">basename：文件名（包含扩展名）</span>
+<span style="color: #0000ff;">echo</span> <span style="color: #008080;">pathinfo</span>(<span style="color: #800080;">$file_name</span>,PATHINFO_FILENAME),'&lt;br&gt;';<span style="color: #008000;">//</span><span style="color: #008000;">filename：文件名</span>
+<span style="color: #0000ff;">echo</span> <span style="color: #008080;">pathinfo</span>(<span style="color: #800080;">$file_name</span>,PATHINFO_EXTENSION),'&lt;br&gt;';<span style="color: #008000;">//</span><span style="color: #008000;">extension：扩展名
+
+<p>&#x2F;&#x2F;输出当前文件完整路径</span><br><span style="color: #800080;">$file_name</span> &#x3D; <span style="color: #ff00ff;"><strong>FILE</strong></span>; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取$file_name的完整路径，包含文件名</span><br><span style="color: #0000ff;">echo</span> <span style="color: #800080;">$file_name</span>,’&lt;br&gt;’<span style="color: #000000;">;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">返回路径中的文件名（含扩展名）</span><br><span style="color: #0000ff;">echo</span> <span style="color: #008080;">basename</span>(<span style="color: #800080;">$file_name</span>),’&lt;br&gt;’<span style="color: #000000;">;<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">返回路径中的文件名（过滤掉.php后缀）</span><br><span style="color: #0000ff;">echo</span> <span style="color: #008080;">basename</span>(<span style="color: #800080;">$file_name</span>,’.php’),’&lt;br&gt;’<span style="color: #000000;">;<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">返回当前文件的所在路径</span><br><span style="color: #0000ff;">echo</span> <span style="color: #008080;">dirname</span>(<span style="color: #800080;">$file_name</span>),’&lt;br&gt;’<span style="color: #000000;">;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">检测文件或目录是否存在</span><br><span style="color: #008080;">var_dump</span>(<span style="color: #008080;">file_exists</span>(<span style="color: #800080;">$file_name</span>));</pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>文件操作相关</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">创建文件，若文件存在则进行覆盖</span>
+<span style="color: #800080;">$file</span> = '哈哈哈.txt'<span style="color: #000000;">;
+</span><span style="color: #0000ff;">if</span>(<span style="color: #008080;">touch</span>(<span style="color: #800080;">$file</span><span style="color: #000000;">))
+    </span><span style="color: #0000ff;">echo</span> '文件创建成功'<span style="color: #000000;">;
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">删除文件，若文件不存在，还执行删除就会报错</span><br><span style="color: #0000ff;">if</span>(<span style="color: #008080;">file_exists</span>(<span style="color: #800080;">$file</span>) &amp;&amp; <span style="color: #008080;">unlink</span>(<span style="color: #800080;">$file</span><span style="color: #000000;">))<br>    </span><span style="color: #0000ff;">echo</span> ‘文件删除成功’<span style="color: #000000;">;<br></span><span style="color: #0000ff;">else</span><br>    <span style="color: #0000ff;">echo</span> ‘文件删除失败’<span style="color: #000000;">;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">重命名 || 剪切文件</span><br><span style="color: #0000ff;">if</span>(<span style="color: #008080;">file_exists</span>(<span style="color: #800080;">$file</span>) &amp;&amp; <span style="color: #008080;">rename</span>(<span style="color: #800080;">$file</span>,’我是新名字的.txt’<span style="color: #000000;">))<br>    </span><span style="color: #0000ff;">echo</span> ‘重命名成功’<span style="color: #000000;">;<br></span><span style="color: #0000ff;">else</span><br>    <span style="color: #0000ff;">echo</span> ‘重命名失败’<span style="color: #000000;">;<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">剪切只是在重命名的基础上添加路径</span><br><span style="color: #0000ff;">if</span>(<span style="color: #008080;">file_exists</span>(<span style="color: #800080;">$file</span>) &amp;&amp; <span style="color: #008080;">rename</span>(<span style="color: #800080;">$file</span>,’..&#x2F;我是新名字的.txt’<span style="color: #000000;">))<br>    </span><span style="color: #0000ff;">echo</span> ‘剪切成功’<span style="color: #000000;">;<br></span><span style="color: #0000ff;">else</span><br>    <span style="color: #0000ff;">echo</span> ‘剪切失败’<span style="color: #000000;">;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">拷贝文件</span><br><span style="color: #0000ff;">if</span>(<span style="color: #008080;">file_exists</span>(<span style="color: #800080;">$file</span>) &amp;&amp; <span style="color: #008080;">copy</span>(<span style="color: #800080;">$file</span>,’..&#x2F;‘.<span style="color: #800080;">$file</span><span style="color: #000000;">))<br>    </span><span style="color: #0000ff;">echo</span> ‘文件拷贝成功’<span style="color: #000000;">;<br></span><span style="color: #0000ff;">else</span><br>    <span style="color: #0000ff;">echo</span> ‘文件拷贝失败’<span style="color: #000000;">;<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">也可拷贝远程文件，需要php.ini 开启 allow_url_fopen&#x3D;On</span><br><span style="color: #0000ff;">if</span>(<span style="color: #008080;">copy</span>(‘<a target="_blank" rel="noopener" href="http://baijia-admin.solomore.net/new_baijiabackend/back_end/cover_mp4/upload/1606124640%E4%B8%8D%E5%90%BC%E4%B8%8D%E5%8F%AB+%E4%B8%BB%E5%8A%A8+%E5%A4%AB%E5%A6%BB.mp4','bbc.mp4">http://baijia-admin.solomore.net/new_baijiabackend/back_end/cover_mp4/upload/1606124640不吼不叫+主动+夫妻.mp4&#39;,&#39;bbc.mp4</a>‘<span style="color: #000000;">))<br>    </span><span style="color: #0000ff;">echo</span> ‘文件拷贝成功’<span style="color: #000000;">;<br></span><span style="color: #0000ff;">else</span><br>    <span style="color: #0000ff;">echo</span> ‘文件拷贝失败’;</pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>文件内容（打开文件）</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$filename</span> = './text.txt'<span style="color: #000000;">;
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">打开文件</span><br><span style="color: #800080;">$handle</span> &#x3D; <span style="color: #008080;">fopen</span>(<span style="color: #800080;">$filename</span>,’r’<span style="color: #000000;">);<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">第一个参数为文件路径<br>&#x2F;&#x2F;第二个参数指定以什么形式打开文件。</span></pre></p>
+</div>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202012/1680452-20201206104830384-2071230946.png" alt="" width="696" height="325" loading="lazy" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>文件内容（读取文件）</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$filename</span> = './text.txt'<span style="color: #000000;">;
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">打开文件</span><br><span style="color: #800080;">$handle</span> &#x3D; <span style="color: #008080;">fopen</span>(<span style="color: #800080;">$filename</span>,’r’<span style="color: #000000;">);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">读取文件<br>&#x2F;&#x2F;$res &#x3D;  fread($handle,3);<br>&#x2F;&#x2F;第一个参数为文件句柄<br>&#x2F;&#x2F;第二个参数为读取多少个字节<br>&#x2F;&#x2F;注意：若读取到3的位置，指针也会在3的位置，下一次读取的时候是不会从头开始读的</span></p>
+<p><span style="color: #800080;">$res</span> &#x3D; <span style="color: #008080;">fread</span>(<span style="color: #800080;">$handle</span>,<span style="color: #008080;">filesize</span>(<span style="color: #800080;">$filename</span>)); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">读取全部文件<br>&#x2F;&#x2F;echo $res;</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><strong>&nbsp;更好的读取文件操作</strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">header("content-type:image/jpeg");</span>
+<span style="color: #008080;">header</span>("content-type:video/mp4"); <span style="color: #008000;">//</span><span style="color: #008000;">记得添加输出的文件类型</span>
+<span style="color: #800080;">$filename</span> = './bbc.mp4'<span style="color: #000000;">;
+</span><span style="color: #008000;">//</span><span style="color: #008000;">打开文件</span>
+<span style="color: #800080;">$handle</span> = <span style="color: #008080;">fopen</span>(<span style="color: #800080;">$filename</span>,'rb+'<span style="color: #000000;">);
+</span><span style="color: #008000;">//</span><span style="color: #008000;">注意：为了更好的兼容性，在选择打开方式的时候在后面追加一个b
+
+<p>&#x2F;&#x2F;读取文件</span><br><span style="color: #800080;">$res</span> &#x3D;  <span style="color: #008080;">fread</span>(<span style="color: #800080;">$handle</span>,<span style="color: #008080;">filesize</span>(<span style="color: #800080;">$filename</span><span style="color: #000000;">));<br></span><span style="color: #0000ff;">echo</span> <span style="color: #800080;">$res</span><span style="color: #000000;">;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">关闭文件</span><br><span style="color: #008080;">fclose</span>(<span style="color: #800080;">$handle</span>);</pre></p>
+</div>
+<p>&nbsp;</p>
+<p><strong>按字节读 / 按行读</strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">打开文件</span>
+<span style="color: #800080;">$handle</span> = <span style="color: #008080;">fopen</span>(<span style="color: #800080;">$filename</span>,'ab+'<span style="color: #000000;">);
+
+<p></span><span style="color: #0000ff;">while</span> (!<span style="color: #008080;">feof</span>(<span style="color: #800080;">$handle</span>)){ <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">判断当前指针是否已经到文件末尾<br>    &#x2F;&#x2F;一个字节一个字节地读<br>&#x2F;&#x2F;    echo fgetc($handle).”\n”;</p>
+<pre><code>//一行一行地读
+</code></pre>
+<p>&#x2F;&#x2F;    echo fgets($handle).”\n”;</p>
+<pre><code>//一行一行的读，过滤html标签&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;echo&lt;/span&gt; &lt;span style=&quot;color: #008080;&quot;&gt;strip_tags&lt;/span&gt;(&lt;span style=&quot;color: #008080;&quot;&gt;fgets&lt;/span&gt;(&lt;span style=&quot;color: #800080;&quot;&gt;$handle&lt;/span&gt;)).&quot;\n&quot;&lt;span style=&quot;color: #000000;&quot;&gt;;
+</code></pre>
+<p>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>文件内容（文件指针）</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">获取当前指针的位置</span>
+<span style="color: #0000ff;">echo</span> <span style="color: #008080;">ftell</span>(<span style="color: #800080;">$handle</span><span style="color: #000000;">);
+</span><span style="color: #008000;">//</span><span style="color: #008000;">第一个参数为文件句柄
+
+<p>&#x2F;&#x2F;设置指针的位置</span><br><span style="color: #008080;">fseek</span>(<span style="color: #800080;">$handle</span>,2<span style="color: #000000;">);<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">第一个参数为文件句柄<br>&#x2F;&#x2F;第二个参数为指针移动到的位置下标</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>文件内容（关闭文件）</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$filename</span> = './text.txt'<span style="color: #000000;">;
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">打开文件</span><br><span style="color: #800080;">$handle</span> &#x3D; <span style="color: #008080;">fopen</span>(<span style="color: #800080;">$filename</span>,’r’<span style="color: #000000;">);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">读取文件</span><br><span style="color: #800080;">$res</span> &#x3D;  <span style="color: #008080;">fread</span>(<span style="color: #800080;">$handle</span>,3<span style="color: #000000;">);<br></span><span style="color: #0000ff;">echo</span> <span style="color: #800080;">$res</span><span style="color: #000000;">;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">关闭文件</span><br><span style="color: #008080;">fclose</span>(<span style="color: #800080;">$handle</span><span style="color: #000000;">);<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">第一个参数为文件句柄<br>&#x2F;&#x2F;注意：关闭文件后，文件获取到的文件句柄将不可用</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>文件内容（写入文件）</h3>
+<p>fwrite的别名是fputs，两者是等价的</p>
+<div class="cnblogs_code">
+<pre>以读写的形式写入文件r+
+
+<p><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">打开文件</span><br><span style="color: #800080;">$handle</span> &#x3D; <span style="color: #008080;">fopen</span>(<span style="color: #800080;">$filename</span>,’rb+’<span style="color: #000000;">);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">fwrite()执行写入操作</span><br><span style="color: #008080;">fwrite</span>(<span style="color: #800080;">$handle</span>,’我要写入文字’,6<span style="color: #000000;">);<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">第一个参数为文件句柄<br>&#x2F;&#x2F;第二个参数为写入的内容<br>&#x2F;&#x2F;第三个可选参数，表示写入的长度，默认全部写入<br>&#x2F;&#x2F;注意：写入的内容会覆盖原来的内容，写入到哪个地方指针就会在哪里停留</span></pre></p>
+</div>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">以写入的形式打开文件w。若文件存在则截断为0后写入；若文件不存在则会先创建
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">打开文件</span><br><span style="color: #800080;">$handle</span> &#x3D; <span style="color: #008080;">fopen</span>(<span style="color: #800080;">$filename</span>,’w’<span style="color: #000000;">);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">fwrite()执行写入操作</span><br><span style="color: #008080;">fwrite</span>(<span style="color: #800080;">$handle</span>,’我要’.PHO_EOL.’写入文字’); <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">PHP_EOL已弃用<br>&#x2F;&#x2F;第一个参数为文件句柄<br>&#x2F;&#x2F;第二个参数为写入的内容<br>&#x2F;&#x2F;第三个可选参数，表示写入的长度，默认全部写入<br>&#x2F;&#x2F;注意：写入的内容会覆盖原来的内容，写入到哪个地方指针就会在哪里停留</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre>以写入的形式打开文件a  a+<span style="color: #000000;">是读写的形式
+若文件存在，则指针跳到文件末尾后写入；若文件不存在则会先创建
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">打开文件b</span><br><span style="color: #800080;">$handle</span> &#x3D; <span style="color: #008080;">fopen</span>(<span style="color: #800080;">$filename</span>,’ab+’<span style="color: #000000;">);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">fwrite()执行写入操作</span><br><span style="color: #008080;">fwrite</span>(<span style="color: #800080;">$handle</span>,’我要写入文字’.”\n”<span style="color: #000000;">);<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">第一个参数为文件句柄<br>&#x2F;&#x2F;第二个参数为写入的内容<br>&#x2F;&#x2F;第三个可选参数，表示写入的长度，默认全部写入<br>&#x2F;&#x2F;注意：写入的内容会覆盖原来的内容，写入到哪个地方指针就会在哪里停留</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>想要输出追加后的所有内容</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">文件写入后想读取文件的所有内容，需要先重置指针</span>
+<span style="color: #008080;">rewind</span>(<span style="color: #800080;">$handle</span><span style="color: #000000;">);
+
+<p></span><span style="color: #800080;">$res</span> &#x3D; <span style="color: #008080;">fread</span>(<span style="color: #800080;">$handle</span>,<span style="color: #008080;">filesize</span>(<span style="color: #800080;">$filename</span><span style="color: #000000;">));<br></span><span style="color: #0000ff;">echo</span> <span style="color: #800080;">$res</span>;</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>想要截断文件，源文件会被修改</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">打开文件b</span>
+<span style="color: #800080;">$handle</span> = <span style="color: #008080;">fopen</span>(<span style="color: #800080;">$filename</span>,'ab+'<span style="color: #000000;">);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">将文件截断成自己需要的部分</span><br><span style="color: #008080;">ftruncate</span>(<span style="color: #800080;">$handle</span>,9);</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>CSV文件操作</h3>
+<p>将csv里面的数据全部转为数组</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">打开文件</span>
+<span style="color: #800080;">$handle</span> = <span style="color: #008080;">fopen</span>(<span style="color: #800080;">$filename</span>,'rb+'<span style="color: #000000;">);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">读取里面的全部内容，并转为数组</span><br><span style="color: #0000ff;">while</span> (<span style="color: #800080;">$row</span> &#x3D; <span style="color: #008080;">fgetcsv</span>(<span style="color: #800080;">$handle</span>)){ <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">只要$row不等于空就继续循环</span><br>    <span style="color: #800080;">$arr</span>[] &#x3D; <span style="color: #800080;">$row</span><span style="color: #000000;">;<br>}<br></span><span style="color: #008080;">print_r</span>(<span style="color: #800080;">$arr</span>);</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>若csv文件里面的分隔符不是 , 的话</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">打开文件</span>
+<span style="color: #800080;">$handle</span> = <span style="color: #008080;">fopen</span>(<span style="color: #800080;">$filename</span>,'rb+'<span style="color: #000000;">);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">读取里面的全部内容，并转为数组</span><br><span style="color: #0000ff;">while</span> (<span style="color: #800080;">$row</span> &#x3D; <span style="color: #008080;">fgetcsv</span>(<span style="color: #800080;">$handle</span>,0,’-‘<span style="color: #000000;">)){<br>    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">第一个参数文件句柄，<br>    &#x2F;&#x2F;第二个参数表示读多少行 0表示全读，默认为0<br>    &#x2F;&#x2F;第三个参数说明csv里面的分隔符</span><br>    <span style="color: #800080;">$arr</span>[] &#x3D; <span style="color: #800080;">$row</span><span style="color: #000000;">;<br>}<br></span><span style="color: #008080;">print_r</span>(<span style="color: #800080;">$arr</span>);</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>将数组写入csv文件</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">打开文件</span>
+<span style="color: #800080;">$handle</span> = <span style="color: #008080;">fopen</span>(<span style="color: #800080;">$filename</span>,'wb+'<span style="color: #000000;">);
+
+<p></span><span style="color: #800080;">$arr</span> &#x3D;<span style="color: #000000;">[<br>    [</span>1,’男’,23,’北京’,‘<a href="mailto:&#115;&#108;&#x64;&#107;&#102;&#x6a;&#x6c;&#x40;&#49;&#54;&#x33;&#46;&#99;&#111;&#x6d;">&#115;&#108;&#x64;&#107;&#102;&#x6a;&#x6c;&#x40;&#49;&#54;&#x33;&#46;&#99;&#111;&#x6d;</a>‘],<span style="color: #000000;"><br>    [</span>1,’男’,23,’北京’,‘<a href="mailto:&#x73;&#108;&#100;&#x6b;&#102;&#106;&#x6c;&#64;&#x31;&#54;&#51;&#46;&#99;&#111;&#x6d;">&#x73;&#108;&#100;&#x6b;&#102;&#106;&#x6c;&#64;&#x31;&#54;&#51;&#46;&#99;&#111;&#x6d;</a>‘],<span style="color: #000000;"><br>    [</span>1,’男’,23,’北京’,‘<a href="mailto:&#115;&#108;&#x64;&#x6b;&#x66;&#106;&#108;&#64;&#x31;&#54;&#x33;&#x2e;&#99;&#111;&#109;">&#115;&#108;&#x64;&#x6b;&#x66;&#106;&#108;&#64;&#x31;&#54;&#x33;&#x2e;&#99;&#111;&#109;</a>‘],<span style="color: #000000;"><br>    [</span>1,’男’,23,’北京’,‘<a href="mailto:&#115;&#x6c;&#x64;&#107;&#x66;&#106;&#108;&#64;&#x31;&#x36;&#x33;&#x2e;&#x63;&#111;&#109;">&#115;&#x6c;&#x64;&#107;&#x66;&#106;&#108;&#64;&#x31;&#x36;&#x33;&#x2e;&#x63;&#111;&#109;</a>‘],<span style="color: #000000;"><br>    [</span>1,’男’,23,’北京’,‘<a href="mailto:&#x73;&#x6c;&#x64;&#107;&#x66;&#106;&#108;&#64;&#49;&#54;&#51;&#x2e;&#x63;&#x6f;&#109;">&#x73;&#x6c;&#x64;&#107;&#x66;&#106;&#108;&#64;&#49;&#54;&#51;&#x2e;&#x63;&#x6f;&#109;</a>‘<span style="color: #000000;">]<br>];</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">写入csv文件</span><br><span style="color: #0000ff;">foreach</span> (<span style="color: #800080;">$arr</span> <span style="color: #0000ff;">as</span> <span style="color: #800080;">$val</span><span style="color: #000000;">){<br>    fputcsv(</span><span style="color: #800080;">$handle</span>,<span style="color: #800080;">$val</span>,’-‘<span style="color: #000000;">);<br>    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">第一个参数为文件句柄<br>    &#x2F;&#x2F;第二个参数为一个一维数组<br>    &#x2F;&#x2F;第三个可选参数，表示写入csv文件的分隔符，默认逗号</span><br>}</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>常用读取文件操作</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">读取文件
+//$filename = './aa.csv';
+
+<p>&#x2F;&#x2F;读取视频<br>&#x2F;&#x2F;header(“content-type:video&#x2F;mp4”);<br>&#x2F;&#x2F;$filename &#x3D; ‘.&#x2F;bbc.mp4’;</p>
+<p>&#x2F;&#x2F;读取html</span><br><span style="color: #008080;">header</span>(“content-type:text&#x2F;html;charset&#x3D;utf-8”<span style="color: #000000;">);<br></span><span style="color: #800080;">$filename</span> &#x3D; ‘<a target="_blank" rel="noopener" href="http://www.baidu.com/">http://www.baidu.com</a>‘<span style="color: #000000;">;</p>
+<p></span><span style="color: #800080;">$res</span> &#x3D; <span style="color: #008080;">file_get_contents</span>(<span style="color: #800080;">$filename</span><span style="color: #000000;">);<br></span><span style="color: #0000ff;">echo</span> <span style="color: #800080;">$res</span>;</pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>常用写入文件操作（覆盖原来的）</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$filename</span> = 'text.txt'<span style="color: #000000;">;
+</span><span style="color: #008080;">file_put_contents</span>(<span style="color: #800080;">$filename</span>,'haha,I\'m a text');</pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>常用写入文件操作（文件最后追加内容）</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$filename</span> = 'text.txt'<span style="color: #000000;">;
+</span><span style="color: #008000;">//</span><span style="color: #008000;">获取原来内容</span>
+<span style="color: #800080;">$str</span> = <span style="color: #008080;">file_get_contents</span>(<span style="color: #800080;">$filename</span><span style="color: #000000;">);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">定义新内容</span><br><span style="color: #800080;">$new_date</span> &#x3D; <span style="color: #800080;">$str</span>.’haha,I&#39;m a new text’.”\n”<span style="color: #000000;">;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">进行数据写入</span><br><span style="color: #008080;">file_put_contents</span>(<span style="color: #800080;">$filename</span>,<span style="color: #800080;">$new_date</span><span style="color: #000000;">);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">显示全部内容</span><br><span style="color: #800080;">$res</span> &#x3D; <span style="color: #008080;">file_get_contents</span>(<span style="color: #800080;">$filename</span><span style="color: #000000;">);<br></span><span style="color: #0000ff;">echo</span> <span style="color: #800080;">$res</span><span style="color: #000000;">;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">注意：file_put_content函数，若文件不存在会进行创建</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>常用写入文件操作（将数组写入文件）</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$filename</span> = 'text.txt'<span style="color: #000000;">;
+</span><span style="color: #800080;">$arr</span> =<span style="color: #000000;"> [
+    [</span>1,'小明',23,'男','北京'],<span style="color: #000000;">
+    [</span>1,'小明',23,'男','北京'],<span style="color: #000000;">
+    [</span>1,'小明',23,'男','北京'],<span style="color: #000000;">
+    [</span>1,'小明',23,'男','北京'],<span style="color: #000000;">
+];
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">先将数组序列化</span><br><span style="color: #800080;">$date</span> &#x3D; <span style="color: #008080;">serialize</span>(<span style="color: #800080;">$arr</span><span style="color: #000000;">);<br></span><span style="color: #008080;">file_put_contents</span>(<span style="color: #800080;">$filename</span>,<span style="color: #800080;">$date</span>);</pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>&nbsp;</h3>
+<h3>常用写入文件操作（将文件里的序列化数据，转为数组）</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$filename</span> = 'text.txt'<span style="color: #000000;">;
+</span><span style="color: #008000;">//</span><span style="color: #008000;">获取文件里面的序列化数据</span>
+<span style="color: #800080;">$date</span> = <span style="color: #008080;">file_get_contents</span>(<span style="color: #800080;">$filename</span><span style="color: #000000;">);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">将序列化数据转为数组</span><br><span style="color: #800080;">$arr</span> &#x3D; <span style="color: #008080;">unserialize</span>(<span style="color: #800080;">$date</span><span style="color: #000000;">);<br></span><span style="color: #008080;">print_r</span>(<span style="color: #800080;">$arr</span>);</pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>&nbsp;</h3>
+<h3>常用写入文件操作（array转json，json转array）</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #800080;">$filename</span> = 'text.txt'<span style="color: #000000;">;
+</span><span style="color: #800080;">$arr</span> =<span style="color: #000000;"> [
+    [</span>1,'小明',23,'男','北京'],<span style="color: #000000;">
+    [</span>1,'小明',23,'男','北京'],<span style="color: #000000;">
+    [</span>1,'小明',23,'男','北京'],<span style="color: #000000;">
+    [</span>1,'小明',23,'男','北京'],<span style="color: #000000;">
+];
+</span><span style="color: #008000;">//</span><span style="color: #008000;">将数组转为json字符串，并存入文件</span>
+<span style="color: #800080;">$date</span> = json_encode(<span style="color: #800080;">$arr</span><span style="color: #000000;">);
+</span><span style="color: #008080;">file_put_contents</span>(<span style="color: #800080;">$filename</span>,<span style="color: #800080;">$date</span><span style="color: #000000;">);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;</span></p>
+<p><span style="color: #800080;">$filename</span> &#x3D; ‘text.txt’<span style="color: #000000;">;<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">读取文件里的json数据，并转为数组</span><br><span style="color: #800080;">$date</span> &#x3D; <span style="color: #008080;">file_get_contents</span>(<span style="color: #800080;">$filename</span><span style="color: #000000;">);<br></span><span style="color: #800080;">$arr</span> &#x3D; json_decode(<span style="color: #800080;">$date</span><span style="color: #000000;">);<br></span><span style="color: #008080;">print_r</span>(<span style="color: #800080;">$arr</span>);</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h1>二、Mysql基础</h1>
+<p>略</p>
+<p>&nbsp;</p>
+<h1>三、PHP操作MySQL</h1>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202012/1680452-20201206192137737-2089970047.png" alt="" width="758" height="311" loading="lazy" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">连接数据库</span>
+<span style="color: #800080;">$conn</span> = <span style="color: #008080;">mysqli_connect</span>('host','user','password','new_database','3306'<span style="color: #000000;">);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">判断是否连接成功</span><br><span style="color: #0000ff;">if</span>(<span style="color: #008080;">mysqli_connect_error</span>() !&#x3D; <span style="color: #0000ff;">null</span><span style="color: #000000;">)<br>    </span><span style="color: #0000ff;">die</span>(‘连接失败：’.<span style="color: #008080;">mysqli_connect_error</span><span style="color: #000000;">());<br></span><span style="color: #0000ff;">else</span><br>    <span style="color: #0000ff;">echo</span> ‘连接成功’<span style="color: #000000;">;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">选择数据库</span><br><span style="color: #008080;">mysqli_select_db</span>(<span style="color: #800080;">$conn</span>,’other_database’<span style="color: #000000;">);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">设置字符集</span><br>mysqli_set_charset(<span style="color: #800080;">$conn</span>,’utf8’<span style="color: #000000;">);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">书写sql语句</span><br><span style="color: #800080;">$sql</span> &#x3D; ‘SELECT * FROM table’<span style="color: #000000;">;</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">执行sql</span><br><span style="color: #800080;">$result</span> &#x3D; <span style="color: #008080;">mysqli_query</span>(<span style="color: #800080;">$conn</span>,<span style="color: #800080;">$sql</span><span style="color: #000000;">);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">解析结果集<br>&#x2F;&#x2F;$array &#x3D; mysqli_fetch_array($result);&#x2F;&#x2F;解析为索引数组</span><br><span style="color: #800080;">$array</span> &#x3D; <span style="color: #008080;">mysqli_fetch_assoc</span>(<span style="color: #800080;">$result</span>);<span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">解析为关联数组</p>
+<p>&#x2F;&#x2F;关闭连接</span><br><span style="color: #008080;">mysqli_close</span>(<span style="color: #800080;">$conn</span>);</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>解析结果集的方法</h2>
+<h3>逐条解析</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">索引数组和关联数组并存</span>
+<span style="color: #008080;">mysqli_fetch_array</span>(<span style="color: #800080;">$result</span>);<span style="color: #008000;">//</span><span style="color: #008000;">默认就是MYSQLI_BOTH</span>
+<span style="color: #008080;">mysqli_fetch_array</span>(<span style="color: #800080;">$result</span>,<span style="color: #000000;">MYSQLI_BOTH);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">只有索引数组</span><br><span style="color: #008080;">mysqli_fetch_row</span>(<span style="color: #800080;">$result</span><span style="color: #000000;">);<br></span><span style="color: #008080;">mysqli_fetch_array</span>(<span style="color: #800080;">$result</span>,<span style="color: #000000;">MYSQLI_NUM);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">只有关联数组</span><br><span style="color: #008080;">mysqli_fetch_assoc</span>(<span style="color: #800080;">$result</span><span style="color: #000000;">);<br></span><span style="color: #008080;">mysqli_fetch_array</span>(<span style="color: #800080;">$result</span>,<span style="color: #000000;">MYSQLI_ASSOC);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">解析成对象形式</span><br><span style="color: #008080;">mysqli_fetch_object</span>(<span style="color: #800080;">$result</span>);</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>全部解析</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">索引数组和关联数组并存</span>
+mysqli_fetch_all(<span style="color: #800080;">$result</span>,<span style="color: #000000;">MYSQLI_BOTH);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">只有索引数组</span><br>mysqli_fetch_all(<span style="color: #800080;">$result</span><span style="color: #000000;">);<br>mysqli_fetch_all(</span><span style="color: #800080;">$result</span>,MYSQLI_NUM);<span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">默认</p>
+<p>&#x2F;&#x2F;只有关联数组</span><br>mysqli_fetch_all(<span style="color: #800080;">$result</span>,MYSQLI_ASSOC);</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>功能性函数</h3>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">获取到的结果的行</span>
+<span style="color: #800080;">$n</span> = <span style="color: #008080;">mysqli_num_rows</span>(<span style="color: #800080;">$result</span><span style="color: #000000;">);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取到结果的列数</span><br><span style="color: #800080;">$colum</span> &#x3D; <span style="color: #008080;">mysqli_num_fields</span>(<span style="color: #800080;">$result</span><span style="color: #000000;">);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">还可以查询刚才插入的数据id</span><br><span style="color: #800080;">$id</span> &#x3D; <span style="color: #008080;">mysqli_insert_id</span>(<span style="color: #800080;">$conn</span><span style="color: #000000;">);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">执行完sql语句可以查询到影响的行数</span><br><span style="color: #800080;">$num</span> &#x3D; <span style="color: #008080;">mysqli_affected_rows</span>(<span style="color: #800080;">$conn</span><span style="color: #000000;">);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">逐条解析时的，循环输出</span><br><span style="color: #0000ff;">while</span>(<span style="color: #800080;">$row</span> &#x3D; <span style="color: #008080;">mysqli_fetch_assoc</span>(<span style="color: #800080;">$result</span><span style="color: #000000;">)){<br>    </span><span style="color: #008080;">print_r</span>(<span style="color: #800080;">$row</span><span style="color: #000000;">);<br>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h1>四、会话控制</h1>
+<h2>会话控制的方式</h2>
+<p>1、COOKIE</p>
+<p>2、SESSION</p>
+<p>3、其他：</p>
+<p>Json Web Tocken：json格式令牌，用于系统间交互</p>
+<p>Authorized Tocken：用于系统对用授权</p>
+<p>Access Tocken + Secret Tocken：用于对用户进行资源的访问限制</p>
+<p>&nbsp;</p>
+<h2>COOKIE</h2>
+<p>作用：cookie可以标记用户、标记客户端、存储简单值</p>
+<p>&nbsp;</p>
+<p>工作原理：在http响应时，给客户端设置cookie；在cookie有效期内，每次请求都会携带cookie的值</p>
+<p>&nbsp;</p>
+<h3><strong>cookie的生命周期：</strong></h3>
+<p><strong>在http请求中携带cookie</strong></p>
+<p>1、只可访问域名相同，路径匹配并在有效期内的cookie</p>
+<p>2、通过cookie指令发送具有访问权限的cookie值</p>
+<p>3、多个cookie的值用分号; 隔开</p>
+<p><strong>cookie失效</strong></p>
+<p>1、cookie过期</p>
+<p>2、用户手动删除cookie</p>
+<p>3、服务器清楚cookie有效性</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>SESSION</h2>
+<p>作用：cookie可以标记用户、标记客户端、存储数据 (其中可以大数据)</p>
+<p>&nbsp;</p>
+<p>工作原理：</p>
+<p>1、在http响应中设置cookie，并在临时文件中保存session值</p>
+<p>2、通过客户端请求中的cookie定位到相应的session文件</p>
+<p>3、读取并处理session的内容</p>
+<p>&nbsp;</p>
+<h3><strong>SESSION的生命周期：</strong></h3>
+<p><strong>启用并设置cookie：</strong></p>
+<p>1、在http响应中设置客户端的唯一cookie</p>
+<p>2、将相应的session内容写入临时文件</p>
+<p><strong>读取并处理session：</strong></p>
+<p>1、客户端在http请求中携带cookie的值</p>
+<p>2、服务器通过cookie值定位到session文件</p>
+<p>3、读取并处理session内容</p>
+<p><strong>SESSION失效 / 清除：</strong></p>
+<p>1、cookie过期（关闭浏览器）</p>
+<p>2、用户手动删除cookie</p>
+<p>3、服务端删除session文件 或 清空session内容</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>SESSION的使用</h3>
+<p>session开启前设置（若需要的话）</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">获取 / 设置SESSION NAME 的值</span>
+<span style="color: #008080;">session_name</span>('se_name'); <span style="color: #008000;">//</span><span style="color: #008000;">设置了session_name的值</span>
+<span style="color: #0000ff;">echo</span> <span style="color: #008080;">session_name</span>();<span style="color: #008000;">//</span><span style="color: #008000;">获取了session_name的值
+
+<p>&#x2F;&#x2F;获取 &#x2F; 设置SESSION ID 的值</span><br><span style="color: #008080;">session_id</span>(‘2323’<span style="color: #000000;">);<br></span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">session_id</span><span style="color: #000000;">();</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取 &#x2F; 设置SESSION文件的保存路径</span><br><span style="color: #008080;">session_save_path</span>(‘&#x2F;‘<span style="color: #000000;">);<br></span><span style="color: #0000ff;">echo</span> <span style="color: #008080;">session_save_path</span><span style="color: #000000;">();</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">设置SESSION中的COOKIE参数</span><br><span style="color: #008080;">session_set_cookie_params</span><span style="color: #000000;">();<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">第一个参数：cookie生存时间 int<br>&#x2F;&#x2F;第二个参数：cookie的有效路径 string<br>&#x2F;&#x2F;第三个参数：有效域名 string<br>&#x2F;&#x2F;第四个参数：安全限制，默认false bool<br>&#x2F;&#x2F;第五个参数：访问限制，默认false bool</p>
+<p>&#x2F;&#x2F;注意：以上设置需要在session开启之前设置</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>开启session并使用</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">开启session</span>
+<span style="color: #008080;">session_start</span><span style="color: #000000;">();
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">设置session的值</span><br><span style="color: #800080;">$_SESSION</span>[‘user’] &#x3D; <span style="color: #0000ff;">array</span><span style="color: #000000;">(<br>    </span>‘username’ &#x3D;&gt; ‘人’,<br>    ‘age’ &#x3D;&gt; 23<span style="color: #000000;"><br>);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">读取session的内容</span><br><span style="color: #008080;">var_dump</span>(<span style="color: #800080;">$_SESSION</span>[‘user’<span style="color: #000000;">]);</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">清空session数据,session文件还会存在</span><br><span style="color: #008080;">session_unset</span><span style="color: #000000;">();<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">删除session文件</span><br><span style="color: #008080;">session_destroy</span>();</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>利用COOKIE实现记住用户登录状态</h2>
+<p>登录成功后设置cookie保存到本地</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">setcookie</span>('username',<span style="color: #800080;">$username</span>,<span style="color: #008080;">time</span>() + 7 * 24 * 3600);<span style="color: #008000;">//</span><span style="color: #008000;">设置用户名、和cookie有效时间7天</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>网页中检查cookie是否存在 并 合法性。若是检查无误后，设置Session值</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">session_start</span><span style="color: #000000;">();
+
+<p></span><span style="color: #0000ff;">if</span>(<span style="color: #0000ff;">isset</span>(<span style="color: #800080;">$_SESSION</span>[‘username’]) &amp;&amp; <span style="color: #800080;">$_SESSION</span>[‘username’]&#x3D;&#x3D;’people’<span style="color: #000000;">)<br>    </span><span style="color: #0000ff;">echo</span> ‘登录成功’<span style="color: #000000;">;<br></span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(<span style="color: #0000ff;">isset</span>(<span style="color: #800080;">$_COOKIE</span>[‘username’]) &amp;&amp; <span style="color: #800080;">$_COOKIE</span>[‘username’]&#x3D;&#x3D;’people’<span style="color: #000000;">){<br>    </span><span style="color: #800080;">$_SESSION</span>[‘username’] &#x3D; ‘people’<span style="color: #000000;">;<br>    </span><span style="color: #0000ff;">echo</span> ‘登录成功’<span style="color: #000000;">;<br>}<br></span><span style="color: #0000ff;">else</span><br>    <span style="color: #008080;">header</span>(“Location:login.php”);</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>注销登录时，不仅要清楚session，还要清除cookie</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">session_unset</span><span style="color: #000000;">();
+</span><span style="color: #008080;">setcookie</span>('username','',<span style="color: #008080;">time</span>()-33);</pre>
+</div>
+<p>&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/02%E3%80%81PHP%E5%87%BD%E6%95%B0%E5%BA%93/" rel="prev" title="02、PHP函数库">
+      <i class="fa fa-chevron-left"></i> 02、PHP函数库
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/03%E3%80%81PHP%E6%95%B0%E7%BB%84/" rel="next" title="03、PHP数组">
+      03、PHP数组 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">一、文件操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">文件目录函数库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.1.</span> <span class="nav-text">文件相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.2.</span> <span class="nav-text">文件路径相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.3.</span> <span class="nav-text">文件操作相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.4.</span> <span class="nav-text">文件内容（打开文件）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.5.</span> <span class="nav-text">文件内容（读取文件）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.6.</span> <span class="nav-text">文件内容（文件指针）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.7.</span> <span class="nav-text">文件内容（关闭文件）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.8.</span> <span class="nav-text">文件内容（写入文件）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.9.</span> <span class="nav-text">CSV文件操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.10.</span> <span class="nav-text">常用读取文件操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.11.</span> <span class="nav-text">常用写入文件操作（覆盖原来的）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.12.</span> <span class="nav-text">常用写入文件操作（文件最后追加内容）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.13.</span> <span class="nav-text">常用写入文件操作（将数组写入文件）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.14.</span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.15.</span> <span class="nav-text">常用写入文件操作（将文件里的序列化数据，转为数组）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.16.</span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.17.</span> <span class="nav-text">常用写入文件操作（array转json，json转array）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">二、Mysql基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">三、PHP操作MySQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text">解析结果集的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.1.1.</span> <span class="nav-text">逐条解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.1.2.</span> <span class="nav-text">全部解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.1.3.</span> <span class="nav-text">功能性函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">四、会话控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text">会话控制的方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.2.</span> <span class="nav-text">COOKIE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.2.1.</span> <span class="nav-text">cookie的生命周期：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.3.</span> <span class="nav-text">SESSION</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.3.1.</span> <span class="nav-text">SESSION的生命周期：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.3.2.</span> <span class="nav-text">SESSION的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.4.</span> <span class="nav-text">利用COOKIE实现记住用户登录状态</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/04%E3%80%81PHP%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/",
+      identifier: "/uncategorized/04、PHP常用操作/",
+      title     : "04、PHP常用操作",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="之前 protobuf 时安装过，不需安装 快速开启 grpc 服务 新建目录 testGrpc 。以及 testGrpc&#x2F;service 和 testGrpc&#x2F;client testGrpc 下新建 hello.proto syntax &#x3D; &quot;proto3&quot;; package tempPackag">
+<meta property="og:type" content="article">
+<meta property="og:title" content="9、gRPC">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/9%E3%80%81gRPC/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="之前 protobuf 时安装过，不需安装 快速开启 grpc 服务 新建目录 testGrpc 。以及 testGrpc&#x2F;service 和 testGrpc&#x2F;client testGrpc 下新建 hello.proto syntax &#x3D; &quot;proto3&quot;; package tempPackag">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202112/1680452-20211204234012357-665272410.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202112/1680452-20211204233446614-687026950.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202112/1680452-20211205131246745-1671421273.png">
+<meta property="article:published_time" content="2021-12-05T08:19:00.000Z">
+<meta property="article:modified_time" content="2026-08-20T06:32:52.579Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2020.cnblogs.com/blog/1680452/202112/1680452-20211204234012357-665272410.png">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/9%E3%80%81gRPC/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>9、gRPC | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/9%E3%80%81gRPC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          9、gRPC<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/9%E3%80%81gRPC.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-05 16:19:00" itemprop="dateCreated datePublished" datetime="2021-12-05T16:19:00+08:00">2021-12-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-08-20 14:32:52" itemprop="dateModified" datetime="2026-08-20T14:32:52+08:00">2026-08-20</time>
+              </span>
+
+          
+            <div class="post-description">之前 protobuf 时安装过，不需安装 快速开启 grpc 服务 新建目录 testGrpc 。以及 testGrpc/service 和 testGrpc/client testGrpc 下新建 hello.proto syntax = "proto3"; package tempPackag</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&nbsp;之前 protobuf 时安装过，不需安装</p>
+<p>&nbsp;</p>
+<h2>快速开启 grpc 服务</h2>
+<p>新建目录 testGrpc 。以及&nbsp;testGrpc/service 和&nbsp;testGrpc/client</p>
+<p>&nbsp;</p>
+<p>testGrpc 下新建 hello.proto</p>
+<div class="cnblogs_code">
+<pre>syntax = <span style="color: #800000;">"</span><span style="color: #800000;">proto3</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+
+<p>package tempPackageName;</p>
+<p>option go_package </span>&#x3D; <span style="color: #800000;">“</span><span style="color: #800000;">ginStart&#x2F;testGrpc&#x2F;service&#x2F;helloPackage</span><span style="color: #800000;">“</span>; <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> 生成在service文件夹下，包名为 helloPackage</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> The greeting service definition.</span><br><span style="color: #000000;">service Greeter {<br>  </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> Sends a greeting</span><br><span style="color: #000000;">  rpc SayHello (HelloRequest) returns (HelloReply) {}<br>}</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> The request message containing the user’s name.</span><br><span style="color: #000000;">message HelloRequest {<br>  </span><span style="color: #0000ff;">string</span> name &#x3D; <span style="color: #800080;">1</span><span style="color: #000000;">;<br>}</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> The response message containing the greetings</span><br><span style="color: #000000;">message HelloReply {<br>  </span><span style="color: #0000ff;">string</span> message &#x3D; <span style="color: #800080;">1</span><span style="color: #000000;">;<br>}</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> 生成普通结构文件<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> protoc –go_out&#x3D;client –go_opt&#x3D;paths&#x3D;source_relative grpc.proto</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> 生成 grpc 文件<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> protoc –go-grpc_out&#x3D;service –go-grpc_opt&#x3D;paths&#x3D;source_relative grpc.proto </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> 若是 . 表示当前目录<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> –go-grpc_out&#x3D;service </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> 定义输出路径<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> –go-grpc_opt&#x3D;paths&#x3D;source_relative </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> 定义输入路径<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> grpc.proto </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> 定义需要编译的文件</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> 两种文件一起生成<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> protoc –go_out&#x3D;. –go_opt&#x3D;paths&#x3D;source_relative <br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> –go-grpc_out&#x3D;. –go-grpc_opt&#x3D;paths&#x3D;source_relative <br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> grpc.proto</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>执行命令在当前文件夹生成文件</p>
+<div class="cnblogs_code">
+<pre> protoc --go_out=. --go_opt=paths=<span style="color: #000000;">source_relative \
+ </span>--go-grpc_out=. --go-grpc_opt=paths=<span style="color: #000000;">source_relative \
+ grpc.proto</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>在 service 下新建 main.go</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">package main
+
+<p>import (<br>    </span><span style="color: #800000;">“</span><span style="color: #800000;">context</span><span style="color: #800000;">“</span><br>    <span style="color: #800000;">“</span><span style="color: #800000;">google.golang.org&#x2F;grpc</span><span style="color: #800000;">“</span><br>    <span style="color: #800000;">“</span><span style="color: #800000;">log</span><span style="color: #800000;">“</span><br>    <span style="color: #800000;">“</span><span style="color: #800000;">net</span><span style="color: #800000;">“</span><span style="color: #000000;"><br>    pb </span><span style="color: #800000;">“</span><span style="color: #800000;">project&#x2F;testGrpc</span><span style="color: #800000;">“</span><span style="color: #000000;"><br>)</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> 在 hello_grpc.pb.go 里面找到 GreeterServer 接口<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">type GreeterServer interface {<br></span><span style="color: #008000;">&#x2F;&#x2F;</span>    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> Sends a greeting<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">    SayHello(context.Context, *HelloRequest) (*HelloReply, error)<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">    mustEmbedUnimplementedGreeterServer()<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">}</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> 根据格式，实现接口</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> server is used to implement hello.GreeterServer.</span><br>type server <span style="color: #0000ff;">struct</span><span style="color: #000000;"> {<br>    pb.UnimplementedGreeterServer<br>}</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> SayHello implements hello.GreeterServer</span><br>func (s *server) SayHello(ctx context.Context, <span style="color: #0000ff;">in</span> <em>pb.HelloRequest) (</em><span style="color: #000000;">pb.HelloReply, error) {<br>    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">log.Printf(“Received: %v”, in.GetName())</span></p>
+<pre><code>&lt;span style=&quot;color: #0000ff;&quot;&gt;return&lt;/span&gt; &amp;amp;&lt;span style=&quot;color: #000000;&quot;&gt;pb.HelloReply{
+    Message: &lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;Hello &lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt; + &lt;span style=&quot;color: #0000ff;&quot;&gt;in&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;.GetName(),
+}, nil
+</code></pre>
+<p>}</p>
+<p>func main() {</p>
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 监听 tcp 的 50051 端口&lt;/span&gt;
+lis, err := net.Listen(&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;tcp&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;, &lt;span style=&quot;color: #800000;&quot;&gt;&quot;localhost:50051&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;)
+&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;if&lt;/span&gt; err !=&lt;span style=&quot;color: #000000;&quot;&gt; nil {
+    log.Fatalf(&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;failed to listen: %v&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;, err) &lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 监听发生错误就打印出来，随后退出&lt;/span&gt;
+</code></pre>
+<p><span style="color: #000000;">    }</p>
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 初始化服务&lt;/span&gt;
+s :=&lt;span style=&quot;color: #000000;&quot;&gt; grpc.NewServer()
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 注册服务&lt;/span&gt;
+pb.RegisterGreeterServer(s, &amp;amp;&lt;span style=&quot;color: #000000;&quot;&gt;server{})
+
+log.Printf(&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;server listening at %v&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;, lis.Addr()) &lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 一些无关紧要的打印信息
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 开启服务&lt;/span&gt;
+err =&lt;span style=&quot;color: #000000;&quot;&gt; s.Serve(lis)
+
+&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;if&lt;/span&gt; err !=&lt;span style=&quot;color: #000000;&quot;&gt; nil {
+    log.Fatalf(&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;failed to serve: %v&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;, err)
+}
+</code></pre>
+<p>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>启动服务端</p>
+<div class="cnblogs_code">
+<pre>go run service/main.go</pre>
+</div>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202112/1680452-20211204234012357-665272410.png" alt="" loading="lazy" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>在 client 下新建main.go</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">package main
+
+<p>import (<br>    </span><span style="color: #800000;">“</span><span style="color: #800000;">context</span><span style="color: #800000;">“</span><br>    <span style="color: #800000;">“</span><span style="color: #800000;">google.golang.org&#x2F;grpc</span><span style="color: #800000;">“</span><br>    <span style="color: #800000;">“</span><span style="color: #800000;">log</span><span style="color: #800000;">“</span><span style="color: #000000;"><br>    pb </span><span style="color: #800000;">“</span><span style="color: #800000;">project&#x2F;testGrpc</span><span style="color: #800000;">“</span><br>    <span style="color: #800000;">“</span><span style="color: #800000;">time</span><span style="color: #800000;">“</span><span style="color: #000000;"><br>)</p>
+<p>func main() {</p>
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 开始请求服务端&lt;/span&gt;
+conn, err := grpc.Dial(&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;localhost:50051&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;, grpc.WithInsecure(), grpc.WithBlock())
+&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;if&lt;/span&gt; err !=&lt;span style=&quot;color: #000000;&quot;&gt; nil {
+    log.Fatalf(&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;did not connect: %v&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;, err)
+}
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 请求结束后就自动关闭连接&lt;/span&gt;
+</code></pre>
+<p><span style="color: #000000;">    defer conn.Close()</p>
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 初始化客户端连接&lt;/span&gt;
+c :=&lt;span style=&quot;color: #000000;&quot;&gt; pb.NewGreeterClient(conn)
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; Contact the server and print out its response.
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;name := defaultName
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;if len(os.Args) &amp;gt; 1 {
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;    name = os.Args[1]
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;}
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 创建一个子节点的context,1秒后自动超时&lt;/span&gt;
+ctx, cancel :=&lt;span style=&quot;color: #000000;&quot;&gt; context.WithTimeout(context.Background(), time.Second)
+defer cancel()
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 发送请求体，返回内容&lt;/span&gt;
+r, err := c.SayHello(ctx, &amp;amp;pb.HelloRequest{Name: &lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;好家伙&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;})
+&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;if&lt;/span&gt; err !=&lt;span style=&quot;color: #000000;&quot;&gt; nil {
+    log.Fatalf(&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;could not greet: %v&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;, err)
+}
+
+log.Printf(&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;Greeting: %s&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;, r.GetMessage())
+</code></pre>
+<p>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>客户端开始连接测试</p>
+<div class="cnblogs_code">
+<pre>go run client/main.go</pre>
+</div>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202112/1680452-20211204233446614-687026950.png" alt="" loading="lazy" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>GRPC Gateway 实现</h2>
+<p>在主目录新建 hello.yaml</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">type: google.api.Service
+
+<p>config_version: </span><span style="color: #800080;">3</span><span style="color: #000000;"></p>
+<p>http:<br>  rules:<br>    </span>-<span style="color: #000000;"> selector: tempPackageName.Greeter.SayHello<br>      </span><span style="color: #0000ff;">get</span>: &#x2F;haha&#x2F;{name}</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>创建 .bat 快捷键 （最后一行是生成gateway）</p>
+<div class="cnblogs_code">
+<pre>protoc --go_out=. --go_opt=paths=<span style="color: #000000;">source_relative hello.proto
+protoc </span>--go-grpc_out=. --go-grpc_opt=paths=<span style="color: #000000;">source_relative  hello.proto
+protoc </span>--grpc-gateway_out=. --grpc-gateway_opt=paths=source_relative,grpc_api_configuration=hello.yaml hello.proto</pre>
+</div>
+<p>&nbsp;</p>
+<p>调用生成</p>
+<div class="cnblogs_code">
+<pre>./gen.bat</pre>
+</div>
+<p>&nbsp;</p>
+<p>在 service/main.go 里面</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">package main
+
+<p>import (<br>    </span><span style="color: #800000;">“</span><span style="color: #800000;">context</span><span style="color: #800000;">“</span><br>    <span style="color: #800000;">“</span><span style="color: #800000;">github.com&#x2F;grpc-ecosystem&#x2F;grpc-gateway&#x2F;v2&#x2F;runtime</span><span style="color: #800000;">“</span><br>    <span style="color: #800000;">“</span><span style="color: #800000;">google.golang.org&#x2F;grpc</span><span style="color: #800000;">“</span><br>    <span style="color: #800000;">“</span><span style="color: #800000;">log</span><span style="color: #800000;">“</span><br>    <span style="color: #800000;">“</span><span style="color: #800000;">net</span><span style="color: #800000;">“</span><br>    <span style="color: #800000;">“</span><span style="color: #800000;">net&#x2F;http</span><span style="color: #800000;">“</span><span style="color: #000000;"><br>    pb </span><span style="color: #800000;">“</span><span style="color: #800000;">project&#x2F;testGrpc</span><span style="color: #800000;">“</span><span style="color: #000000;"><br>)</p>
+<p>type server </span><span style="color: #0000ff;">struct</span><span style="color: #000000;"> {<br>    pb.UnimplementedGreeterServer<br>}</p>
+<p>func (s </span>*server) SayHello(ctx context.Context, <span style="color: #0000ff;">in</span> <em>pb.HelloRequest) (</em><span style="color: #000000;">pb.HelloReply, error) {</p>
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;return&lt;/span&gt; &amp;amp;&lt;span style=&quot;color: #000000;&quot;&gt;pb.HelloReply{
+    Message: &lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;Hello &lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;+ &lt;span style=&quot;color: #0000ff;&quot;&gt;in&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;.GetName(),
+}, nil
+</code></pre>
+<p>}</p>
+<p>func main() {<br>    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> 新增 grpc gateway</span><br><span style="color: #000000;">    go grpcGateWay()</p>
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 监听 tcp 的 8088 端口&lt;/span&gt;
+lis, err := net.Listen(&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;tcp&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;, &lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;localhost:50051&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;)
+&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;if&lt;/span&gt; err !=&lt;span style=&quot;color: #000000;&quot;&gt; nil {
+    log.Fatalf(&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;failed to listen: %v&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;, err) &lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 监听发生错误就打印出来，随后退出&lt;/span&gt;
+</code></pre>
+<p><span style="color: #000000;">    }</p>
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 初始化服务&lt;/span&gt;
+s :=&lt;span style=&quot;color: #000000;&quot;&gt; grpc.NewServer()
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 注册服务&lt;/span&gt;
+pb.RegisterGreeterServer(s, &amp;amp;&lt;span style=&quot;color: #000000;&quot;&gt;server{})
+
+log.Printf(&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;server listening at %v&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;, lis.Addr()) &lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 一些无关紧要的打印信息
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 开启服务&lt;/span&gt;
+err =&lt;span style=&quot;color: #000000;&quot;&gt; s.Serve(lis)
+
+&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;if&lt;/span&gt; err !=&lt;span style=&quot;color: #000000;&quot;&gt; nil {
+    log.Fatalf(&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;failed to serve: %v&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;, err)
+}
+</code></pre>
+<p>}</p>
+<p>func grpcGateWay() {<br>    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> 生成没有具体内容的上下文</span><br>    c :&#x3D;<span style="color: #000000;"> context.Background()</p>
+<pre><code>&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 给它新增退出功能&lt;/span&gt;
+c, cancel :=&lt;span style=&quot;color: #000000;&quot;&gt; context.WithCancel(c)
+defer cancel()
+
+mux :&lt;/span&gt;=&lt;span style=&quot;color: #000000;&quot;&gt; runtime.NewServeMux()
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 注册 grpc 服务&lt;/span&gt;
+err :=&lt;span style=&quot;color: #000000;&quot;&gt; pb.RegisterGreeterHandlerFromEndpoint(
+    c,
+    mux,
+    &lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;:50051&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;,
+    []grpc.DialOption{grpc.WithInsecure()},
+)
+
+&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;if&lt;/span&gt; err !=&lt;span style=&quot;color: #000000;&quot;&gt; nil {
+    log.Fatalf(&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;can not start grpc gateway：%v&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;,err)
+}
+
+&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #008000;&quot;&gt; 监听端口中的 HTTP 请求，监听到就按照 .yaml 的内容进行分发&lt;/span&gt;
+err = http.ListenAndServe(&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;:8080&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;,mux)
+
+&lt;/span&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;if&lt;/span&gt; err !=&lt;span style=&quot;color: #000000;&quot;&gt; nil {
+    log.Fatalf(&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;can not start grpc gateway：%v&lt;/span&gt;&lt;span style=&quot;color: #800000;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color: #000000;&quot;&gt;,err)
+}
+</code></pre>
+<p>}</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>起服务后，浏览器访问</p>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202112/1680452-20211205131246745-1671421273.png" alt="" width="666" height="223" loading="lazy" /></p>
+<p>&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/8%E3%80%81Protocol%20Buffers%20(protobuf)/" rel="prev" title="8、Protocol Buffers (protobuf)">
+      <i class="fa fa-chevron-left"></i> 8、Protocol Buffers (protobuf)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/1%E3%80%81docker%E5%AE%89%E8%A3%85/" rel="next" title="1、docker安装">
+      1、docker安装 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">快速开启 grpc 服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">GRPC Gateway 实现</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/9%E3%80%81gRPC/",
+      identifier: "/uncategorized/9、gRPC/",
+      title     : "9、gRPC",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

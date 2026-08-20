@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="结构标签（有意义的div） 标记定义一个页面或一个区域的头部 标记定义导航链接 标记定义一个区域 标记定义一篇文章 标记定义页面内容部分的侧边栏">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01-HTML5标签变化">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/01-HTML5%E6%A0%87%E7%AD%BE%E5%8F%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="结构标签（有意义的div） 标记定义一个页面或一个区域的头部 标记定义导航链接 标记定义一个区域 标记定义一篇文章 标记定义页面内容部分的侧边栏">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-01-18T07:29:00.000Z">
+<meta property="article:modified_time" content="2020-04-11T14:24:00.000Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/01-HTML5%E6%A0%87%E7%AD%BE%E5%8F%98%E5%8C%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>01-HTML5标签变化 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/01-HTML5%E6%A0%87%E7%AD%BE%E5%8F%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          01-HTML5标签变化<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/01-HTML5%E6%A0%87%E7%AD%BE%E5%8F%98%E5%8C%96.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-18 15:29:00" itemprop="dateCreated datePublished" datetime="2020-01-18T15:29:00+08:00">2020-01-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-11 22:24:00" itemprop="dateModified" datetime="2020-04-11T22:24:00+08:00">2020-04-11</time>
+              </span>
+
+          
+            <div class="post-description">结构标签（有意义的div） <header>标记定义一个页面或一个区域的头部</header> <nav>标记定义导航链接</nav> <section>标记定义一个区域</section> <article>标记定义一篇文章</article> <aside>标记定义页面内容部分的侧边栏</asi</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong><span style="font-family: 幼圆; font-size: 14pt;">结构标签（有意义的div）</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">header</span><span style="color: #0000ff;">&gt;</span>标记定义一个页面或一个区域的头部<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">header</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">nav</span><span style="color: #0000ff;">&gt;</span>标记定义导航链接<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">nav</span><span style="color: #0000ff;">&gt;</span>
+
+<p><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">section</span><span style="color: #0000ff;">&gt;</span>标记定义一个区域<span style="color: #0000ff;">&lt;&#x2F;</span><span style="color: #800000;">section</span><span style="color: #0000ff;">&gt;</span><br><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">article</span><span style="color: #0000ff;">&gt;</span>标记定义一篇文章<span style="color: #0000ff;">&lt;&#x2F;</span><span style="color: #800000;">article</span><span style="color: #0000ff;">&gt;</span></p>
+<p><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">aside</span><span style="color: #0000ff;">&gt;</span>标记定义页面内容部分的侧边栏<span style="color: #0000ff;">&lt;&#x2F;</span><span style="color: #800000;">aside</span><span style="color: #0000ff;">&gt;</span><br><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">hgroup</span><span style="color: #0000ff;">&gt;</span>标记定义文件中一个区块的相关信息<span style="color: #0000ff;">&lt;&#x2F;</span><span style="color: #800000;">hgroup</span><span style="color: #0000ff;">&gt;</span></p>
+<p><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">figure</span><span style="color: #0000ff;">&gt;</span>标记定义一组媒体内容以及它们的标题<span style="color: #0000ff;">&lt;&#x2F;</span><span style="color: #800000;">figure</span><span style="color: #0000ff;">&gt;</span><br><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">figcaption</span><span style="color: #0000ff;">&gt;</span>标记定义figure元素的标题<span style="color: #0000ff;">&lt;&#x2F;</span><span style="color: #800000;">figcaption</span><span style="color: #0000ff;">&gt;</span></p>
+<p><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dialog</span><span style="color: #0000ff;">&gt;</span>标记定义一个对话框（类似微信会话框）<span style="color: #0000ff;">&lt;&#x2F;</span><span style="color: #800000;">dialog</span><span style="color: #0000ff;">&gt;</span><br><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">footer</span><span style="color: #0000ff;">&gt;</span>标记定义一个页面或一个区域的底部<span style="color: #0000ff;">&lt;&#x2F;</span><span style="color: #800000;">footer</span><span style="color: #0000ff;">&gt;<br /><br /></span></pre></p>
+<p>//header/section/aside/article/footer 标签不要嵌套使用</p>
+<p>//header/section/footer 大于 aside/article/figure/hgroup/nav 大于 div/figcaption</p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 14pt;"><strong>新增加的多媒体标签</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">video</span><span style="color: #0000ff;">&gt;</span>标记定义一个视频<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">video</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">audio</span><span style="color: #0000ff;">&gt;</span>标记定义音频内容<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">audio</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">canvas</span><span style="color: #0000ff;">&gt;</span>标记定义图片<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">canvas</span><span style="color: #0000ff;">&gt;</span>
+
+<p><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">source </span><span style="color: #ff0000;">src</span><span style="color: #0000ff;">&#x3D;””</span><span style="color: #ff0000;"> type</span><span style="color: #0000ff;">&#x3D;””</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">标记定义媒体资源<br></span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">embed</span><span style="color: #0000ff;">&gt;</span>标记定义外部的可交互的内容或插件，比如flash<span style="color: #0000ff;">&lt;&#x2F;</span><span style="color: #800000;">embed</span><span style="color: #0000ff;">&gt;</span></pre></p>
+</div>
+<p><span style="font-family: 幼圆; font-size: 16px;">&nbsp;</span></p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong><span style="font-size: 14pt;">音频标签</span></strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">audio</span><span style="color: #0000ff;">&gt;</span>不支持audio标签才会显示这段文字<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">audio</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p><span style="font-family: 幼圆; font-size: 16px;">1、src属性：直接引入音频</span><br /><span style="font-family: 幼圆; font-size: 16px;">2、autoplay="autoplay"，音频自动播放</span><br /><span style="font-family: 幼圆; font-size: 16px;">3、loop="-1&Prime;，音频无限循环</span><br /><span style="font-family: 幼圆; font-size: 16px;">4、controls = "controls"，使用浏览器的音频播放</span></p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">如果audio标签里面有多个音频文件，可以用：</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">audio</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">source </span><span style="color: #ff0000;">src</span><span style="color: #0000ff;">="xxx.mp3&Prime; type="</span><span style="color: #ff0000;">audio/mpeg"</span><span style="color: #0000ff;">&gt;　　</span><span style="color: #000000;">//音频文件转码用：type="audio/mpeg"（audio里面的mp3文件）
+</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">source </span><span style="color: #ff0000;">src</span><span style="color: #0000ff;">="aaa.mp3&Prime; type="</span><span style="color: #ff0000;">audio/mpeg"</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">audio</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong><span style="font-size: 14pt;">视频标签</span></strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">video </span><span style="color: #ff0000;">width</span><span style="color: #0000ff;">="1024px"</span><span style="color: #ff0000;"> height</span><span style="color: #0000ff;">="800px"</span><span style="color: #0000ff;">&gt;</span>不支持video标签才会显示这段文字<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">video</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p><span style="font-family: 幼圆; font-size: 16px;">1、src属性：直接引入音频</span><br /><span style="font-family: 幼圆; font-size: 16px;">2、autoplay="autoplay"，音频自动播放</span><br /><span style="font-family: 幼圆; font-size: 16px;">3、loop="-1&Prime;，音频无限循环</span><br /><span style="font-family: 幼圆; font-size: 16px;">4、controls = "controls"，使用浏览器的音频播放</span></p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">如果video标签里面有多个音频文件，可以用：</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">video</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">source </span><span style="color: #ff0000;">src</span><span style="color: #0000ff;">="xxx.mp4&Prime; type="</span><span style="color: #ff0000;">video/mp4&Prime;</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">//视频文件转码用：type="video/mp4&Prime;（video里面的mp4文件）
+</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">source </span><span style="color: #ff0000;">src</span><span style="color: #0000ff;">="aaa.mp4&Prime; type="</span><span style="color: #ff0000;">video/mp4"</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">video</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 14pt;"><strong>外部的可交互的内容或插件 使用</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">embed </span><span style="color: #ff0000;">src</span><span style="color: #0000ff;">="xxx.swf"</span><span style="color: #ff0000;"> width</span><span style="color: #0000ff;">=""</span><span style="color: #ff0000;"> height</span><span style="color: #0000ff;">=""</span><span style="color: #0000ff;">&gt;&lt;/</span><span style="color: #800000;">embed</span><span style="color: #0000ff;">&gt;　　</span>//embed一般用来引用flash文件</pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 14pt;"><strong>新增加的web应用标签</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">meter</span><span style="color: #0000ff;">&gt;</span>状态标签（实时状态显示：气压、气温）<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">meter</span><span style="color: #0000ff;">&gt;<br /></span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">progress </span><span style="color: #ff0000;">value</span><span style="color: #0000ff;">=""</span><span style="color: #ff0000;"> max</span><span style="color: #0000ff;">=""</span><span style="color: #0000ff;">&gt;</span>状态标签（任务过程：安装、加载）</pre>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">meter //实时显示气压、气温</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">meter </span><span style="color: #ff0000;">value</span><span style="color: #0000ff;">="220&Prime;      min="</span><span style="color: #ff0000;">20&Prime;   max</span><span style="color: #0000ff;">="380&Prime;       low="</span><span style="color: #ff0000;">200&Prime;           high</span><span style="color: #0000ff;">="240&Prime;         optimum="</span><span style="color: #ff0000;">220&Prime;</span><span style="color: #0000ff;">&gt;&lt;/</span><span style="color: #800000;">meter</span><span style="color: #0000ff;">&gt;</span>
+value：自定义的值<br />min：最小<br />max：最大<br />low：安全最低<br />high：安全最高<br />optimum：最佳<br /><br /><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">meter </span><span style="color: #ff0000;">value</span><span style="color: #0000ff;">="0.75&Prime;&gt;&lt;/meter&gt; //直接到75%的位置</span></pre>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">progress //任务加载过程</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">progress </span><span style="color: #ff0000;">value</span><span style="color: #0000ff;">="30&Prime; max="</span><span style="color: #ff0000;">100&Prime;</span><span style="color: #0000ff;">&gt;　　</span><span style="color: #000000;">//进度条会在30%的位置
+
+<p></span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">progress </span><span style="color: #ff0000;">max</span><span style="color: #0000ff;">&#x3D;”100&amp;Prime;&gt;　　&#x2F;&#x2F;进度条会来回转动</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 14pt;">新增加的列表标签</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">datalist</span><span style="color: #0000ff;">&gt;</span>为input标记定义一个下拉列表，配合option<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">datalist</span><span style="color: #0000ff;">&gt;<br /></span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">details</span><span style="color: #0000ff;">&gt;</span>标记定义一个元素的详细内容，配合summary<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">details</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">datalist&nbsp; &nbsp;//选择列表</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">input </span><span style="color: #ff0000;">placeholder</span><span style="color: #0000ff;">="请选择xxx"</span><span style="color: #ff0000;"> list</span><span style="color: #0000ff;">="qml"</span> <span style="color: #0000ff;">/&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">datalist </span><span style="color: #ff0000;">id</span><span style="color: #0000ff;">="qml"</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">option </span><span style="color: #ff0000;">value</span><span style="color: #0000ff;">="aa"</span><span style="color: #0000ff;">&gt;</span>aa<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">option</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">option </span><span style="color: #ff0000;">value</span><span style="color: #0000ff;">="bb"</span><span style="color: #0000ff;">&gt;</span>bb<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">option</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">option </span><span style="color: #ff0000;">value</span><span style="color: #0000ff;">="cc"</span><span style="color: #0000ff;">&gt;</span>cc<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">option</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">option </span><span style="color: #ff0000;">value</span><span style="color: #0000ff;">="dd"</span><span style="color: #0000ff;">&gt;</span>dd<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">option</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">option </span><span style="color: #ff0000;">value</span><span style="color: #0000ff;">="ee"</span><span style="color: #0000ff;">&gt;</span>ee<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">option</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">datalist</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">details //详细展示</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">details </span><span style="color: #ff0000;">open</span><span style="color: #0000ff;">="open"</span><span style="color: #0000ff;">&gt;　　</span><span style="color: #000000;">//open表示默认是打开
+</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">summary</span><span style="color: #0000ff;">&gt;</span>自定义的详细信息<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">summary</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">p</span><span style="color: #0000ff;">&gt;</span>详细信息详细信息详细信息详细信息详细信息详细信息<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">p</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">details</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 14pt;"><strong>新增加的其他标签</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">ruby</span><span style="color: #0000ff;">&gt;</span>标记定义注释或音标<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">ruby</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">rt</span><span style="color: #0000ff;">&gt;</span>标记定义对ruby的注释内容文本<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">rt</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">rp</span><span style="color: #0000ff;">&gt;</span>告诉那些不支持ruby元素的浏览器，如何显示<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">rp</span><span style="color: #0000ff;">&gt;</span>
+
+<p><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">mark</span><span style="color: #0000ff;">&gt;</span>标记定义有标记的文本（黄色选中状态）<span style="color: #0000ff;">&lt;&#x2F;</span><span style="color: #800000;">mark</span><span style="color: #0000ff;">&gt;</span><br><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">output</span><span style="color: #0000ff;">&gt;</span>标记定义一些输出类型，计算表单结果，配合oninput<span style="color: #0000ff;">&lt;&#x2F;</span><span style="color: #800000;">output</span><span style="color: #0000ff;">&gt;</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">ruby注释标签</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">p</span><span style="color: #0000ff;">&gt;</span>这个"<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">ruby</span><span style="color: #0000ff;">&gt;</span>    丘 <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">rt</span><span style="color: #0000ff;">&gt;</span>qiu<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">rt</span><span style="color: #0000ff;">&gt;</span>    <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">ruby</span><span style="color: #0000ff;">&gt;</span>"字怎么念<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">p</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">
+
+<p>&#x2F;&#x2F;对于不支持的浏览器可以加rp：<br></span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">p</span><span style="color: #0000ff;">&gt;</span>这个”<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">ruby</span><span style="color: #0000ff;">&gt;</span>    丘<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">rp</span><span style="color: #0000ff;">&gt;</span>(<span style="color: #0000ff;">&lt;&#x2F;</span><span style="color: #800000;">rp</span><span style="color: #0000ff;">&gt;</span>    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">rt</span><span style="color: #0000ff;">&gt;</span>qiu<span style="color: #0000ff;">&lt;&#x2F;</span><span style="color: #800000;">rt</span><span style="color: #0000ff;">&gt;</span>    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">rp</span><span style="color: #0000ff;">&gt;</span>）<span style="color: #0000ff;">&lt;&#x2F;</span><span style="color: #800000;">rp</span><span style="color: #0000ff;">&gt;</span>    <span style="color: #0000ff;">&lt;&#x2F;</span><span style="color: #800000;">ruby</span><span style="color: #0000ff;">&gt;</span>“字怎么念<span style="color: #0000ff;">&lt;&#x2F;</span><span style="color: #800000;">p</span><span style="color: #0000ff;">&gt;</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">mark标记文本</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">p</span><span style="color: #0000ff;">&gt;</span> 有两个字会变   <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">mark</span><span style="color: #0000ff;">&gt;</span>黄色<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">mark</span><span style="color: #0000ff;">&gt;</span>   <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">p</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">output做简单计算器</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">form </span><span style="color: #ff0000;">oninput</span><span style="color: #0000ff;">="totalPrice.value = parseInt(price.value) * parseInt(number.value)"</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">input </span><span style="color: #ff0000;">type</span><span style="color: #0000ff;">="number"</span><span style="color: #ff0000;"> id</span><span style="color: #0000ff;">="price"</span><span style="color: #ff0000;"> placeholder</span><span style="color: #0000ff;">="输入一个数"</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">
+*</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">input </span><span style="color: #ff0000;">type</span><span style="color: #0000ff;">="number"</span><span style="color: #ff0000;"> id</span><span style="color: #0000ff;">="number"</span><span style="color: #ff0000;"> placeholder</span><span style="color: #0000ff;">="输入另外一个数"</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">
+=</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">output </span><span style="color: #ff0000;">name</span><span style="color: #0000ff;">="totalPrice"</span><span style="color: #ff0000;"> for</span><span style="color: #0000ff;">="price number"</span><span style="color: #0000ff;">&gt;&lt;/</span><span style="color: #800000;">output</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">form</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 14pt;">重定义标签：显示不变,只是表达的含义进行了重新定义的标签</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">b</span><span style="color: #0000ff;">&gt;&lt;/</span><span style="color: #800000;">b</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">代表内联文本,通常是粗体,没有传递表示重要的意思
+</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">i</span><span style="color: #0000ff;">&gt;&lt;/</span><span style="color: #800000;">i</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">代表内联文本,通常是斜体,没有传递表示重要的意思
+
+<p></span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dd</span><span style="color: #0000ff;">&gt;&lt;&#x2F;</span><span style="color: #800000;">dd</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">可以同 details 与 figure 一同使用,定义包含文本,dialog也可用<br></span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">dt</span><span style="color: #0000ff;">&gt;&lt;&#x2F;</span><span style="color: #800000;">dt</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">可以同 details 与 figure 一同使用,汇总细节, dialog也可用</p>
+<p></span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">hr</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">不仅表示水平线,还表示主题结束,显示效果相同<br></span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">menu</span><span style="color: #0000ff;">&gt;&lt;&#x2F;</span><span style="color: #800000;">menu</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">重新定义用户界面的菜单,配合 command或者 menuitem使用</p>
+<p></span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">smal</span><span style="color: #0000ff;">&gt;&lt;&#x2F;</span><span style="color: #800000;">smal</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">表示小字体,例如打印注释或者法律条款<br></span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">strong</span><span style="color: #0000ff;">&gt;&lt;&#x2F;</span><span style="color: #800000;">strong</span><span style="color: #0000ff;">&gt;</span>表示重要性而不是强调符号</pre></p>
+</div>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/09-CSS%E5%AE%9A%E4%BD%8D%EF%BC%88position%EF%BC%89/" rel="prev" title="09-CSS定位（position）">
+      <i class="fa fa-chevron-left"></i> 09-CSS定位（position）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/02-HTML5%E5%B1%9E%E6%80%A7%E5%8F%98%E5%8C%96/" rel="next" title="02-HTML5属性变化">
+      02-HTML5属性变化 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/01-HTML5%E6%A0%87%E7%AD%BE%E5%8F%98%E5%8C%96/",
+      identifier: "/uncategorized/01-HTML5标签变化/",
+      title     : "01-HTML5标签变化",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

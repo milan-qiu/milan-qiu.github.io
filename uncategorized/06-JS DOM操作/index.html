@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="创建节点 document.write（创建任意内容，并写入） document.write(&#39;添加到html中的文本&#39;); docement.createElement（创建元素） var jd &#x3D; document.createElement(&#39;li&#39;); &#x2F;&#x2F;创建一个li元素">
+<meta property="og:type" content="article">
+<meta property="og:title" content="06-JS DOM操作">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/06-JS%20DOM%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="创建节点 document.write（创建任意内容，并写入） document.write(&#39;添加到html中的文本&#39;); docement.createElement（创建元素） var jd &#x3D; document.createElement(&#39;li&#39;); &#x2F;&#x2F;创建一个li元素">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202003/1680452-20200331161642268-731013282.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202003/1680452-20200331161707683-223337669.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202003/1680452-20200331162713931-1071328712.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/1680452/202003/1680452-20200331162741306-1596209088.png">
+<meta property="article:published_time" content="2020-01-22T06:25:00.000Z">
+<meta property="article:modified_time" content="2020-03-31T08:28:00.000Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2020.cnblogs.com/blog/1680452/202003/1680452-20200331161642268-731013282.png">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/06-JS%20DOM%E6%93%8D%E4%BD%9C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>06-JS DOM操作 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/06-JS%20DOM%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          06-JS DOM操作<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/06-JS%20DOM%E6%93%8D%E4%BD%9C.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-22 14:25:00" itemprop="dateCreated datePublished" datetime="2020-01-22T14:25:00+08:00">2020-01-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-31 16:28:00" itemprop="dateModified" datetime="2020-03-31T16:28:00+08:00">2020-03-31</time>
+              </span>
+
+          
+            <div class="post-description">创建节点 document.write（创建任意内容，并写入） document.write('<h1>添加到html中的文本</h1>'); docement.createElement（创建元素） var jd = document.createElement('li'); //创建一个li元素</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2><span style="font-family: 幼圆;">&nbsp;</span></h2>
+<p><strong><span style="font-family: 幼圆; font-size: 14pt;">创建节点</span></strong></p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">document.write（创建任意内容，并写入）</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;">document.write('&lt;h1&gt;添加到html中的文本&lt;/h1&gt;');</span></pre>
+</div>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">docement.createElement（创建元素）</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;"><span style="color: #0000ff;">var</span> jd = document.createElement('li'); <span style="color: #008000;">//</span><span style="color: #008000;">创建一个li元素</span></span></pre>
+</div>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">document.createTextNode（创建文本）</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;"><span style="color: #0000ff;">var</span> wb = document.createTextNode('创建的文本');  <span style="color: #008000;">//</span><span style="color: #008000;">创建一个文本内容</span></span></pre>
+</div>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">document.createDocumentFragment （创建虚拟节点对象）</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;"><span style="color: #0000ff;">var</span> fragment = document.createDocumentFragment();   <span style="color: #008000;">//</span><span style="color: #008000;">创建一虚拟的节点对象，节点对象包含所有属性和方法。</span>
+<span style="color: #000000;">
+//document.createDocumentFragment()优点：说白了就是为了节约使用DOM。每隔JavaScript对DOM的操作都会改变页面的变现，并重新刷新整个页面，从而减少消耗的时间。为解决这个问题，可以创建一个文档碎片，把所有的新摘要附加其上，然后把文档碎片的内容一次性添加到文档中。</span></span></pre>
+</div>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">&nbsp;document.createComment（创建注释）</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;"><span style="color: #0000ff;">var</span> zhuxi = document.createComment('注释的内容');  <span style="color: #008000;">//</span><span style="color: #008000;">创建一个注释内容</span></span></pre>
+</div>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p><span style="font-size: 16px;"><span style="font-family: 幼圆;">&nbsp;注：以上创建的节点需要&nbsp; xx.appendChild()的方法添加到页面中。document.write除外。</span></span></p>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 14pt;">高效创建节点</span></strong></p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">innerHTML</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;"><span style="color: #000000;">innerHTML：用来设置或获取当前标签的起始和结束里面的内容
+
+<p>html文档：</span>&lt;div id&#x3D;’dd’ &gt;&lt;p&gt; 321&lt;p&gt; &lt;&#x2F;div&gt;<br><span style="color: #000000;"><br>script文档1：  </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">设置</span></p>
+<p><span style="color: #0000ff;">var</span> dd &#x3D; document.getElementById(‘dd’<span style="color: #000000;">);<br></span><span style="color: #0000ff;">var</span> str &#x3D; ‘&lt;p&gt;文本1&lt;&#x2F;p&gt;’<br>+’&lt;h1&gt;标题节点&lt;&#x2F;h1&gt;’<br>+’&lt;h2&gt;小标题节点&lt;&#x2F;h2&gt;’<span style="color: #000000;">;<br>dd.innerHTML </span>&#x3D; str;         <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">原来div里面的元素都被替换</span><br><span style="color: #000000;"><br>script文档2：  </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取</span></p>
+<p><span style="color: #0000ff;">var</span> dd &#x3D; document.getElementById(‘dd’<span style="color: #000000;">);<br>console.log(dd.innerHTML);    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取到的值为&lt;p&gt; 321&lt;p&gt;</span></span></pre></p>
+</div>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">&nbsp;outerHTML</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;"><span style="color: #000000;">outerHTML：返回调用它的元素及所有子节点的HTML标签
+
+<p>html文档：</span>&lt;div id&#x3D;’dd’ &gt; 321 &lt;&#x2F;div&gt;<br><span style="color: #000000;"><br>script文档1：</p>
+<p></span><span style="color: #0000ff;">var</span> dd &#x3D; document.getElementById(‘dd’<span style="color: #000000;">);<br>console.log(dd.outerHTML);    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">返回值&lt;div id&#x3D;’dd’ &gt; 321 &lt;&#x2F;div&gt;</span><br><span style="color: #000000;"><br>script文档2：</p>
+<p></span><span style="color: #0000ff;">var</span> dd &#x3D; document.getElementById(‘dd’<span style="color: #000000;">);<br>dd.outerHTML </span>&#x3D; ‘&lt;p&gt; 清空原来的所有值，变成这个 &lt;&#x2F;p&gt;’;    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">原来的值是321。</span></span></pre></p>
+</div>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">&nbsp;interText</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;"><span style="color: #000000;">interText：设置或获取位于对象起始和结束标签内的文本。
+
+<p>html文档：</span>&lt;div id&#x3D;’dd’ &gt;&lt;p&gt; 321&lt;p&gt; &lt;&#x2F;div&gt;<br><span style="color: #000000;"><br>script文档： </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取目标文档</span></p>
+<p><span style="color: #0000ff;">var</span> dd &#x3D; document.getElementById(‘dd’<span style="color: #000000;">);<br>console.log(dd.innerText);          </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">打印321</span><br><span style="color: #000000;"><br>script文档2：   </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">设置目标文档</span></p>
+<p><span style="color: #0000ff;">var</span> dd &#x3D; document.getElementById(‘dd’<span style="color: #000000;">);<br>console.log(dd.innerText);<br>dd.innerText </span>&#x3D; ‘&lt;p&gt; 替换原来所有的文本 &lt;&#x2F;p&gt;’;     <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">屏幕div显示，&lt;p&gt; 替换原来所有的文本 &lt;&#x2F;p&gt;，p标签也会当作文档显示出来</span><br><span style="color: #000000;"><br>注：火狐浏览器不支持该标签，不过有类似标签textContent</span></span></pre></p>
+</div>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">&nbsp;outerText 与 innerText 的区别</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;"><span style="color: #000000;">outerText：获取文档跟innerText一样，设置不一样，如，
+
+<p>html文档：</span>&lt;div id&#x3D;’dd’ &gt;&lt;p&gt; 321&lt;p&gt; &lt;&#x2F;div&gt;<br><span style="color: #000000;"><br>script文档：</p>
+<p></span><span style="color: #0000ff;">var</span> dd &#x3D; document.getElementById(‘dd’<span style="color: #000000;">);<br>console.log(dd.innerText);<br>dd.outerText </span>&#x3D; ‘&lt;p&gt; 替换原来所有的文本 &lt;&#x2F;p&gt;’;    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">屏幕依然显示&lt;p&gt; 替换原来所有的文本 &lt;&#x2F;p&gt;，但是原来的div已经不复存在，只留下文本    &lt;p&gt; 替换原来所有的文本 &lt;&#x2F;p&gt;</span></span></pre></p>
+</div>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 14pt;">父子节点查找</span></strong></p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">父节点 找 子节点</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;"><span style="color: #000000;"> 找第一个子节点：firstChild<br />
+找最后一个子节点：lastChild<br />
+  找第n个子节点：childNodes[n</span>-1]　　<span style="color: #008000;">//</span><span style="color: #008000;">从0开始算<br /></span>
+<span style="color: #000000;">  找第n个子节点：childNodes.item(n</span>-1)　　<span style="color: #008000;">//</span><span style="color: #008000;">从0开始算 </span></span></pre>
+</div>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">子节点 找 父节点</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;">找父节点：parentNode</span></pre>
+</div>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">子节点 找 兄弟节点</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;">找下一个兄弟节点：nextSibling</span><br /><br /><span style="font-family: 幼圆;">找上一个兄弟节点：previousSibling</span></pre>
+</div>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 16px;">找文档根节点</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;">直接查找文档的根节点：<span style="color: #0000ff;">var</span> gen =<span style="color: #000000;"> document.documentElement;
+
+<p>直接查找文档的根节点：</span><span style="color: #0000ff;">var</span> gen &#x3D; p.ownerDocument;      <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">现在gen &#x3D; document</span><br><span style="color: #000000;"><br>tagName：返回属性的标签名。  </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">如，console.log(‘gen.tagName’);  直接打印出根节点。</span><br><span style="color: #000000;"><br>元素名.hasChildNodes();   </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">判断该元素是否有子节点，返回Boolean值。包括文本节点。</span><br><span style="color: #000000;"></p>
+<p>console.log(gen.children[i]); </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">打印出第 i+1 个节点，不包括文本节点，从0开始算</span></p>
+<p><span style="color: #0000ff;">var</span> shu &#x3D;  gen.childElementCount;  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">算出有多少个非文本节点的节点</span></span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 14pt;">类数组对象</span></strong></p>
+<p><span style="font-family: 幼圆;"><strong>类数组对象NodeList，转换成数组，再添加一个节点。</strong></span></p>
+<p>&nbsp;<img src="https://img2020.cnblogs.com/blog/1680452/202003/1680452-20200331161642268-731013282.png" alt="" /></p>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p><span style="font-family: 幼圆;"><strong>HTMLCollection（获取类数组对象）</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;"><span style="color: #0000ff;">var</span> script = document.scripts;  <span style="color: #008000;">//</span><span style="color: #008000;">获取当前html里面所有的script</span>
+
+<p><span style="color: #0000ff;">var</span> links &#x3D; document.links;  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">返回当前html中所有的a标签链接</span></p>
+<p><span style="color: #0000ff;">var</span> cells &#x3D; document.getElementById(‘tr’).cells;  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取当前html中，所有的td元素</span></p>
+<p><span style="color: #0000ff;">var</span> imgs &#x3D; document.images;  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取当前html中，所有的图片</span></p>
+<p><span style="color: #0000ff;">var</span> forms &#x3D; document.forms;  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取当前html中，所有的表单</span></p>
+<p><span style="color: #0000ff;">var</span> options &#x3D; document.getElementById(‘select’).options;  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取当前html中，所有的option选项</span></p>
+<p><span style="color: #0000ff;">var</span> ps &#x3D; document.getElementsByTagName(‘p’);  <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取当前html中，的所有p标签的内容</span><br><span style="color: #000000;"><br>以上的值返回的都是HTMCollection</span></span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 16px;">类数组对象<strong>NameNodeMap</strong></span></p>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202003/1680452-20200331161707683-223337669.png" alt="" /></p>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong>类数组对象的动态性</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">Nodelist，HTMLcollection, NamedNodeMap 三个集合都是 <strong>动态的, 是有生命、有呼吸的对象</strong>
+
+<p>它们实际上是基于DOM结构动态执行查询的结果,因此<strong>DOM结构的变化能够自动反映这些对象中</strong></p>
+<p>每当文档结构发生变化时,它们都会得到更新。因此,<strong>它们始终都会保存着最新、最准确的信息</strong></span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 14pt;">获取节点</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;">IE6 到 IE8 也兼容</span><br /><span style="font-family: 幼圆;">getElementById()</span><br /><span style="font-family: 幼圆;">getElementsByName()</span><br /><span style="font-family: 幼圆;">getElementsByTagName()</span><br /><br /><span style="font-family: 幼圆;">IE9 或以上</span><br /><span style="font-family: 幼圆;">getElementsByClassName()</span><br /><span style="font-family: 幼圆;">querySelector()</span><br /><span style="font-family: 幼圆;">querySelectorAll()</span></pre>
+</div>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p><strong><span style="font-family: 幼圆; font-size: 14pt;">操作节点</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;"><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">ul </span><span style="color: #ff0000;">id</span><span style="color: #0000ff;">='abc'</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span> 1 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span> 2 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span> 3 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">ul</span><span style="color: #0000ff;">&gt;</span></span></pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong>appendChild()&nbsp;</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;">appendChild()  <span style="color: #008000;">//</span><span style="color: #008000;">为指定元素节点的最后一个子节点之后添加节点。该方法返回新的子节点。</span>
+<span style="color: #000000;">
+如：要为上面ul添加一个li
+
+<p></span><span style="color: #0000ff;">var</span> abc &#x3D; document.getElementById(‘abc’);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取ul元素对象</span></p>
+<p><span style="color: #0000ff;">var</span> text &#x3D; document.creatTextNode(‘4’);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">创建文本节点4</span></p>
+<p><span style="color: #0000ff;">var</span> li &#x3D; document.createElement(‘li’);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">创建li元素</span><br><span style="color: #000000;"><br>li.appendChild(text);    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">给li元素填入文本节点4</span><br><span style="color: #000000;"><br>ul.appendChild(li);    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">给ul元素填入刚才的li元素</span></span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong>insertBefore()&nbsp;&nbsp;</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;">insertBefore()  <span style="color: #008000;">//</span><span style="color: #008000;">在指定的已有节点之前插入新的子节点</span>
+<span style="color: #000000;">
+如：要为上面</span>&lt;li&gt;2&lt;/li&gt;前面插入一个新节点
+
+<p><span style="color: #0000ff;">var</span> abc &#x3D; document.getElementById(‘abc’);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取ul元素对象</span></p>
+<p><span style="color: #0000ff;">var</span> text &#x3D; document.creatTextNode(‘4’);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">创建文本节点4</span></p>
+<p><span style="color: #0000ff;">var</span> lia &#x3D; document.createElement(‘li’);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">创建li元素</span><br><span style="color: #000000;"><br>lia.appendChild(text);    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">给li元素填入文本节点4</span></p>
+<p><span style="color: #0000ff;">var</span> lib &#x3D; abc.children.item(1);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取第二个子节点</span><br><span style="color: #000000;"><br>abc.insertBefore(lia,lib);    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">lia为要插入的节点，插入的位置是lib的前面，若是lib写成null，则效果跟appendChild一样。</span></span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong>replaceChild()</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;">replaceChild(要插入的节点，被替换的节点)   <span style="color: #008000;">//</span><span style="color: #008000;">用新的节点替换某个子节点，返回值是被替换的子节点</span>
+<span style="color: #000000;">
+如：要为上面</span>&lt;li&gt;3&lt;/li&gt;替换成&lt;li&gt;4&lt;/li&gt;
+
+<p><span style="color: #0000ff;">var</span> abc &#x3D; document.getElementById(‘abc’);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取ul元素对象</span></p>
+<p><span style="color: #0000ff;">var</span> text &#x3D; document.creatTextNode(‘4’);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">创建文本节点4</span></p>
+<p><span style="color: #0000ff;">var</span> lia &#x3D; document.createElement(‘li’);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">创建li元素</span><br><span style="color: #000000;"><br>lia.appendChild(text);    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">给li元素填入文本节点4</span></p>
+<p><span style="color: #0000ff;">var</span> lib &#x3D; abc.children.item(2);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取第3个子节点</span><br><span style="color: #000000;"><br>abc.replaceChild( lia,lib );   </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">lia是要插入的节点，lib是被替换的节点。</span></span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong>cloneNode()&nbsp;</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;">cloneNode(<span style="color: #0000ff;">true</span>/false)   //节点的拷贝，返回该副本。不填时为false，false表示只拷贝当前节点的标签元素，不拷贝子节点；true表示连同子节点一起拷贝。
+<span style="color: #000000;">
+如：拷贝一份ul到当前的body里面
+
+<p></span><span style="color: #0000ff;">var</span> abc &#x3D; document.getElementById(‘abc’);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取ul元素对象</span></p>
+<p><span style="color: #0000ff;">var</span> clone &#x3D; abc.cloneNode(<span style="color: #0000ff;">true</span>);    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">连同子节点一起拷贝</span><br><span style="color: #000000;"><br>document.body.appendChild(clone);     </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">拷贝的节点要有父节点，没有父节点的话得通过appendChild、insertBefore、replaceChild等方式进行添加</span></span></pre></p>
+</div>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong>normalize()&nbsp;</strong></span></p>
+<div class="cnblogs_code">
+<pre>normalize()    <span style="color: #008000;">//</span><span style="color: #008000;">合并相邻的text节点</span>
+
+<p><span style="color: #0000ff;">var</span> div &#x3D; document.creatElement(‘div’);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">创建一个div</span></p>
+<p><span style="color: #0000ff;">var</span> text &#x3D; document.creatTextNode(‘123’);    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">创建第一个文本节点</span><br><span style="color: #000000;"><br>div.appendChild(text);     </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">把第一个文本节点添加到div里面</span></p>
+<p><span style="color: #0000ff;">var</span> text2 &#x3D; document.creatTextNode(‘456’);    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">创建第二个文本节点</span><br><span style="color: #000000;"><br>div.appendChild(text2);    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">把第二个文本节点添加到div里面</span><br><span style="color: #000000;"><br>document.body.appendChild(div);   </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">在body显示div</span></pre></p>
+</div>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202003/1680452-20200331162713931-1071328712.png" alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">可以看见右边调试工具的文本节点有两个的</span>
+<span style="color: #000000;">
+div.normalize();   </span><span style="color: #008000;">//</span><span style="color: #008000;">这样我们就能把两个节点合并为一个节点了</span></pre>
+</div>
+<p><img src="https://img2020.cnblogs.com/blog/1680452/202003/1680452-20200331162741306-1596209088.png" alt="" /></p>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong>splitText()&nbsp;</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;">splitText()    <span style="color: #008000;">//</span><span style="color: #008000;">按照指定位置把一个文本节点分割为两个文本节点，返回新的文本节点</span>
+
+<p><span style="color: #0000ff;">var</span> div &#x3D; document.creatElement(‘div’);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">创建一个div</span></p>
+<p><span style="color: #0000ff;">var</span> text &#x3D; document.creatTextNode(‘123456’);    <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">创建一个文本节点</span><br><span style="color: #000000;"><br>div.appendChild(text);     </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">把文本节点添加到div里面</span></p>
+<p><span style="color: #0000ff;">var</span> fen &#x3D; div.firstChild.splitText(3);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">从第4个开始分割，包含第四个。</span><br><span style="color: #000000;"><br>console.log(div.firstChild.nodeValue);   </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">控制台打印出第一个文本节点，即123</span></span></pre></p>
+</div>
+<p><span style="font-family: 幼圆;">&nbsp;</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong><span style="font-family: 幼圆; font-size: 14pt;">删除节点</span></strong></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;"><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">ul </span><span style="color: #ff0000;">id</span><span style="color: #0000ff;">='abc'</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span> 1 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span> 2 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span> 3 <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">ul</span><span style="color: #0000ff;">&gt;</span></span></pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong>removeChild()&nbsp;</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;">removeChild()   <span style="color: #008000;">//</span><span style="color: #008000;">删除某个节点，括号必须传入要删除的节点，返回删除的节点</span>
+<span style="color: #000000;">
+如：删除上面</span>&lt;li&gt;1&lt;/li&gt;节点
+
+<p><span style="color: #0000ff;">var</span>  abc &#x3D; document.getElementById(‘abc’);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取ul元素id</span></p>
+<p><span style="color: #0000ff;">var</span> del &#x3D; abc.removeChild(abc.childNodes[1]);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">删除第二个节点，上面一共7个节点，7个节点里面包含空白节点</span></span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong>removeNode()</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;">removeNode()   <span style="color: #008000;">//</span><span style="color: #008000;">ie私有，参数是布尔值，默认为false。false时只删除改节点，true时连同子节点一起删</span>
+<span style="color: #000000;">
+如：删除上面的ul节点，不删子节点
+
+<p></span><span style="color: #0000ff;">var</span>  abc &#x3D; document.getElementById(‘abc’);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取ul元素id</span></p>
+<p><span style="color: #0000ff;">var</span> del &#x3D;<span style="color: #000000;"> abc.removeNode();</p>
+<p>如：删除上面的ul节点，连同子节点</p>
+<p></span><span style="color: #0000ff;">var</span>  abc &#x3D; document.getElementById(‘abc’);   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取ul元素id</span></p>
+<p><span style="color: #0000ff;">var</span> del &#x3D; abc.removeNode(<span style="color: #0000ff;">true</span>);</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family: 幼圆; font-size: 16px;"><strong>removeChild()与innerHTML的区别</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 幼圆;">removeChild()，在ie6-<span style="color: #000000;">8删除后还可以调用；在chrome删除后还可以调用
+
+<p>innerHTML，在ie6</span>-<span style="color: #000000;">8删除后还不可以调用；在chrome删除后还可以调用</p>
+<p>ps：调用指的是元素对应的方法，而不是元素本身</span></span></pre></p>
+</div>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/05-%E9%94%99%E8%AF%AF%E8%B0%83%E8%AF%95%E4%B8%8E%E5%A4%84%E7%90%86/" rel="prev" title="05-错误调试与处理">
+      <i class="fa fa-chevron-left"></i> 05-错误调试与处理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/07-JS%20DOM%E5%B1%9E%E6%80%A7/" rel="next" title="07-JS DOM属性">
+      07-JS DOM属性 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"> </span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/06-JS%20DOM%E6%93%8D%E4%BD%9C/",
+      identifier: "/uncategorized/06-JS DOM操作/",
+      title     : "06-JS DOM操作",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="生成Auth所需命令 一、在已有的项目中生成auth认证 composer require laravel&#x2F;ui php artisan ui vue --auth npm install &amp;&amp; npm run dev 二、新建项目，并直接生成auth认证 laravel new blog --au">
+<meta property="og:type" content="article">
+<meta property="og:title" content="13、Laravel中的用户认证（Auth）">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/13%E3%80%81Laravel%E4%B8%AD%E7%9A%84%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81%EF%BC%88Auth%EF%BC%89/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="生成Auth所需命令 一、在已有的项目中生成auth认证 composer require laravel&#x2F;ui php artisan ui vue --auth npm install &amp;&amp; npm run dev 二、新建项目，并直接生成auth认证 laravel new blog --au">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-07-03T07:19:00.000Z">
+<meta property="article:modified_time" content="2021-01-31T15:35:00.000Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/13%E3%80%81Laravel%E4%B8%AD%E7%9A%84%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81%EF%BC%88Auth%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>13、Laravel中的用户认证（Auth） | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/13%E3%80%81Laravel%E4%B8%AD%E7%9A%84%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81%EF%BC%88Auth%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          13、Laravel中的用户认证（Auth）<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/13%E3%80%81Laravel%E4%B8%AD%E7%9A%84%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81%EF%BC%88Auth%EF%BC%89.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-03 15:19:00" itemprop="dateCreated datePublished" datetime="2020-07-03T15:19:00+08:00">2020-07-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-31 23:35:00" itemprop="dateModified" datetime="2021-01-31T23:35:00+08:00">2021-01-31</time>
+              </span>
+
+          
+            <div class="post-description">生成Auth所需命令 一、在已有的项目中生成auth认证 composer require laravel/ui php artisan ui vue --auth npm install && npm run dev 二、新建项目，并直接生成auth认证 laravel new blog --au</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2>生成Auth所需命令</h2>
+<p>一、在已有的项目中生成auth认证</p>
+<div class="cnblogs_code">
+<pre>composer require laravel/ui&nbsp;</pre>
+</div>
+<div class="cnblogs_code">
+<pre>php artisan ui vue --auth</pre>
+</div>
+<div class="cnblogs_code">
+<pre>npm install &amp;&amp; npm run dev</pre>
+</div>
+<p>&nbsp;</p>
+<p><span style="text-decoration: line-through;">二、新建项目，并直接生成auth认证</span></p>
+<div class="cnblogs_code">
+<pre>laravel <span style="color: #0000ff;">new</span> blog --auth</pre>
+</div>
+<p>&nbsp;</p>
+<p>三、打开服务器后即可网页预览</p>
+<p>&nbsp;</p>
+<p>四、.env更改数据库配置后，新建数据表（mysql5.7以上，若不是就需要更改字段类型）</p>
+<div class="cnblogs_code">
+<pre>php artisan migrate</pre>
+</div>
+<p>&nbsp;实际执行 database -&gt; migrations -&gt; 里面的迁移表</p>
+<p>更改字段类型：config -&gt; database.php -&gt; 里面的 charset 换成 utf8，里面的 collation 换成 utf8_unicode_ci（大概56-57行）</p>
+<p>&nbsp;</p>
+<h2>数据迁移</h2>
+<p>一、第一种生成迁移文件方法</p>
+<div class="cnblogs_code">
+<pre>php artisan make:migration create_students_table --create=students</pre>
+</div>
+<p>--table 和 --create 参数可以用来指定数据表名称，以及迁移文件是否要建立新的数据表</p>
+<p>&nbsp;</p>
+<p>二、第二种，生成模型的同时生成迁移文件</p>
+<div class="cnblogs_code">
+<pre>php artisan make:model Student -m</pre>
+</div>
+<p>&nbsp;</p>
+<p>三、执行生成操作</p>
+<div class="cnblogs_code">
+<pre>php artisan migrate</pre>
+</div>
+<p>&nbsp;</p>
+<p>四、根据具体需求修改刚生成的迁移文件</p>
+<div class="cnblogs_code">
+<pre>//若将迁移文件里面的字段进行了更改，需要同步到数据库需要
+php artisan migrate:refresh</pre>
+</div>
+<p>&nbsp;</p>
+<p>五、回滚失误操作</p>
+<div class="cnblogs_code">
+<pre>php artisan migrate:rollback --step=1     <span style="color: #008000;">//</span><span style="color: #008000;">表示回滚上一次操作</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>六、删除所有数据库表，并不会删除迁移文件</p>
+<div class="cnblogs_code">
+<pre>php artisan migrate:<span style="color: #008080;">reset</span></pre>
+</div>
+<p>&nbsp;</p>
+<h2>数据填充</h2>
+<p>一、创建一个填充文件（最后一个参数为填充文件名）</p>
+<div class="cnblogs_code">
+<pre>php artisan make:seeder StudentTableSeeder</pre>
+</div>
+<p>&nbsp;位于database -&gt; seeds 里面的 StudentTableSeeder.php</p>
+<p>&nbsp;在run里面填入插入语句</p>
+<p>&nbsp;</p>
+<p>二、执行单个填充文件（最后一个参数为填充文件名）</p>
+<div class="cnblogs_code">
+<pre>php artisan db:seed --<span style="color: #0000ff;">class</span>=StudentTableSeeder</pre>
+</div>
+<p>&nbsp;</p>
+<p>三、批量执行填充文件</p>
+<div class="cnblogs_code">
+<pre>php artisan db:seed</pre>
+</div>
+<p>生成多个填充文件后，在&nbsp;database -&gt; seeds 里面的 DatabaseSeeder.php 的run里面进行引入多个填充文件，后执行批量填充语句</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">run函数里面</span>
+<span style="color: #800080;">$this</span> -&gt; call (StudentSeeder::<span style="color: #0000ff;">class</span>);</pre>
+</div>
+<p>四、生成数据表的同时插入数据</p>
+<div class="cnblogs_code">
+<pre>php artisan migrate:refresh --seed</pre>
+</div>
+<p><strong>五、利用 factory 批量制造伪数据</strong></p>
+<p>1、在 databade\factories 下选择某个工厂类</p>
+<p>2、配置字段需要填充什么值</p>
+<p>3、php artisan tinker 进入shell命令行</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">先定义命名空间</span>
+<span style="color: #000000;">namespace App\Models;
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">查看数据表原有内容</span><br><span style="color: #800080;">$users</span> &#x3D; User::<span style="color: #000000;">all();</p>
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">选择工厂类，要插入多少条，开始执行</span><br>User::factory()-&gt;<span style="color: #008080;">count</span>(10)-&gt;create();</pre></p>
+</div>
+<p>&nbsp;</p>
+<p>创建一个新的factory类，并绑定某一个model</p>
+<p>1、创建一个新的model类，并生成迁移文件</p>
+<div class="cnblogs_code">
+<pre>php artisan make:model Post -<span style="color: #000000;">m
+</span><span style="color: #008000;">//</span><span style="color: #008000;">Post类带迁移文件</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>2、执行迁移文件，并填充一点数据</p>
+<div class="cnblogs_code">
+<pre>php artisan migrate</pre>
+</div>
+<div class="cnblogs_code">
+<pre>php artisan db::seed</pre>
+</div>
+<p>&nbsp;</p>
+<p>3、开始新增工厂类，并绑定model类</p>
+<div class="cnblogs_code">
+<pre>php artisan make:factory PostFactory -<span style="color: #000000;">m Post
+</span><span style="color: #008000;">//</span><span style="color: #008000;">工厂类PostFactory绑定model类Post</span></pre>
+</div>
+<p>虚拟数据时，设置文章的user_id，从user表里面随机获取，写在迁移文件</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">先指定表外键</span>
+<span style="color: #800080;">$table</span>-&gt;unsignedInterge(''<span style="color: #000000;">author_id);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">另主键id关联user表的id</span><br><span style="color: #800080;">$table</span>-&gt;foreign(‘author_id’)-&gt;references(‘id’)-&gt;on(‘users’);</pre></p>
+</div>
+<p>&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/12%E3%80%81Artisan%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/" rel="prev" title="12、Artisan基本用法">
+      <i class="fa fa-chevron-left"></i> 12、Artisan基本用法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/14%E3%80%81Laravel%E6%A1%86%E6%9E%B6%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD/" rel="next" title="14、Laravel框架常用功能">
+      14、Laravel框架常用功能 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">生成Auth所需命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">数据迁移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">数据填充</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/13%E3%80%81Laravel%E4%B8%AD%E7%9A%84%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81%EF%BC%88Auth%EF%BC%89/",
+      identifier: "/uncategorized/13、Laravel中的用户认证（Auth）/",
+      title     : "13、Laravel中的用户认证（Auth）",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

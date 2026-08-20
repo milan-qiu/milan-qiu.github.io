@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一、配置公众号的appid、appsecret等信息 二、配置成功后返回的url 三、在返回的页面接收参数，执行相关操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP调用微信登陆授权">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/PHP%E8%B0%83%E7%94%A8%E5%BE%AE%E4%BF%A1%E7%99%BB%E9%99%86%E6%8E%88%E6%9D%83/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="一、配置公众号的appid、appsecret等信息 二、配置成功后返回的url 三、在返回的页面接收参数，执行相关操作">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-06-17T06:19:00.000Z">
+<meta property="article:modified_time" content="2026-08-20T06:32:52.618Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/PHP%E8%B0%83%E7%94%A8%E5%BE%AE%E4%BF%A1%E7%99%BB%E9%99%86%E6%8E%88%E6%9D%83/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>PHP调用微信登陆授权 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/PHP%E8%B0%83%E7%94%A8%E5%BE%AE%E4%BF%A1%E7%99%BB%E9%99%86%E6%8E%88%E6%9D%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PHP调用微信登陆授权<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/PHP%E8%B0%83%E7%94%A8%E5%BE%AE%E4%BF%A1%E7%99%BB%E9%99%86%E6%8E%88%E6%9D%83.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-17 14:19:00" itemprop="dateCreated datePublished" datetime="2020-06-17T14:19:00+08:00">2020-06-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-08-20 14:32:52" itemprop="dateModified" datetime="2026-08-20T14:32:52+08:00">2026-08-20</time>
+              </span>
+
+          
+            <div class="post-description">一、配置公众号的appid、appsecret等信息 二、配置成功后返回的url 三、在返回的页面接收参数，执行相关操作 <?php /** * 获取微信用户信息 */ class GetWxUser{ private $appid = 'appidddd'; private $appsecret</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>一、配置公众号的appid、appsecret等信息</p>
+<p>&nbsp;</p>
+<p>二、配置成功后返回的url</p>
+<p>&nbsp;</p>
+<p>三、在返回的页面接收参数，执行相关操作</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre>&lt;?<span style="color: #000000;">php
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">*
+ * 获取微信用户信息
+ </span><span style="color: #008000;">*/</span>
+
+<p><span style="color: #0000ff;">class</span><span style="color: #000000;"> GetWxUser{<br>    </span><span style="color: #0000ff;">private</span> <span style="color: #800080;">$appid</span> &#x3D; ‘appidddd’<span style="color: #000000;">;<br>    </span><span style="color: #0000ff;">private</span> <span style="color: #800080;">$appsecret</span> &#x3D; ‘appsecrettttt’<span style="color: #000000;">;<br>   </span><span style="color: #008000;">&#x2F;<em></span><span style="color: #008000;"></em><br>    * 1、获取微信用户信息，判断有没有code，有使用code换取access_token，没有去获取code。<br>    * @return array 微信用户信息数组<br>    </span><span style="color: #008000;"><em>&#x2F;</span><br>    <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">function</span><span style="color: #000000;"> get_user(){<br>        </span><span style="color: #0000ff;">if</span> (!<span style="color: #0000ff;">isset</span>(<span style="color: #800080;">$_GET</span>[‘code’])){<span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">没有code，去微信接口获取code码</span><br>            <span style="color: #800080;">$callback</span> &#x3D;  <span style="color: #800080;">$_SERVER</span>[“REQUEST_SCHEME”].”:&#x2F;&#x2F;“.<span style="color: #800080;">$_SERVER</span>[‘HTTP_HOST’].<span style="color: #800080;">$_SERVER</span>[‘PHP_SELF’].”?url&#x3D;”.<span style="color: #800080;">$_GET</span>[“url”];<span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">微信服务器回调url，这里是本页url</span><br>            <span style="color: #800080;">$this</span>-&gt;get_code(<span style="color: #800080;">$callback</span><span style="color: #000000;">);<br>        } </span><span style="color: #0000ff;">else</span> {<span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取code后跳转回来到这里了</span><br>            <span style="color: #800080;">$code</span> &#x3D; <span style="color: #800080;">$_GET</span>[‘code’<span style="color: #000000;">];<br>            </span><span style="color: #800080;">$data</span> &#x3D; <span style="color: #800080;">$this</span>-&gt;get_access_token(<span style="color: #800080;">$code</span>);<span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取网页授权access_token和用户openid</span><br>            <span style="color: #800080;">$data_all</span> &#x3D; <span style="color: #800080;">$this</span>-&gt;get_user_info(<span style="color: #800080;">$data</span>[‘access_token’],<span style="color: #800080;">$data</span>[‘openid’],<span style="color: #800080;">$_GET</span>[“url”]);<span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">获取微信用户信息</span><br>            <span style="color: #0000ff;">return</span> <span style="color: #800080;">$data_all</span><span style="color: #000000;">;<br>        }<br>    }<br>   </span><span style="color: #008000;">&#x2F;</em></span><span style="color: #008000;">*<br>    * 2、用户授权并获取code<br>    * @param string $callback 微信服务器回调链接url<br>    </span><span style="color: #008000;"><em>&#x2F;</span><br>    <span style="color: #0000ff;">private</span> <span style="color: #0000ff;">function</span> get_code(<span style="color: #800080;">$callback</span><span style="color: #000000;">){<br>        </span><span style="color: #800080;">$appid</span> &#x3D; <span style="color: #800080;">$this</span>-&gt;<span style="color: #000000;">appid;<br>        </span><span style="color: #800080;">$scope</span> &#x3D; ‘snsapi_userinfo’<span style="color: #000000;">;<br>        </span><span style="color: #800080;">$state</span> &#x3D; <span style="color: #008080;">md5</span>(<span style="color: #008080;">uniqid</span>(<span style="color: #008080;">rand</span>(), <span style="color: #0000ff;">TRUE</span>));<span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">唯一ID标识符绝对不会重复</span><br>        <span style="color: #800080;">$url</span> &#x3D; ‘<a target="_blank" rel="noopener" href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=">https://open.weixin.qq.com/connect/oauth2/authorize?appid=</a>‘ . <span style="color: #800080;">$appid</span> . ‘&amp;redirect_uri&#x3D;’.<span style="color: #008080;">urlencode</span>(<span style="color: #800080;">$callback</span>).’&amp;response_type&#x3D;code&amp;scope&#x3D;’ . <span style="color: #800080;">$scope</span> . ‘&amp;state&#x3D;’ . <span style="color: #800080;">$state</span> . ‘#wechat_redirect’<span style="color: #000000;">;<br>        </span><span style="color: #008080;">header</span>(“Location:<span style="color: #800080;">$url</span>“<span style="color: #000000;">);<br>    }<br>   </span><span style="color: #008000;">&#x2F;</em></span><span style="color: #008000;">*<br>    * 3、使用code换取access_token<br>    * @param string 用于换取access_token的code，微信提供<br>    * @return array access_token和用户openid数组<br>    </span><span style="color: #008000;"><em>&#x2F;</span><br>    <span style="color: #0000ff;">private</span> <span style="color: #0000ff;">function</span> get_access_token(<span style="color: #800080;">$code</span><span style="color: #000000;">){<br>        </span><span style="color: #800080;">$appid</span> &#x3D; <span style="color: #800080;">$this</span>-&gt;<span style="color: #000000;">appid;<br>        </span><span style="color: #800080;">$appsecret</span> &#x3D; <span style="color: #800080;">$this</span>-&gt;<span style="color: #000000;">appsecret;<br>        </span><span style="color: #800080;">$url</span> &#x3D; ‘<a target="_blank" rel="noopener" href="https://api.weixin.qq.com/sns/oauth2/access_token?appid=">https://api.weixin.qq.com/sns/oauth2/access_token?appid=</a>‘ . <span style="color: #800080;">$appid</span> . ‘&amp;secret&#x3D;’ . <span style="color: #800080;">$appsecret</span> . ‘&amp;code&#x3D;’ . <span style="color: #800080;">$code</span> . ‘&amp;grant_type&#x3D;authorization_code’<span style="color: #000000;">;<br>        </span><span style="color: #800080;">$user</span> &#x3D; json_decode(<span style="color: #008080;">file_get_contents</span>(<span style="color: #800080;">$url</span><span style="color: #000000;">));<br>        </span><span style="color: #0000ff;">if</span> (<span style="color: #0000ff;">isset</span>(<span style="color: #800080;">$user</span>-&gt;<span style="color: #000000;">errcode)) {<br>               </span><span style="color: #0000ff;">echo</span> ‘error:’ . <span style="color: #800080;">$user</span>-&gt;errcode.’&lt;hr&gt;msg  :’ . <span style="color: #800080;">$user</span>-&gt;<span style="color: #000000;">errmsg;<br>              </span><span style="color: #0000ff;">exit</span><span style="color: #000000;">;<br>        }<br>        </span><span style="color: #800080;">$data</span> &#x3D; json_decode(json_encode(<span style="color: #800080;">$user</span>),<span style="color: #0000ff;">true</span>);<span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">返回的json数组转换成array数组</span><br>        <span style="color: #0000ff;">return</span> <span style="color: #800080;">$data</span><span style="color: #000000;">;<br>    }<br>   </span><span style="color: #008000;">&#x2F;</em></span><span style="color: #008000;">*<br>    * 4、使用access_token获取用户信息<br>    * @param string access_token<br>    * @param string 用户的openid<br>    * @return array 用户信息数组<br>    </span><span style="color: #008000;">*&#x2F;</span><br>    <span style="color: #0000ff;">private</span> <span style="color: #0000ff;">function</span> get_user_info(<span style="color: #800080;">$access_token</span>,<span style="color: #800080;">$openid</span>,<span style="color: #800080;">$pth</span><span style="color: #000000;">){<br>        </span><span style="color: #800080;">$url</span> &#x3D; ‘<a target="_blank" rel="noopener" href="https://api.weixin.qq.com/sns/userinfo?access_token=">https://api.weixin.qq.com/sns/userinfo?access_token=</a>‘ . <span style="color: #800080;">$access_token</span> . ‘&amp;openid&#x3D;’ . <span style="color: #800080;">$openid</span> . ‘&amp;lang&#x3D;zh_CN’<span style="color: #000000;">;<br>        </span><span style="color: #800080;">$user</span> &#x3D; <span style="color: #008080;">file_get_contents</span>(<span style="color: #800080;">$url</span><span style="color: #000000;">);<br>        </span><span style="color: #0000ff;">if</span> (<span style="color: #0000ff;">isset</span>(<span style="color: #800080;">$user</span>-&gt;<span style="color: #000000;">errcode)) {<br>               </span><span style="color: #0000ff;">echo</span> ‘error:’ . <span style="color: #800080;">$user</span>-&gt;errcode.’&lt;hr&gt;msg  :’ . <span style="color: #800080;">$user</span>-&gt;<span style="color: #000000;">errmsg;<br>              </span><span style="color: #0000ff;">exit</span><span style="color: #000000;">;<br>        }<br>          </span><span style="color: #800080;">$s</span>&#x3D;<span style="color: #800080;">$pth</span>&#x3D;&#x3D;’’?”?”:”&amp;”<span style="color: #000000;">;<br>    </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;"> var_dump( $_SERVER);</span><br>      <span style="color: #0000ff;">echo</span> <span style="color: #800080;">$_SERVER</span>[“REQUEST_SCHEME”].”:&#x2F;&#x2F;“.<span style="color: #800080;">$_SERVER</span>[‘HTTP_HOST’].”&#x2F;“.<span style="color: #800080;">$pth</span>.<span style="color: #800080;">$s</span>.”val&#x3D;”.<span style="color: #800080;">$user</span><span style="color: #000000;">;<br>     </span><span style="color: #008080;">header</span>(“Location:”. <span style="color: #800080;">$_SERVER</span>[“REQUEST_SCHEME”].”:&#x2F;&#x2F;“.<span style="color: #800080;">$_SERVER</span>[‘HTTP_HOST’].”&#x2F;quest&#x2F;Assessment&#x2F;index.php 这里配置返回地址”.<span style="color: #800080;">$pth</span>.<span style="color: #800080;">$s</span>.”val&#x3D;”.<span style="color: #008080;">urlencode</span>(<span style="color: #800080;">$user</span><span style="color: #000000;">));<br>        </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">$user</span><span style="color: #000000;">;<br>    }<br>}<br></span><span style="color: #800080;">$g</span>&#x3D;<span style="color: #0000ff;">new</span><span style="color: #000000;"> GetWxUser();<br></span><span style="color: #800080;">$g</span>-&gt;<span style="color: #000000;">get_user();<br></span>?&gt;</pre></p>
+</div>
+<p>&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/PHP%E8%B0%83%E7%94%A8%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98-%E6%B2%99%E7%AE%B1%E7%8E%AF%E5%A2%83%EF%BC%88SDK%E6%96%B9%E5%BC%8F%EF%BC%89/" rel="prev" title="PHP调用支付宝支付-沙箱环境（SDK方式）">
+      <i class="fa fa-chevron-left"></i> PHP调用支付宝支付-沙箱环境（SDK方式）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/PHP%E8%AF%BB%E5%8F%96Excel%EF%BC%8C%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93%20-%20PhpSpreadsheet/" rel="next" title="PHP读取Excel，批量插入数据库 - PhpSpreadsheet">
+      PHP读取Excel，批量插入数据库 - PhpSpreadsheet <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/PHP%E8%B0%83%E7%94%A8%E5%BE%AE%E4%BF%A1%E7%99%BB%E9%99%86%E6%8E%88%E6%9D%83/",
+      identifier: "/uncategorized/PHP调用微信登陆授权/",
+      title     : "PHP调用微信登陆授权",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"milan-qiu.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":true,"nav":{"categories":"/categories"},"activeClass":"disqusjs"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1、变量和数据类型 变量$ + 符合命名规范的字符 php是一种弱类型语言，即不需要生命变量类型就能够使用。 变量输出：echo + 字符串&#x2F;变量，var_dump(变量) 输出变量类型及数据 注释：单行注释&#x2F;&#x2F; 或 #，多行注释 &#x2F;**&#x2F; 指定编码方式： &#x2F;&#x2F;告诉浏览器以什么编码方式解析什么类型的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01、PHP基本常识">
+<meta property="og:url" content="https://milan-qiu.github.io/uncategorized/01%E3%80%81PHP%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/index.html">
+<meta property="og:site_name" content="Milan明良-个人记录">
+<meta property="og:description" content="1、变量和数据类型 变量$ + 符合命名规范的字符 php是一种弱类型语言，即不需要生命变量类型就能够使用。 变量输出：echo + 字符串&#x2F;变量，var_dump(变量) 输出变量类型及数据 注释：单行注释&#x2F;&#x2F; 或 #，多行注释 &#x2F;**&#x2F; 指定编码方式： &#x2F;&#x2F;告诉浏览器以什么编码方式解析什么类型的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-07-24T01:22:00.000Z">
+<meta property="article:modified_time" content="2020-09-06T11:54:00.000Z">
+<meta property="article:author" content="Milan明良">
+<meta property="article:tag" content="博客,简历,技术">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://milan-qiu.github.io/uncategorized/01%E3%80%81PHP%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>01、PHP基本常识 | Milan明良-个人记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Milan明良-个人记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://milan-qiu.github.io/uncategorized/01%E3%80%81PHP%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Milan明良">
+      <meta itemprop="description" content="一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milan明良-个人记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          01、PHP基本常识<a href="https://github.com/jayden-qiu/jayden-qiu.github.io/edit/dev/source/_posts/01%E3%80%81PHP%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-24 09:22:00" itemprop="dateCreated datePublished" datetime="2020-07-24T09:22:00+08:00">2020-07-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-06 19:54:00" itemprop="dateModified" datetime="2020-09-06T19:54:00+08:00">2020-09-06</time>
+              </span>
+
+          
+            <div class="post-description">1、变量和数据类型 变量$ + 符合命名规范的字符 php是一种弱类型语言，即不需要生命变量类型就能够使用。 变量输出：echo + 字符串/变量，var_dump(变量) 输出变量类型及数据 注释：单行注释// 或 #，多行注释 /**/ 指定编码方式： //告诉浏览器以什么编码方式解析什么类型的</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2><strong>1、变量和数据类型</strong></h2>
+<p><strong>变量</strong>$ + 符合命名规范的字符</p>
+<p>php是一种弱类型语言，即不需要生命变量类型就能够使用。</p>
+<p>&nbsp;</p>
+<p><strong>变量输出</strong>：echo + 字符串/变量，var_dump(变量) 输出变量类型及数据</p>
+<p><strong>注释</strong>：单行注释// 或 #，多行注释 /**/</p>
+<p>&nbsp;</p>
+<p><strong>指定编码方式</strong>：</p>
+<p>//告诉浏览器以什么编码方式解析什么类型的文档</p>
+<div class="cnblogs_code">
+<pre>header('content-type:text/html;charset=utf-8');</pre>
+</div>
+<p>&nbsp;</p>
+<p><strong>错误抑制符</strong>：@&nbsp; &nbsp; //在某个语句前添加@可以忽略该语句的错误信息</p>
+<h3><strong>变量类型</strong>：</h3>
+<p>浮点型$a = 2e3 / $a = 2E3 就是 2x10的3次方&nbsp;</p>
+<p>字符串型 ' '里面内容不解析变量，" "里面内容解析变量，" "可以尝试字符串加变量一起输出。</p>
+<div class="cnblogs_code">
+<pre>$name = <span style="color: #800000;">'</span><span style="color: #800000;">丘</span><span style="color: #800000;">'</span><span style="color: #000000;">;
+echo </span><span style="color: #800000;">"</span><span style="color: #800000;">我是$name 的啊</span><span style="color: #800000;">"</span>;<span style="color: #008000;">//</span><span style="color: #008000;">$name 后要用空格隔开，否则就会被认为后面一串都是变量名。
+</span><span style="color: #008000;">//</span><span style="color: #008000;">若不想要空格还可以这样，{}里面不能有空格，否则就会被当做普通字符</span>
+echo <span style="color: #800000;">"</span><span style="color: #800000;">我是{$name}的啊</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+echo </span><span style="color: #800000;">"</span><span style="color: #800000;">我是${name} 的啊</span><span style="color: #800000;">"</span>;</pre>
+</div>
+<p>转义符：\n回车，\t水平制表符，\r回车，\\是\，\$是$，\'是'，\*是*</p>
+<p>略......</p>
+<p>&nbsp;</p>
+<h3>类型转换</h3>
+<h4><strong>临时转换（不改变变量本身）</strong></h4>
+<p>第一种：(变量类型)变量名称。如：$bb = (int)$a;&nbsp; //将$a转换为整型</p>
+<div class="cnblogs_code">
+<pre>(<span style="color: #0000ff;">int</span>)(integer)、(<span style="color: #0000ff;">float</span>)(<span style="color: #0000ff;">double</span>)(real)、(<span style="color: #0000ff;">string</span>)、(<span style="color: #0000ff;">bool</span><span style="color: #000000;">)(boolean)
+
+<p>(unset)   </span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">将某变量临时转换为 null</span><br>(array)   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">临时将变量转换为数组</span><br>(<span style="color: #0000ff;">object</span>)   <span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">临时将变量转换为对象</span></pre></p>
+</div>
+<p>第二种：通过系统函数。即 变量类型val(变量名称)，如 $a = intval($b);&nbsp; //将$b转换为整型</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">intval
+floatval、doubleval
+stringval
+boolval</span></pre>
+</div>
+<p>&nbsp;</p>
+<h4><strong>永久转换（改变变量本身）</strong></h4>
+<p>gettype（获取变量类型，慎用）</p>
+<div class="cnblogs_code">
+<pre>echo gettype($a); <span style="color: #008000;">//</span><span style="color: #008000;">输出$a的变量类型</span></pre>
+</div>
+<p>settype($a,'int') （设置变量类型）</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">例子</span>
+$a = <span style="color: #800080;">1</span><span style="color: #000000;">;
+settype($a,</span><span style="color: #800000;">'</span><span style="color: #800000;">bool</span><span style="color: #800000;">'</span><span style="color: #000000;">);
+var_dump($a);
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">类型参数</span><br>boolean&#x2F;<span style="color: #0000ff;">bool</span><span style="color: #000000;"><br>integer</span>&#x2F;<span style="color: #0000ff;">int</span><br><span style="color: #0000ff;">float</span><br><span style="color: #0000ff;">string</span><span style="color: #000000;"><br>array<br></span><span style="color: #0000ff;">object</span><br><span style="color: #0000ff;">null</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<h4>&nbsp;通过变量函数库，检测变量类型</h4>
+<p>is_类型(变量);&nbsp; &nbsp;//检测变量是不是该类型，返回bool&nbsp;</p>
+<p>如检测 $a是不是整型，is_int($a);&nbsp; //返回bool</p>
+<p>&nbsp;</p>
+<p>如检测 $c是不是资源</p>
+<div class="cnblogs_code">
+<pre>$c = fopen(<span style="color: #800000;">'</span><span style="color: #800000;">./cc.html</span><span style="color: #800000;">'</span> , <span style="color: #800000;">'</span><span style="color: #800000;">r</span><span style="color: #800000;">'</span><span style="color: #000000;">);
+echo is_resource($c);  </span><span style="color: #008000;">//</span><span style="color: #008000;">输出true</span></pre>
+</div>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">类型</span>
+<span style="color: #000000;">
+整型：is_int() , is_integer() , is_long()
+
+<p>浮点型：is_float() , is_double() , is_real()</p>
+<p>字符串：is_string()</p>
+<p>布尔型：is_bool()</p>
+<p>标量类型：is_scalar()</p>
+<p>空null：is_null()</p>
+<p>数组：is_array()</p>
+<p>对象：is_object()</p>
+<p>资源：is_resource</p>
+<p>是否为数值型</span>&#x2F;字符串形式的数值：is_numeric()</pre></p>
+</div>
+<p>&nbsp;</p>
+<h3>heredoc 和 nowdoc</h3>
+<p>heredoc相当于 " " ，使用语法</p>
+<div class="cnblogs_code">
+<pre>$str = &lt;&lt;&lt;<span style="color: #000000;">haha
+这里是代码段
+haha;
+echo $str;
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">也可以</span><br>$str &#x3D; &lt;&lt;&lt;<span style="color: #800000;">“</span><span style="color: #800000;">haha</span><span style="color: #800000;">“</span><span style="color: #000000;"><br>这里是代码段<br>haha;<br>echo $str;</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>nowdoc相当于 ' ' ，使用语法</p>
+<div class="cnblogs_code">
+<pre>$str = &lt;&lt;&lt;<span style="color: #800000;">'</span><span style="color: #800000;">now</span><span style="color: #800000;">'</span><span style="color: #000000;">
+这里的变量不会被解析到
+now;</span></pre>
+</div>
+<p>&nbsp;</p>
+<h2>2、PHP常量</h2>
+<h3>php系统常量</h3>
+<div class="cnblogs_code">
+<pre>echo PHP_VERSION; <span style="color: #008000;">//</span><span style="color: #008000;">输出php的版本</span>
+<span style="color: #000000;">
+echo PHP_OS; </span><span style="color: #008000;">//</span><span style="color: #008000;">输出php的系统</span>
+<span style="color: #000000;">
+echo PHP_INT_MAX;</span><span style="color: #008000;">//</span><span style="color: #008000;">整型的最大值</span>
+<span style="color: #000000;">
+略。。。</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>php自定义常量</h3>
+<p>define函数</p>
+<div class="cnblogs_code">
+<pre>define(<span style="color: #800000;">'</span><span style="color: #800000;">NAME</span><span style="color: #800000;">'</span><span style="color: #000000;">,VALUE);
+echo NAME;
+
+<p></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">常量名称最好大写,常量名称不能加$，常量是全局的作用域<br></span><span style="color: #008000;">&#x2F;&#x2F;</span><span style="color: #008000;">常量已经定义，在脚本执行期间是不可改变的</span></pre></p>
+</div>
+<p>&nbsp;</p>
+<p>const关键字</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">const</span> NAME =<span style="color: #000000;"> VALUE;
+echo NAME;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>魔术常量</p>
+<div class="cnblogs_code">
+<pre>__LINE__  <span style="color: #008000;">//</span><span style="color: #008000;">得到当前的行号</span>
+<span style="color: #000000;">
+__FILE__  </span><span style="color: #008000;">//</span><span style="color: #008000;">得到当前文件完整的绝对路径和文件名</span>
+<span style="color: #000000;">
+__DIR__  </span><span style="color: #008000;">//</span><span style="color: #008000;">得到当前文件完整的绝对路径</span>
+<span style="color: #000000;">
+__FUNCTION__  </span><span style="color: #008000;">//</span><span style="color: #008000;">得到当前函数的名称</span>
+<span style="color: #000000;">
+__CLASS__  </span><span style="color: #008000;">//</span><span style="color: #008000;">得到当前类的类名</span>
+<span style="color: #000000;">
+__METHOD__  </span><span style="color: #008000;">//</span><span style="color: #008000;">得到当前类的方法名称</span>
+<span style="color: #000000;">
+__TRAIT__  </span><span style="color: #008000;">//</span><span style="color: #008000;">得到当前TRAIT名称</span>
+<span style="color: #000000;">
+__NAMESPACE__  </span><span style="color: #008000;">//</span><span style="color: #008000;">得到当前命名空间的名称</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>使用常量</p>
+<p>1、直接写常量名称</p>
+<p>2、通过 constant('NAME')，如echo constant('NAME')；</p>
+<p>&nbsp;</p>
+<p>检测常量是否存在</p>
+<p>defined('NAME');&nbsp; //返回bool</p>
+<p>&nbsp;</p>
+<p>得到所有已经定义的产量，及系统常量（数组）</p>
+<div class="cnblogs_code">
+<pre>print_r(get_defined_contants());</pre>
+</div>
+<p>&nbsp;</p>
+<p>输出</p>
+<div class="cnblogs_code">
+<pre>echo <span style="color: #008000;">//</span><span style="color: #008000;">输出一个或多个字符串</span>
+<span style="color: #000000;">
+print_r()  </span><span style="color: #008000;">//</span><span style="color: #008000;">打印数组信息</span>
+<span style="color: #000000;">
+var_dump()  </span><span style="color: #008000;">//</span><span style="color: #008000;">打印变量的详细信息，一个或多个都行</span></pre>
+</div>
+<p>&nbsp;</p>
+<h3>PHP预定义变量</h3>
+<p>$GLOBALS&nbsp; //超全局变量，包含以下所有的预定义变量</p>
+<p>$_SERVERS&nbsp; //服务器和执行环境信息变量</p>
+<p>$_ENV&nbsp; //环境变量</p>
+<p>$_COOKIE&nbsp; //Http cookies</p>
+<p>$_SESSION&nbsp; //http session</p>
+<p>$_FILES&nbsp; //文件上传信息变量</p>
+<p>$_GET&nbsp; &nbsp; //接收以get方式方式发送的数据</p>
+<p>$_POST //接收以post方式发送的数据</p>
+<p>$_REQUEST&nbsp; //$_GET + $_POST + $_COOKIE</p>
+<div class="cnblogs_code">
+<pre>print_r($_GET);  <span style="color: #008000;">//</span><span style="color: #008000;">接收以get方式接收的所有数据，以数组的方式存起来<br /><br />echo $_REQUEST['name'];  //接收get/post发送的数据</span></pre>
+</div>
+<p>&nbsp;</p>
+<h2>3、运算符</h2>
+<p>算术运算符</p>
+<p>递增递减运算符</p>
+<p>字符连接符</p>
+<p>赋值运算符</p>
+<p>比较运算符</p>
+<p>逻辑运算符</p>
+<p>错误抑制符</p>
+<p>略。。。</p>
+<p>&nbsp;</p>
+<h2>4、流程控制</h2>
+<p>if</p>
+<p>switch...case</p>
+<p>for</p>
+<p>while,do while,goto</p>
+<p>略。。。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/uncategorized/%E5%BE%AE%E4%BF%A1h5%E7%BD%91%E9%A1%B5%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%86%E4%BA%AB%EF%BC%88%E6%A0%87%E9%A2%98%E3%80%81%E6%8F%8F%E8%BF%B0%E3%80%81%E5%9B%BE%E6%A0%87%EF%BC%89/" rel="prev" title="微信h5网页自定义分享（标题、描述、图标）">
+      <i class="fa fa-chevron-left"></i> 微信h5网页自定义分享（标题、描述、图标）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/02%E3%80%81PHP%E5%87%BD%E6%95%B0%E5%BA%93/" rel="next" title="02、PHP函数库">
+      02、PHP函数库 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">1、变量和数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">变量类型：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.2.1.</span> <span class="nav-text">临时转换（不改变变量本身）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.2.2.</span> <span class="nav-text">永久转换（改变变量本身）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.2.3.</span> <span class="nav-text"> 通过变量函数库，检测变量类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">heredoc 和 nowdoc</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">2、PHP常量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text">php系统常量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text">php自定义常量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.3.</span> <span class="nav-text">PHP预定义变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">3、运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">4、流程控制</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Milan明良"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Milan明良</p>
+  <div class="site-description" itemprop="description">一个互联网小民工，会写 JS、TS、Python、GO、PHP、Rust</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">221</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jayden-qiu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jayden-qiu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xiaoliang0730@163.com" title="E-Mail → mailto:xiaoliang0730@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cnblogs.com/jayden-qiu" title="https:&#x2F;&#x2F;cnblogs.com&#x2F;jayden-qiu" rel="noopener" target="_blank">原博客系统</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2024201050号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milan明良</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  <script src="//code.tidio.co/dxwpgtbdtqljnoweujbchudicjc0wgwo.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : '' || 'https://disqus.com/api/',
+      apikey    : 'p0IXKF4V43VLSaUu2YfB82aNrtvRjfrvZdZFaXKj1H5liqMfILWdVV7LemZQWzTz',
+      shortname : 'jayden-blog',
+      url       : "https://milan-qiu.github.io/uncategorized/01%E3%80%81PHP%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/",
+      identifier: "/uncategorized/01、PHP基本常识/",
+      title     : "01、PHP基本常识",
+    });
+  }, window.DisqusJS);
+});
+</script>
+
+</body>
+</html>
